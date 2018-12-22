@@ -1,0 +1,60 @@
+<header>
+  <div class="container">
+    <div class="sixteen columns">
+      <!-- Logo -->
+      <div id="logo">
+        <h1>
+          <a href="/"
+            ><img src="assets/images/logo.png" alt="Menzon Limited"
+          /></a>
+        </h1>
+      </div>
+
+      <!-- Menu -->
+      <nav id="navigation" class="menu">
+        <ul id="responsive">
+          <li><a href="/">Home</a></li>
+
+          <li>
+            <a [routerLink]="['/blog']" routerLinkActive="active current"
+              >Career Advice</a
+            >
+          </li>
+
+          <li>
+            <a [routerLink]="['/faq']" routerLinkActive="active current"
+              >FAQ(s)</a
+            >
+          </li>
+
+          <li>
+            <a [routerLink]="['/contact']" routerLinkActive="active current"
+              >Contact Us</a
+            >
+          </li>
+        </ul>
+
+        <ul class="responsive float-right">
+          <li>
+            <a [routerLink]="['/register']" routerLinkActive="active current"
+              ><i class="fa fa-user"></i> Sign Up</a
+            >
+          </li>
+          <li>
+            <a [routerLink]="['/login']" routerLinkActive="active current"
+              ><i class="fa fa-lock"></i> Log In</a
+            >
+          </li>
+        </ul>
+      </nav>
+
+      <!-- Navigation -->
+      <div id="mobile-navigation">
+        <a href="#menu" class="menu-trigger"
+          ><i class="fa fa-reorder"></i> Menu</a
+        >
+      </div>
+    </div>
+  </div>
+</header>
+<div class="clearfix"></div>

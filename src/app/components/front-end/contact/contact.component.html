@@ -1,0 +1,120 @@
+<!--
+  Titlebar
+  ==================================================
+-->
+<div id="titlebar" class="single">
+  <div class="container">
+    <div class="sixteen columns">
+      <h2>Contact</h2>
+      <nav id="breadcrumbs">
+        <ul>
+          <li>You are here:</li>
+          <li><a href="#">Home</a></li>
+          <li>Contact</li>
+        </ul>
+      </nav>
+    </div>
+  </div>
+</div>
+
+<!--
+  Content
+  ==================================================
+-->
+<!-- Container -->
+<div class="container">
+  <div class="eleven columns">
+    <h3 class="margin-bottom-15">Contact Form</h3>
+
+    <!-- Contact Form -->
+    <section id="contact" class="padding-right">
+      <!-- Success Message -->
+      <mark id="message"></mark>
+
+      <!-- Form -->
+      <form method="post" name="contactform" id="contactform">
+        <fieldset>
+          <div>
+            <label>Name:</label> <input name="name" type="text" id="name" />
+          </div>
+
+          <div>
+            <label>Email: <span>*</span></label>
+            <input
+              name="email"
+              type="email"
+              id="email"
+              pattern="^[A-Za-z0-9](([_\.\-]?[a-zA-Z0-9]+)*)@([A-Za-z0-9]+)(([\.\-]?[a-zA-Z0-9]+)*)\.([A-Za-z]{2,})$"
+            />
+          </div>
+
+          <div>
+            <label>Subject: <span>*</span></label>
+            <select>
+              <option value="">demo</option>
+              <option value="">demo</option>
+              <option value="">demo</option>
+              <option value="">demo</option>
+              <option value="">demo</option>
+            </select>
+          </div>
+
+          <br /><br /><br />
+
+          <div>
+            <label>Message: <span>*</span></label>
+            <textarea
+              name="comment"
+              cols="40"
+              rows="3"
+              id="comment"
+              spellcheck="true"
+            ></textarea>
+          </div>
+        </fieldset>
+        <div id="result"></div>
+        <input type="submit" class="submit" id="submit" value="Send Message" />
+        <div class="clearfix"></div>
+        <div class="margin-bottom-40"></div>
+      </form>
+    </section>
+    <!-- Contact Form / End -->
+  </div>
+  <!-- Container / End -->
+
+  <!--
+    Sidebar
+    ==================================================
+  -->
+  <div class="five columns">
+    <!-- Information -->
+    <h3 class="margin-bottom-10">Information</h3>
+    <div class="widget-box">
+      <p>
+        Morbi eros bibendum lorem ipsum dolor pellentesque pellentesque
+        bibendum.
+      </p>
+
+      <ul class="contact-informations">
+        <li>45 Park Avenue, Apt. 303</li>
+        <li>New York, NY 10016</li>
+      </ul>
+
+      <ul class="contact-informations second">
+        <li>
+          <i class="fa fa-phone"></i>
+          <p>+48 880 440 110</p>
+        </li>
+        <li>
+          <i class="fa fa-envelope"></i>
+          <p>mail@Menzon Limited.com</p>
+        </li>
+        <li>
+          <i class="fa fa-globe"></i>
+          <p>www.Menzon Limited.com</p>
+        </li>
+      </ul>
+    </div>
+  </div>
+</div>
+<!-- Container / End -->

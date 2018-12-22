@@ -1,0 +1,64 @@
+<form [formGroup]="cRForm" class="container">
+  <div formGroupName="skills">
+    <h3 class="margin-bottom-10 margin-top-10">Edit Skills</h3>
+
+    <br /><br />
+
+    <div
+      *ngFor="let s of skillsForms.controls; let i = index"
+      [formGroupName]="i"
+    >
+      <div class="form-row form-row-wide three columns">
+        <label>Skill: <span class="red">*</span></label>
+        <input type="text" class="input-text" formControlName="skill" />
+      </div>
+
+      <div class="form-row form-row-wide three columns">
+        <label>Skill Level: <span class="red">*</span></label>
+        <select formControlName="skillLevel">
+          <option value="">demo</option>
+          <option value="">demo</option>
+          <option value="">demo</option>
+          <option value="">demo</option>
+          <option value="">demo</option>
+        </select>
+      </div>
+
+      <div class="form-row form-row-wide three columns">
+        <label>Last Year Used: <span class="red">*</span></label>
+        <select formControlName="lastYearUsed">
+          <option value="">demo</option>
+          <option value="">demo</option>
+          <option value="">demo</option>
+          <option value="">demo</option>
+          <option value="">demo</option>
+        </select>
+      </div>
+
+      <div class="form-row form-row-wide three columns">
+        <label>Last Month Used: <span class="red">*</span></label>
+        <select formControlName="lastMonthUsed">
+          <option value="">demo</option>
+          <option value="">demo</option>
+          <option value="">demo</option>
+          <option value="">demo</option>
+          <option value="">demo</option>
+        </select>
+      </div>
+
+      <div class="form-row form-row-wide three columns">
+        <label>Years of Experience: <span class="red">*</span></label>
+        <input
+          type="text"
+          class="input-text"
+          formControlName="yearsOfExperience"
+        />
+      </div>
+
+      <br />
+      <br />
+      <br />
+      <br />
+    </div>
+  </div>
+</form>

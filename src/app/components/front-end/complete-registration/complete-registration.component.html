@@ -1,0 +1,567 @@
+<!--
+  Titlebar
+  ==================================================
+-->
+<div id="titlebar" class="single">
+  <div class="container">
+    <div class="sixteen columns">
+      <h2>Complete Registration</h2>
+      <nav id="breadcrumbs">
+        <ul>
+          <li>You are here:</li>
+          <li><a href="#">Home</a></li>
+          <li>complete registrationn</li>
+        </ul>
+      </nav>
+    </div>
+  </div>
+</div>
+
+<!--
+  Content
+  ==================================================
+-->
+
+<!-- Container -->
+<div class="container">
+  <form [formGroup]="cRForm" class="login">
+    <aw-wizard>
+      <aw-wizard-step stepTitle="STEEP 1">
+        <div class="container">
+          <h3 class="margin-bottom-10 margin-top-10">Personal Information</h3>
+
+          <br /><br />
+
+          <p class="form-row form-row-wide four columns">
+            <label>First Name: <span class="red">*</span></label>
+            <input type="text" class="input-text" formControlName="firstName" />
+          </p>
+
+          <p class="form-row form-row-wide four columns">
+            <label>Last Name: <span class="red">*</span></label>
+            <input type="text" class="input-text" formControlName="lastName" />
+          </p>
+
+          <p class="form-row form-row-wide four columns">
+            <label>Middle Name: (Optional)</label>
+            <input
+              type="text"
+              class="input-text"
+              formControlName="middleName"
+            />
+          </p>
+
+          <p class="form-row form-row-wide four columns">
+            <label>Gender: <span class="red">*</span></label>
+            <select formControlName="gender">
+              <option value="male">Male</option>
+              <option value="female">Female</option>
+            </select>
+          </p>
+        </div>
+
+        <div class="container">
+          <div class="form-row form-row-wide four columns">
+            <label>Date of Birth (mm/dd/yyyy):</label>
+            <input
+              style="
+                padding: 14px 18px;
+                outline: none;
+                font-size: 15px;
+                color: #909090;
+                margin: 0;
+                max-width: 100%;
+                width: 100%;
+                box-sizing: border-box;
+                display: block;
+                background-color: #fcfcfc;
+                font-weight: 500;
+                border: 1px solid #e0e0e0;
+                opacity: 1;
+              "
+              placeholder="yyyy-mm-dd"
+              formControlName="dateOfBirth"
+              ngbDatepicker
+              #d="ngbDatepicker"
+              (click)="d.toggle()"
+            />
+          </div>
+
+          <p class="form-row form-row-wide four columns">
+            <label>Email Address: <span class="red">*</span></label>
+            <input type="email" class="input-text" formControlName="email" />
+          </p>
+
+          <p class="form-row form-row-wide four columns">
+            <label>Phone Number: (Optional)</label>
+            <input
+              type="text"
+              class="input-text"
+              formControlName="phoneNumber"
+            />
+          </p>
+
+          <p class="form-row form-row-wide four columns">
+            <label>Street Adress: (Optional)</label>
+            <input
+              type="text"
+              class="input-text"
+              formControlName="street_address"
+            />
+          </p>
+        </div>
+
+        <div class="container">
+          <p class="form-row form-row-wide four columns">
+            <label>City: (Optional)</label>
+            <input type="text" class="input-text" formControlName="city" />
+          </p>
+
+          <p class="form-row form-row-wide four columns">
+            <label>Country: <span class="red">*</span></label>
+            <select formControlName="country">
+              <option value="">demo</option>
+              <option value="">demo</option>
+              <option value="">demo</option>
+              <option value="">demo</option>
+              <option value="">demo</option>
+            </select>
+          </p>
+
+          <p class="form-row form-row-wide four columns">
+            <label>Prov/State: <span class="red">*</span></label>
+            <select formControlName="state">
+              <option value="">demo</option>
+              <option value="">demo</option>
+              <option value="">demo</option>
+              <option value="">demo</option>
+              <option value="">demo</option>
+            </select>
+          </p>
+
+          <p class="form-row form-row-wide four columns">
+            <label>Prefared Location: (Optional)</label>
+            <select formControlName="prefaredLocation">
+              <option value="">demo</option>
+              <option value="">demo</option>
+              <option value="">demo</option>
+              <option value="">demo</option>
+              <option value="">demo</option>
+            </select>
+          </p>
+        </div>
+        <br /><br />
+        <button type="button" awNextStep>Next</button>
+      </aw-wizard-step>
+      <aw-wizard-step stepTitle="STEEP 2">
+        <div class="container">
+          <div formGroupName="education">
+            <h3 class="margin-bottom-10 margin-top-10">Education</h3>
+
+            <br /><br />
+
+            <div
+              *ngFor="let e of educationForms.controls; let i = index"
+              [formGroupName]="i"
+            >
+              <p class="form-row form-row-wide four columns">
+                <label>Institution: <span class="red">*</span></label>
+                <input
+                  type="text"
+                  class="input-text"
+                  formControlName="institution"
+                />
+              </p>
+
+              <p class="form-row form-row-wide four columns">
+                <label>Diploma/Degree: <span class="red">*</span></label>
+                <input
+                  type="text"
+                  class="input-text"
+                  formControlName="degree"
+                />
+              </p>
+
+              <p class="form-row form-row-wide four columns">
+                <label>Country: <span class="red">*</span></label>
+                <select formControlName="country">
+                  <option value="">demo</option>
+                  <option value="">demo</option>
+                  <option value="">demo</option>
+                  <option value="">demo</option>
+                  <option value="">demo</option>
+                </select>
+              </p>
+
+              <p class="form-row form-row-wide four columns">
+                <label>From Year: <span class="red">*</span></label>
+                <select formControlName="fromYear">
+                  <option value="">demo</option>
+                  <option value="">demo</option>
+                  <option value="">demo</option>
+                  <option value="">demo</option>
+                  <option value="">demo</option>
+                </select>
+              </p>
+
+              <p class="form-row form-row-wide four columns">
+                <label>From Month: <span class="red">*</span></label>
+                <select formControlName="fromMonth">
+                  <option value="">demo</option>
+                  <option value="">demo</option>
+                  <option value="">demo</option>
+                  <option value="">demo</option>
+                  <option value="">demo</option>
+                </select>
+              </p>
+
+              <p class="form-row form-row-wide four columns">
+                <label>To Year: <span class="red">*</span></label>
+                <select formControlName="toYear">
+                  <option value="">demo</option>
+                  <option value="">demo</option>
+                  <option value="">demo</option>
+                  <option value="">demo</option>
+                  <option value="">demo</option>
+                </select>
+              </p>
+
+              <p class="form-row form-row-wide four columns">
+                <label>To Month: <span class="red">*</span></label>
+                <select formControlName="toMonth">
+                  <option value="">demo</option>
+                  <option value="">demo</option>
+                  <option value="">demo</option>
+                  <option value="">demo</option>
+                  <option value="">demo</option>
+                </select>
+              </p>
+
+              <p class="form-row form-row-wide four columns">
+                <label>Course of Study: <span class="red">*</span></label>
+                <select formControlName="course">
+                  <option value="">demo</option>
+                  <option value="">demo</option>
+                  <option value="">demo</option>
+                  <option value="">demo</option>
+                  <option value="">demo</option>
+                </select>
+              </p>
+
+              <br />
+              <a
+                style="color: #fff; background: red"
+                *ngIf="educationForms.controls?.length > 1"
+                (click)="deleteEducation(i)"
+                class="button gray"
+                ><i class="fa fa-plus-circle"></i>Delete</a
+              >
+            </div>
+          </div>
+
+          <br />
+          <a (click)="addEducation()" class="button gray"
+            ><i class="fa fa-plus-circle"></i> Add Education</a
+          >
+        </div>
+
+        <!-- static -->
+        <div class="container">
+          <h3 class="margin-bottom-10 margin-top-10">NYSC Information</h3>
+
+          <br /><br />
+
+          <p class="form-row form-row-wide four columns">
+            <label>NYSC Completed: (Optional)</label>
+            <select formControlName="NTSCcompleted">
+              <option value="yes">Yes</option>
+              <option value="no">No</option>
+              <option value="not gone">Not Gone</option>
+            </select>
+          </p>
+
+          <p class="form-row form-row-wide four columns">
+            <label>Date(dd/mm/yyyy): (Optional)</label>
+            <input
+              style="
+                padding: 14px 18px;
+                outline: none;
+                font-size: 15px;
+                color: #909090;
+                margin: 0;
+                max-width: 100%;
+                width: 100%;
+                box-sizing: border-box;
+                display: block;
+                background-color: #fcfcfc;
+                font-weight: 500;
+                border: 1px solid #e0e0e0;
+                opacity: 1;
+              "
+              placeholder="yyyy-mm-dd"
+              formControlName="NYSCDdate"
+              ngbDatepicker
+              #d2="ngbDatepicker"
+              (click)="d2.toggle()"
+            />
+          </p>
+
+          <p class="form-row form-row-wide four columns">
+            <label>NYSC Date of Completion: (Optional)</label>
+            <input
+              style="
+                padding: 14px 18px;
+                outline: none;
+                font-size: 15px;
+                color: #909090;
+                margin: 0;
+                max-width: 100%;
+                width: 100%;
+                box-sizing: border-box;
+                display: block;
+                background-color: #fcfcfc;
+                font-weight: 500;
+                border: 1px solid #e0e0e0;
+                opacity: 1;
+              "
+              placeholder="yyyy-mm-dd"
+              formControlName="NTSCcompletedDate"
+              ngbDatepicker
+              #d3="ngbDatepicker"
+              (click)="d3.toggle()"
+            />
+          </p>
+        </div>
+        <!-- static end -->
+        <br /><br />
+        <button type="button" awPreviousStep>PREV</button>
+        <button type="button" awNextStep>NEXT</button>
+      </aw-wizard-step>
+      <aw-wizard-step stepTitle="STEEP 3">
+        <div class="container">
+          <div formGroupName="workHistory">
+            <h3 class="margin-bottom-10 margin-top-10">Work History</h3>
+
+            <br /><br />
+
+            <div
+              *ngFor="let wH of workHistoryForms.controls; let i = index"
+              [formGroupName]="i"
+            >
+              <p class="form-row form-row-wide five columns">
+                <label>Company:</label>
+                <input
+                  type="text"
+                  class="input-text"
+                  formControlName="company"
+                />
+              </p>
+
+              <p class="form-row form-row-wide five columns">
+                <label>Job Title:</label>
+                <input
+                  type="number"
+                  class="input-text"
+                  formControlName="jobTitle"
+                />
+              </p>
+
+              <p class="form-row form-row-wide five columns">
+                <label>Country:</label>
+                <select formControlName="country">
+                  <option value="">demo</option>
+                  <option value="">demo</option>
+                  <option value="">demo</option>
+                  <option value="">demo</option>
+                  <option value="">demo</option>
+                </select>
+              </p>
+
+              <p class="form-row form-row-wide four columns">
+                <label>From Year:</label>
+                <select formControlName="fromYear">
+                  <option value="">demo</option>
+                  <option value="">demo</option>
+                  <option value="">demo</option>
+                  <option value="">demo</option>
+                  <option value="">demo</option>
+                </select>
+              </p>
+
+              <p class="form-row form-row-wide four columns">
+                <label>From Month:</label>
+                <select formControlName="fromMonth">
+                  <option value="">demo</option>
+                  <option value="">demo</option>
+                  <option value="">demo</option>
+                  <option value="">demo</option>
+                  <option value="">demo</option>
+                </select>
+              </p>
+
+              <p class="form-row form-row-wide four columns">
+                <label>To Year:</label>
+                <select formControlName="toYear">
+                  <option value="">demo</option>
+                  <option value="">demo</option>
+                  <option value="">demo</option>
+                  <option value="">demo</option>
+                  <option value="">demo</option>
+                </select>
+              </p>
+
+              <p class="form-row form-row-wide four columns">
+                <label>To Month:</label>
+                <select formControlName="toMonth">
+                  <option value="">demo</option>
+                  <option value="">demo</option>
+                  <option value="">demo</option>
+                  <option value="">demo</option>
+                  <option value="">demo</option>
+                </select>
+              </p>
+
+              <br />
+              <a
+                *ngIf="workHistoryForms.controls?.length > 1"
+                (click)="deleteWorkHistory(i)"
+                class="button gray"
+                style="color: #fff; background: red"
+                ><i class="fa fa-plus-circle"></i>Delete</a
+              >
+            </div>
+          </div>
+
+          <br />
+          <a (click)="addWorkHistory()" class="button gray"
+            ><i class="fa fa-plus-circle"></i> Add Work History</a
+          >
+        </div>
+        <br /><br />
+        <button type="button" awPreviousStep>PREV</button>
+        <button type="button" awNextStep>NEXT</button>
+      </aw-wizard-step>
+      <aw-wizard-step stepTitle="STEEP 4">
+        <div class="container">
+          <div formGroupName="skills">
+            <h3 class="margin-bottom-10 margin-top-10">Skills</h3>
+
+            <br /><br />
+
+            <div
+              *ngFor="let s of skillsForms.controls; let i = index"
+              [formGroupName]="i"
+            >
+              <div class="form-row form-row-wide three columns">
+                <label>Skill: <span class="red">*</span></label>
+                <input type="text" class="input-text" formControlName="skill" />
+              </div>
+
+              <div class="form-row form-row-wide three columns">
+                <label>Skill Level: <span class="red">*</span></label>
+                <select formControlName="skillLevel">
+                  <option value="">demo</option>
+                  <option value="">demo</option>
+                  <option value="">demo</option>
+                  <option value="">demo</option>
+                  <option value="">demo</option>
+                </select>
+              </div>
+
+              <div class="form-row form-row-wide three columns">
+                <label>Last Year Used: <span class="red">*</span></label>
+                <select formControlName="lastYearUsed">
+                  <option value="">demo</option>
+                  <option value="">demo</option>
+                  <option value="">demo</option>
+                  <option value="">demo</option>
+                  <option value="">demo</option>
+                </select>
+              </div>
+
+              <div class="form-row form-row-wide three columns">
+                <label>Last Month Used: <span class="red">*</span></label>
+                <select formControlName="lastMonthUsed">
+                  <option value="">demo</option>
+                  <option value="">demo</option>
+                  <option value="">demo</option>
+                  <option value="">demo</option>
+                  <option value="">demo</option>
+                </select>
+              </div>
+
+              <div class="form-row form-row-wide three columns">
+                <label>Years of Experience: <span class="red">*</span></label>
+                <input
+                  type="text"
+                  class="input-text"
+                  formControlName="yearsOfExperience"
+                />
+              </div>
+
+              <br />
+              <br />
+              <br />
+              <br />
+              <a
+                style="color: #fff; background: red"
+                *ngIf="skillsForms.controls?.length > 1"
+                (click)="deleteSkill(i)"
+                class="button gray"
+                ><i class="fa fa-plus-circle"></i>Delete</a
+              >
+            </div>
+          </div>
+
+          <br />
+          <a (click)="addSkill()" class="button gray"
+            ><i class="fa fa-plus-circle"></i> Add Skill</a
+          >
+        </div>
+        <br /><br />
+        <button type="button" awPreviousStep>PREV</button>
+        <button type="button" awNextStep>NEXT</button>
+      </aw-wizard-step>
+      <aw-wizard-step stepTitle="'STEEP 5'">
+        <div class="container">
+          <h3 class="margin-bottom-10 margin-top-10">Additional Information</h3>
+
+          <br /><br />
+
+          <div style="margin-top: 50px;" class="form four columns">
+            <h5>Photo (Optional)</h5>
+            <label class="upload-btn">
+              <input type="file" multiple="" />
+              <i class="fa fa-upload"></i> Browse
+            </label>
+            <span class="fake-input">No file selected</span>
+          </div>
+
+          <div style="margin-top: 50px;" class="form four columns">
+            <h5>CV (Optional)</h5>
+            <label class="upload-btn">
+              <input type="file" multiple="" />
+              <i class="fa fa-upload"></i> Browse
+            </label>
+            <span class="fake-input">No file selected</span>
+          </div>
+
+          <p
+            style="margin-top: 35px;"
+            class="form-row form-row-wide four columns"
+          >
+            <label>How did you here about us: <span class="red">*</span></label>
+            <textarea formControlName="howDidYouHereAboutUs" cols="30" rows="10"></textarea>
+          </p>
+        </div>
+
+        <br /><br />
+        <hr />
+        <button type="button" awPreviousStep>Prev</button>
+        <button type="button" (click)="submit()">Finish</button>
+      </aw-wizard-step>
+    </aw-wizard>
+  </form>
+</div>
+
+<br /><br /><br />

@@ -1,0 +1,81 @@
+<form [formGroup]="cRForm" class="container">
+  <div class="container">
+    <div formGroupName="workHistory">
+      <h3 class="margin-bottom-10 margin-top-10">Edit Work History</h3>
+
+      <br /><br />
+
+      <div
+        *ngFor="let wH of workHistoryForms.controls; let i = index"
+        [formGroupName]="i"
+      >
+        <p class="form-row form-row-wide five columns">
+          <label>Company:</label>
+          <input type="text" class="input-text" formControlName="company" />
+        </p>
+
+        <p class="form-row form-row-wide five columns">
+          <label>Job Title:</label>
+          <input type="number" class="input-text" formControlName="jobTitle" />
+        </p>
+
+        <p class="form-row form-row-wide five columns">
+          <label>Country:</label>
+          <select formControlName="country">
+            <option value="">demo</option>
+            <option value="">demo</option>
+            <option value="">demo</option>
+            <option value="">demo</option>
+            <option value="">demo</option>
+          </select>
+        </p>
+
+        <p class="form-row form-row-wide four columns">
+          <label>From Year:</label>
+          <select formControlName="fromYear">
+            <option value="">demo</option>
+            <option value="">demo</option>
+            <option value="">demo</option>
+            <option value="">demo</option>
+            <option value="">demo</option>
+          </select>
+        </p>
+
+        <p class="form-row form-row-wide four columns">
+          <label>From Month:</label>
+          <select formControlName="fromMonth">
+            <option value="">demo</option>
+            <option value="">demo</option>
+            <option value="">demo</option>
+            <option value="">demo</option>
+            <option value="">demo</option>
+          </select>
+        </p>
+
+        <p class="form-row form-row-wide four columns">
+          <label>To Year:</label>
+          <select formControlName="toYear">
+            <option value="">demo</option>
+            <option value="">demo</option>
+            <option value="">demo</option>
+            <option value="">demo</option>
+            <option value="">demo</option>
+          </select>
+        </p>
+
+        <p class="form-row form-row-wide four columns">
+          <label>To Month:</label>
+          <select formControlName="toMonth">
+            <option value="">demo</option>
+            <option value="">demo</option>
+            <option value="">demo</option>
+            <option value="">demo</option>
+            <option value="">demo</option>
+          </select>
+        </p>
+
+        <br />
+      </div>
+    </div>
+  </div>
+</form>

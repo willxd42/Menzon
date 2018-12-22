@@ -1,0 +1,32 @@
+<!--
+  Titlebar
+  ==================================================
+-->
+<div id="titlebar" class="single">
+  <div class="container">
+    <div class="sixteen columns"><h2>FAQ(s)</h2></div>
+  </div>
+</div>
+
+<!-- spinner -->
+<app-loading-spinner *ngIf="loading"></app-loading-spinner>
+<!-- spinner end -->
+
+<!--
+  Content
+  ==================================================
+-->
+
+<div class="container" *ngIf="!loading">
+  <!-- Blog Posts -->
+  <div class="sixteen columns">
+    <div class="padding-right">
+      <div class="post-container" *ngFor="let f of faq">
+        <div class="post-content">
+          <h3>{{ f.question }}</h3>
+          <p>{{ f.answer }}</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,167 @@
+<form [formGroup]="cRForm" class="container">
+  <div formGroupName="education">
+    <h3 class="margin-bottom-10 margin-top-10">Edit Education</h3>
+
+    <br /><br />
+
+    <div
+      *ngFor="let e of educationForms.controls; let i = index"
+      [formGroupName]="i"
+    >
+      <p class="form-row form-row-wide four columns">
+        <label>Institution: <span class="red">*</span></label>
+        <input type="text" class="input-text" formControlName="institution" />
+      </p>
+
+      <p class="form-row form-row-wide four columns">
+        <label>Diploma/Degree: <span class="red">*</span></label>
+        <input type="text" class="input-text" formControlName="degree" />
+      </p>
+
+      <p class="form-row form-row-wide four columns">
+        <label>Country: <span class="red">*</span></label>
+        <select formControlName="country">
+          <option value="">demo</option>
+          <option value="">demo</option>
+          <option value="">demo</option>
+          <option value="">demo</option>
+          <option value="">demo</option>
+        </select>
+      </p>
+
+      <p class="form-row form-row-wide four columns">
+        <label>From Year: <span class="red">*</span></label>
+        <select formControlName="fromYear">
+          <option value="">demo</option>
+          <option value="">demo</option>
+          <option value="">demo</option>
+          <option value="">demo</option>
+          <option value="">demo</option>
+        </select>
+      </p>
+
+      <p class="form-row form-row-wide four columns">
+        <label>From Month: <span class="red">*</span></label>
+        <select formControlName="fromMonth">
+          <option value="">demo</option>
+          <option value="">demo</option>
+          <option value="">demo</option>
+          <option value="">demo</option>
+          <option value="">demo</option>
+        </select>
+      </p>
+
+      <p class="form-row form-row-wide four columns">
+        <label>To Year: <span class="red">*</span></label>
+        <select formControlName="toYear">
+          <option value="">demo</option>
+          <option value="">demo</option>
+          <option value="">demo</option>
+          <option value="">demo</option>
+          <option value="">demo</option>
+        </select>
+      </p>
+
+      <p class="form-row form-row-wide four columns">
+        <label>To Month: <span class="red">*</span></label>
+        <select formControlName="toMonth">
+          <option value="">demo</option>
+          <option value="">demo</option>
+          <option value="">demo</option>
+          <option value="">demo</option>
+          <option value="">demo</option>
+        </select>
+      </p>
+
+      <p class="form-row form-row-wide four columns">
+        <label>Course of Study: <span class="red">*</span></label>
+        <select formControlName="course">
+          <option value="">demo</option>
+          <option value="">demo</option>
+          <option value="">demo</option>
+          <option value="">demo</option>
+          <option value="">demo</option>
+        </select>
+      </p>
+
+      <br />
+      <a
+        style="color: #fff; background: red"
+        *ngIf="educationForms.controls?.length > 1"
+        (click)="deleteEducation(i)"
+        class="button gray"
+        ><i class="fa fa-plus-circle"></i>Delete</a
+      >
+    </div>
+  </div>
+
+  <br />
+
+  <!-- static -->
+  <div class="container">
+    <h3 class="margin-bottom-10 margin-top-10">NYSC Information</h3>
+
+    <br /><br />
+
+    <p class="form-row form-row-wide four columns">
+      <label>NYSC Completed: (Optional)</label>
+      <select formControlName="NTSCcompleted">
+        <option value="yes">Yes</option>
+        <option value="no">No</option>
+        <option value="not gone">Not Gone</option>
+      </select>
+    </p>
+
+    <p class="form-row form-row-wide four columns">
+      <label>Date(dd/mm/yyyy): (Optional)</label>
+      <input
+        style="
+        padding: 14px 18px;
+        outline: none;
+        font-size: 15px;
+        color: #909090;
+        margin: 0;
+        max-width: 100%;
+        width: 100%;
+        box-sizing: border-box;
+        display: block;
+        background-color: #fcfcfc;
+        font-weight: 500;
+        border: 1px solid #e0e0e0;
+        opacity: 1;
+      "
+        placeholder="yyyy-mm-dd"
+        formControlName="NYSCDdate"
+        ngbDatepicker
+        #d2="ngbDatepicker"
+        (click)="d2.toggle()"
+      />
+    </p>
+
+    <p class="form-row form-row-wide four columns">
+      <label>NYSC Date of Completion: (Optional)</label>
+      <input
+        style="
+        padding: 14px 18px;
+        outline: none;
+        font-size: 15px;
+        color: #909090;
+        margin: 0;
+        max-width: 100%;
+        width: 100%;
+        box-sizing: border-box;
+        display: block;
+        background-color: #fcfcfc;
+        font-weight: 500;
+        border: 1px solid #e0e0e0;
+        opacity: 1;
+      "
+        placeholder="yyyy-mm-dd"
+        formControlName="NTSCcompletedDate"
+        ngbDatepicker
+        #d3="ngbDatepicker"
+        (click)="d3.toggle()"
+      />
+    </p>
+  </div>
+</form>

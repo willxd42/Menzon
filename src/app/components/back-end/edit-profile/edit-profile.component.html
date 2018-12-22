@@ -1,0 +1,360 @@
+<!--
+      Titlebar
+      ==================================================
+    -->
+<div id="titlebar" class="single submit-page">
+  <div class="container">
+    <div class="sixteen columns">
+      <h2><i class="fa fa-plus-circle"></i> Edit Profile</h2>
+    </div>
+  </div>
+</div>
+
+<!--
+      Content
+      ==================================================
+    -->
+<div class="container">
+  <!-- Submit Page -->
+  <div class="sixteen columns">
+    <div class="submit-page">
+      <!-- Notice -->
+      <div class="notification notice closeable margin-bottom-40">
+        <p>
+          <span>Have an account?</span> If you don’t have an account you can
+          create one below by entering your email address. A password will be
+          automatically emailed to you.
+        </p>
+      </div>
+
+      <form [formGroup]="cRForm">
+        <div class="container">
+          <h3 class="margin-bottom-10 margin-top-10">Personal Information</h3>
+
+          <br /><br />
+
+          <p class="form-row form-row-wide four columns">
+            <label>First Name: <span class="red">*</span></label>
+            <input type="text" class="input-text" />
+          </p>
+
+          <p class="form-row form-row-wide four columns">
+            <label>Last Name: <span class="red">*</span></label>
+            <input type="text" class="input-text" />
+          </p>
+
+          <p class="form-row form-row-wide four columns">
+            <label>Middle Name: (Optional)</label>
+            <input type="text" class="input-text" />
+          </p>
+
+          <p class="form-row form-row-wide four columns">
+            <label>Gender: <span class="red">*</span></label>
+            <select>
+              <option value="male">Male</option>
+              <option value="female">Female</option>
+            </select>
+          </p>
+        </div>
+
+        <div class="container">
+          <div class="form-row form-row-wide four columns">
+            <label>Date of Birth (mm/dd/yyyy):</label>
+            <input
+              style="
+                padding: 14px 18px;
+                outline: none;
+                font-size: 15px;
+                color: #909090;
+                margin: 0;
+                max-width: 100%;
+                width: 100%;
+                box-sizing: border-box;
+                display: block;
+                background-color: #fcfcfc;
+                font-weight: 500;
+                border: 1px solid #e0e0e0;
+                opacity: 1;
+              "
+              placeholder="yyyy-mm-dd"
+              formControlName="dateOfBirth"
+              ngbDatepicker
+              #d="ngbDatepicker"
+              (click)="d.toggle()"
+            />
+          </div>
+
+          <p class="form-row form-row-wide four columns">
+            <label>Email Address: <span class="red">*</span></label>
+            <input type="email" class="input-text" />
+          </p>
+
+          <p class="form-row form-row-wide four columns">
+            <label>Phone Number: (Optional)</label>
+            <input type="text" class="input-text" />
+          </p>
+
+          <p class="form-row form-row-wide four columns">
+            <label>Street Adress: (Optional)</label>
+            <input type="text" class="input-text" />
+          </p>
+        </div>
+
+        <div class="container">
+          <p class="form-row form-row-wide four columns">
+            <label>City: (Optional)</label>
+            <input type="text" class="input-text" formControlName="city" />
+          </p>
+
+          <p class="form-row form-row-wide four columns">
+            <label>Country: <span class="red">*</span></label>
+            <select>
+              <option value="">demo</option>
+              <option value="">demo</option>
+              <option value="">demo</option>
+              <option value="">demo</option>
+              <option value="">demo</option>
+            </select>
+          </p>
+
+          <p class="form-row form-row-wide four columns">
+            <label>Prov/State: <span class="red">*</span></label>
+            <select>
+              <option value="">demo</option>
+              <option value="">demo</option>
+              <option value="">demo</option>
+              <option value="">demo</option>
+              <option value="">demo</option>
+            </select>
+          </p>
+
+          <p class="form-row form-row-wide four columns">
+            <label>Prefared Location: (Optional)</label>
+            <select>
+              <option value="">demo</option>
+              <option value="">demo</option>
+              <option value="">demo</option>
+              <option value="">demo</option>
+              <option value="">demo</option>
+            </select>
+          </p>
+        </div>
+
+        <div style="margin-top: 50px;" class="form">
+          <h5>Photo (Optional)</h5>
+          <label class="upload-btn">
+            <input type="file" multiple="" />
+            <i class="fa fa-upload"></i> Browse
+          </label>
+          <span class="fake-input">No file selected</span>
+        </div>
+
+        <div style="margin-top: 50px;" class="form">
+          <h5>CV (Optional)</h5>
+          <label class="upload-btn">
+            <input type="file" multiple="" />
+            <i class="fa fa-upload"></i> Browse
+          </label>
+          <span class="fake-input">No file selected</span>
+        </div>
+      </form>
+      <a routerLink="/profile" class="button big margin-top-5"> SAVE </a>
+    </div>
+  </div>
+</div>
+
+<!--
+      Titlebar
+      ==================================================
+    -->
+<div id="titlebar" class="single">
+  <div class="container">
+    <div class="sixteen columns"><h2>Manage Education</h2></div>
+  </div>
+</div>
+<!--
+    Content
+    ==================================================
+  -->
+<div class="container">
+  <!-- Table -->
+  <div class="sixteen columns">
+    <p class="margin-bottom-25">You can manage your Education here.</p>
+
+    <table class="manage-table resumes responsive-table">
+      <tr>
+        <th><i class="fa fa-user"></i> Name</th>
+        <th><i class="fa fa-file-text"></i> Title</th>
+        <th><i class="fa fa-map-marker"></i> Location</th>
+        <th><i class="fa fa-calendar"></i> Date Posted</th>
+        <th></th>
+      </tr>
+
+      <!-- Item #1 -->
+      <tr>
+        <td class="title"><a href="#">John Doe</a></td>
+        <td>Front End Web Developer</td>
+        <td>New York</td>
+        <td>September 30, 2015</td>
+        <td class="action">
+          <button (click)="editEducation()">
+            <i class="fa fa-pencil"></i> Edit
+          </button>
+          <button href="#" class="delete">
+            <i class="fa fa-remove"></i> Delete
+          </button>
+        </td>
+      </tr>
+
+      <!-- Item #1 -->
+      <tr>
+        <td class="title"><a href="#">John Doe</a></td>
+        <td>Logo Designer</td>
+        <td>New York</td>
+        <td>August 12, 2015</td>
+        <td class="action">
+          <button (click)="editEducation()">
+            <i class="fa fa-pencil"></i> Edit
+          </button>
+          <button href="#" class="delete">
+            <i class="fa fa-remove"></i> Delete
+          </button>
+        </td>
+      </tr>
+    </table>
+
+    <br />
+  </div>
+</div>
+
+<!--
+    Titlebar
+    ==================================================
+  -->
+<div id="titlebar" class="single">
+  <div class="container">
+    <div class="sixteen columns"><h2>Manage Skill's</h2></div>
+  </div>
+</div>
+
+<!--
+    Content
+    ==================================================
+  -->
+<div class="container">
+  <!-- Table -->
+  <div class="sixteen columns">
+    <p class="margin-bottom-25">You can manage your skills here.</p>
+
+    <table class="manage-table resumes responsive-table">
+      <tr>
+        <th><i class="fa fa-user"></i> Name</th>
+        <th><i class="fa fa-file-text"></i> Title</th>
+        <th><i class="fa fa-map-marker"></i> Location</th>
+        <th><i class="fa fa-calendar"></i> Date Posted</th>
+        <th></th>
+      </tr>
+
+      <!-- Item #1 -->
+      <tr>
+        <td class="title"><a href="#">John Doe</a></td>
+        <td>Front End Web Developer</td>
+        <td>New York</td>
+        <td>September 30, 2015</td>
+        <td class="action">
+          <button (click)="editSkill()">
+            <i class="fa fa-pencil"></i> Edit
+          </button>
+          <button href="#" class="delete">
+            <i class="fa fa-remove"></i> Delete
+          </button>
+        </td>
+      </tr>
+
+      <!-- Item #1 -->
+      <tr>
+        <td class="title"><a href="#">John Doe</a></td>
+        <td>Logo Designer</td>
+        <td>New York</td>
+        <td>August 12, 2015</td>
+        <td class="action">
+          <button (click)="editSkill()">
+            <i class="fa fa-pencil"></i> Edit
+          </button>
+          <button href="#" class="delete">
+            <i class="fa fa-remove"></i> Delete
+          </button>
+        </td>
+      </tr>
+    </table>
+
+    <br />
+  </div>
+</div>
+
+<!--
+    Titlebar
+    ==================================================
+  -->
+<div id="titlebar" class="single">
+  <div class="container">
+    <div class="sixteen columns"><h2>Manage Work History</h2></div>
+  </div>
+</div>
+
+<!--
+    Content
+    ==================================================
+  -->
+<div class="container">
+  <!-- Table -->
+  <div class="sixteen columns">
+    <p class="margin-bottom-25">You can manage your Work History here.</p>
+
+    <table class="manage-table resumes responsive-table">
+      <tr>
+        <th><i class="fa fa-user"></i> Name</th>
+        <th><i class="fa fa-file-text"></i> Title</th>
+        <th><i class="fa fa-map-marker"></i> Location</th>
+        <th><i class="fa fa-calendar"></i> Date Posted</th>
+        <th></th>
+      </tr>
+
+      <!-- Item #1 -->
+      <tr>
+        <td class="title"><a href="#">John Doe</a></td>
+        <td>Front End Web Developer</td>
+        <td>New York</td>
+        <td>September 30, 2015</td>
+        <td class="action">
+          <button (click)="editWorkHistory()">
+            <i class="fa fa-pencil"></i> Edit
+          </button>
+          <button href="#" class="delete">
+            <i class="fa fa-remove"></i> Delete
+          </button>
+        </td>
+      </tr>
+
+      <!-- Item #1 -->
+      <tr>
+        <td class="title"><a href="#">John Doe</a></td>
+        <td>Logo Designer</td>
+        <td>New York</td>
+        <td>August 12, 2015</td>
+        <td class="action">
+          <button (click)="editWorkHistory()">
+            <i class="fa fa-pencil"></i> Edit
+          </button>
+          <button href="#" class="delete">
+            <i class="fa fa-remove"></i> Delete
+          </button>
+        </td>
+      </tr>
+    </table>
+
+    <br />
+  </div>
+</div>
+
+<div class="divider margin-top-0 padding-reset"></div>

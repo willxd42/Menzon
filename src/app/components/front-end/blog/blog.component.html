@@ -1,0 +1,67 @@
+<!--
+  Titlebar
+  ==================================================
+-->
+<div id="titlebar" class="single">
+  <div class="container">
+    <div class="sixteen columns">
+      <h2>Blog</h2>
+      <span>Keep up to date with the latest news</span>
+    </div>
+  </div>
+</div>
+
+<!-- spinner -->
+<app-loading-spinner *ngIf="loading"></app-loading-spinner>
+<!-- spinner end -->
+
+<!--
+  Content
+  ==================================================
+-->
+
+<div class="container" *ngIf="!loading">
+  <!-- Blog Posts -->
+  <div class="sixteen columns">
+    <div class="padding-right">
+      <!-- Post -->
+      <div class="post-container" *ngFor="let p of posts">
+        <!-- <div class="post-img">
+          <a [routerLink]="['/blog/', 1]"
+            ><img src="assets/images/recent-post-01.webp" alt=""
+          /></a>
+          <div class="hover-icon"></div>
+        </div> -->
+        <div class="post-content">
+          <a [routerLink]="['/blog/', p.id]">
+            <h3>{{ p.title }}</h3>
+          </a>
+          <div class="meta-tags">
+            <span>{{ p.dateAdded }}</span>
+          </div>
+          <p>{{ p.introduction }}</p>
+          <a class="button" [routerLink]="['/blog/', p.id]">Read More</a>
+        </div>
+      </div>
+
+      <!-- Pagination -->
+      <div class="pagination-container">
+        <nav class="pagination">
+          <ul>
+            <li><a href="#" class="current-page">1</a></li>
+            <li><a href="#">2</a></li>
+            <li><a href="#">3</a></li>
+          </ul>
+        </nav>
+
+        <nav class="pagination-next-prev">
+          <ul>
+            <li><a href="#" class="prev">Previous</a></li>
+            <li><a href="#" class="next">Next</a></li>
+          </ul>
+        </nav>
+      </div>
+    </div>
+  </div>
+  <!-- Blog Posts / End -->
+</div>

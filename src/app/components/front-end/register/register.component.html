@@ -1,0 +1,139 @@
+<!--
+  Titlebar
+  ==================================================
+-->
+<div id="titlebar" class="single">
+  <div class="container">
+    <div class="sixteen columns">
+      <h2>Register</h2>
+      <nav id="breadcrumbs">
+        <ul>
+          <li>You are here:</li>
+          <li><a href="#">Home</a></li>
+          <li>sign up</li>
+        </ul>
+      </nav>
+    </div>
+  </div>
+</div>
+
+<!--
+  Content
+  ==================================================
+-->
+
+<!-- Container -->
+<div class="container">
+  <div class="my-account">
+    <div class="">
+      <!-- Register -->
+      <div class="tab-content">
+        <h3 class="margin-bottom-10 margin-top-10">Register</h3>
+
+        <form [formGroup]="registerForm">
+          <div class="container">
+            <div class="form-row form-row-wide four columns">
+              <label>First Name:</label>
+              <input
+                type="text"
+                class="input-text"
+                formControlName="firstName"
+                [ngClass]="{
+                  'input-error': firstName.invalid && firstName.touched
+                }"
+              />
+              <p class="error2" *ngIf="firstName.invalid && firstName.touched">
+                First Name is required
+              </p>
+            </div>
+
+            <div class="form-row form-row-wide four columns">
+              <label>Last Name:</label>
+              <input
+                type="text"
+                class="input-text"
+                formControlName="lastName"
+                [ngClass]="{
+                  'input-error': lastName.invalid && lastName.touched
+                }"
+              />
+              <p class="error2" *ngIf="lastName.invalid && lastName.touched">
+                Last Name is required
+              </p>
+            </div>
+          </div>
+
+          <div class="container">
+            <div class="form-row form-row-wide four columns">
+              <label>Email Address:</label>
+              <input
+                type="email"
+                class="input-text"
+                formControlName="email"
+                [ngClass]="{ 'input-error': email.invalid && email.touched }"
+              />
+              <p class="error2" *ngIf="email.invalid && email.touched">
+                Email is required
+              </p>
+            </div>
+
+            <div class="form-row form-row-wide four columns">
+              <label>Phone Number:</label>
+              <input
+                type="text"
+                class="input-text"
+                formControlName="phoneNumber"
+              />
+            </div>
+          </div>
+
+          <div class="container">
+            <div class="form-row form-row-wide four columns">
+              <label>Password:</label>
+              <input
+                type="password"
+                class="input-text"
+                formControlName="password"
+                [ngClass]="{
+                  'input-error': password.invalid && password.touched
+                }"
+              />
+              <p class="error2" *ngIf="password.invalid && password.touched">
+                Password is required
+              </p>
+            </div>
+            <div class="form-row form-row-wide four columns">
+              <label>Repeat Password:</label>
+              <input
+                (keyup)="comfirmPassword()"
+                type="password"
+                class="input-text"
+                formControlName="password2"
+                [ngClass]="{
+                  'input-error': password2.invalid && password2.touched
+                }"
+              />
+              <p class="error2" *ngIf="password2.invalid && password2.touched">
+                Please comfirm your password
+              </p>
+            </div>
+          </div>
+          <div class="error2" *ngIf="!comfirmPassword$ && password2.touched">
+            Your password did not match please re - enter your password
+          </div>
+
+          <div class="form-row">
+            <button
+              type="submit"
+              class="button"
+              [disabled]="registerForm.invalid"
+              (click)="submit()"
+            >
+              Register
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

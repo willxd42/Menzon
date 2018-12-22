@@ -1,0 +1,56 @@
+<!--
+  Titlebar
+  ==================================================
+-->
+<div id="titlebar" class="single">
+  <div class="container">
+    <div class="sixteen columns">
+      <h2>Login</h2>
+      <nav id="breadcrumbs">
+        <ul>
+          <li>You are here:</li>
+          <li><a href="#">Home</a></li>
+          <li>sign in</li>
+        </ul>
+      </nav>
+    </div>
+  </div>
+</div>
+
+<!--
+  Content
+  ==================================================
+-->
+
+<!-- Container -->
+<div class="container">
+  <div class="my-account">
+    <div class="">
+      <div class="tab-content">
+        <h3 class="margin-bottom-10 margin-top-10">Login</h3>
+
+        <form class="login">
+          <p class="form-row form-row-wide">
+            <label>Email Address:</label>
+            <input type="email" class="input-text" name="email" value="" />
+          </p>
+
+          <p class="form-row form-row-wide">
+            <label>Password:</label>
+            <input class="input-text" type="password" name="password" />
+          </p>
+
+          <p class="form-row">
+            <a type="submit" class="button" value="Login" routerLink="/profile"
+              >Login</a
+            >
+          </p>
+
+          <p class="lost_password">
+            <a routerLink="/forgot-password">Lost Your Password?</a>
+          </p>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,331 @@
+<!-- spinner -->
+<app-loading-spinner *ngIf="loading"></app-loading-spinner>
+<!-- spinner end -->
+
+<!-- home -->
+
+<div *ngIf="!loading">
+  <!--
+    Banner
+    ==================================================
+  -->
+  <div id="banner" style="background: url('assets/images/banner-home-02.jpg')">
+    <div class="container">
+      <div class="sixteen columns">
+        <div class="search-container">
+          <div class="categories-group">
+            <div [formGroup]="searchForm" class="container">
+              <!-- Form -->
+              <h2>Find job</h2>
+              <input
+                type="text"
+                class="six columns inputs fit"
+                placeholder="job title"
+                formControlName="title"
+                [ngClass]="{ 'input-error': title.invalid && title.touched }"
+              />
+
+              <div class="error" *ngIf="title.invalid && title.touched">
+                Job title is required
+              </div>
+
+              <select
+                formControlName="state"
+                class="three columns inputs"
+                [ngClass]="{ 'input-error': state.invalid && state.touched }"
+              >
+                <option value="">States</option>
+                <option *ngFor="let s of states" [value]="s.stateName">{{
+                  s.stateName
+                }}</option>
+              </select>
+
+              <div class="error" *ngIf="state.invalid && state.touched">
+                State is required
+              </div>
+
+              <select
+                formControlName="experience"
+                class="three columns inputs"
+                [ngClass]="{
+                  'input-error': experience.invalid && experience.touched
+                }"
+              >
+                <option value="">Experience</option>
+                <option *ngFor="let e of exp" [value]="e.name">{{ e.name }}</option>
+              </select>
+
+              <div
+                class="error"
+                *ngIf="experience.invalid && experience.touched"
+              >
+                Experience is required
+              </div>
+
+              <button
+                [disabled]="searchForm.invalid"
+                (click)="submit()"
+                class="two columns fit"
+                style="margin: 10px"
+              >
+                <i class="fa fa-search"></i>
+              </button>
+            </div>
+          </div>
+
+          <div class="error" *ngIf="error">Please Fill the form above.</div>
+
+          <!-- Browse Jobs -->
+          <div class="browse-jobs">
+            Browse job offers by <a href="browse-categories.html"> category</a>
+          </div>
+
+          <!-- Announce -->
+          <div class="announce">
+            We’ve <strong>Great</strong> job offers for you!
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!--
+    Content
+    ==================================================
+  -->
+  <div id="categories">
+    <!-- Categories Group -->
+    <div class="categories-group">
+      <div class="container">
+        <div class="three columns" *ngFor="let c of categories">
+          <ul>
+            <li>
+              <a routerLink="#">{{ c.name }}</a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="divider-line"></div>
+  <div class="margin-top-50"></div>
+
+  <!-- Recent Works -->
+  <div class="container">
+    <!-- Recent Jobs -->
+    <div class="eleven columns">
+      <div class="padding-right">
+        <h3 class="margin-bottom-25">Recent Jobs</h3>
+        <ul class="job-list">
+          <li class="highlighted" *ngFor="let j of jobs">
+            <a [routerLink]="['/job', j.id]"  >
+              <img src="assets/images/job-list-logo-01.png" alt="" />
+              <div class="job-list-content">
+                <h4>
+                  {{ j.title }}
+                  <span
+                    [ngClass]="{
+                      'full-time': j.employementType.name === 'Full-time',
+                      'part-time': j.employementType.name === 'Part-time',
+                      temporary: j.employementType.name === 'Temporary',
+                      internship: j.employementType.name === 'Contract',
+                      internship: j.employementType.name === 'Other'
+                    }"
+                  >
+                    {{ j.employementType.name }}
+                  </span>
+                </h4>
+                <div class="job-icons">
+                  <span><i class="fa fa-briefcase"></i> {{ j.benefits }}</span>
+                  <span
+                    ><i class="fa fa-map-marker"></i> {{ j.country.name }}</span
+                  >
+                  <ng-container
+                    *ngIf="j.currency.code === 'NGN'; else elseTemplate"
+                  >
+                    <span>
+                      <i class="fa fa-money"></i> <span>&#8358;</span
+                      >{{ j.salaryMin }} - <span>&#8358;</span>{{ j.salaryMax }}
+                    </span>
+                  </ng-container>
+                  <ng-template #elseTemplate>
+                    <span>
+                      <i class="fa fa-money"></i> {{ j.salaryMin }} -
+                      {{ j.salaryMax }}
+                    </span>
+                  </ng-template>
+                </div>
+              </div>
+            </a>
+            <div class="clearfix"></div>
+          </li>
+        </ul>
+
+        <a routerLink="/jobs" class="button centered"
+          ><i class="fa fa-plus-circle"></i> Show More Jobs</a
+        >
+        <div class="margin-bottom-55"></div>
+      </div>
+    </div>
+
+    <!-- Job Spotlight -->
+    <div class="five columns">
+      <h3 class="margin-bottom-5">Job Spotlight</h3>
+
+      <!-- Navigation -->
+      <div class="showbiz-navigation">
+        <div id="showbiz_left_1" class="sb-navigation-left">
+          <i class="fa fa-angle-left"></i>
+        </div>
+        <div id="showbiz_right_1" class="sb-navigation-right">
+          <i class="fa fa-angle-right"></i>
+        </div>
+      </div>
+      <div class="clearfix"></div>
+
+      <!-- Showbiz Container -->
+      <div id="job-spotlight" class="showbiz-container">
+        <div
+          class="showbiz"
+          data-left="#showbiz_left_1"
+          data-right="#showbiz_right_1"
+          data-play="#showbiz_play_1"
+        >
+          <div class="overflowholder">
+            <ul>
+              <li *ngFor="let js of jobSportlite">
+                <div class="job-spotlight">
+                  <a href="#"
+                    ><h4>
+                      {{ js.title }}
+                      <span
+                      [ngClass]="{
+                        'full-time': js.employementType.name === 'Full-time',
+                        'part-time': js.employementType.name === 'Part-time',
+                        temporary: js.employementType.name === 'Temporary',
+                        internship: js.employementType.name === 'Contract',
+                        internship: js.employementType.name === 'Other'
+                      }"
+                    >
+                      {{ js.employementType.name }}
+                    </span>
+                    </h4></a
+                  >
+                  <ng-container
+                    *ngIf="js.currency.code === 'NGN'; else elseTemplate"
+                  >
+                    <span>
+                      <i class="fa fa-money"></i> <span>&#8358;</span
+                      >{{ js.salaryMin }} - <span>&#8358;</span>{{ js.salaryMax }}
+                    </span>
+                  </ng-container>
+                  <ng-template #elseTemplate>
+                    <span>
+                      <i class="fa fa-money"></i> {{ js.salaryMin }} -
+                      {{ js.salaryMax }}
+                    </span>
+                  </ng-template>
+                  <p>
+                    {{ js.shortDescription }}
+                  </p>
+                  <a href="job-page.html" class="button">Apply For This Job</a>
+                </div>
+              </li>
+            </ul>
+            <div class="clearfix"></div>
+          </div>
+          <div class="clearfix"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Infobox -->
+  <div class="infobox margin-reset">
+    <div class="container">
+      <div class="sixteen columns">
+        Start Building Your Own Job Board Now
+        <a routerLink="register.html">Get Started</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- Recent Posts -->
+  <div class="container">
+    <div class="sixteen columns">
+      <h3 class="margin-bottom-25">Recent Posts</h3>
+    </div>
+
+    <div class="one-third column" *ngFor="let p of posts">
+      <!-- Post #1 -->
+      <div class="recent-post">
+        <!-- <div class="recent-post-img">
+          <a [routerLink]="['/blog/', 1]"
+            ><img src="assets/images/recent-post-01.webp" alt=""
+          /></a>
+          <div class="hover-icon"></div>
+        </div> -->
+        <a [routerLink]="['/blog/', p.id]"
+          ><h4>{{ p.title }}</h4></a
+        >
+        <div class="meta-tags">
+          <span>{{ p.dateAdded }}</span>
+        </div>
+        <p>{{ p.introduction }}</p>
+        <a [routerLink]="['/blog/', p.id]" class="button">Read More</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- Clients Carousel -->
+  <h3 class="centered-headline">
+    Clients Who Have Trusted Us
+    <span>The list of clients who have put their trust in us includes:</span>
+  </h3>
+  <div class="clearfix"></div>
+
+  <div class="container">
+    <div class="sixteen columns">
+      <!-- Navigation / Left -->
+      <div class="one carousel column">
+        <div id="showbiz_left_2" class="sb-navigation-left-2">
+          <i class="fa fa-angle-left"></i>
+        </div>
+      </div>
+
+      <!-- ShowBiz Carousel -->
+      <div id="our-clients" class="showbiz-container fourteen carousel columns">
+        <!-- Portfolio Entries -->
+        <div
+          class="showbiz our-clients"
+          data-left="#showbiz_left_2"
+          data-right="#showbiz_right_2"
+        >
+          <div class="overflowholder">
+            <ul>
+              <!-- Item -->
+              <li *ngFor="let cl of clients">
+                <img
+                  [src]="'data:image/png;base64,' + cl.logo"
+                  [alt]="cl.name"
+                />
+              </li>
+            </ul>
+            <div class="clearfix"></div>
+          </div>
+          <div class="clearfix"></div>
+        </div>
+      </div>
+
+      <!-- Navigation / Right -->
+      <div class="one carousel column">
+        <div id="showbiz_right_2" class="sb-navigation-right-2">
+          <i class="fa fa-angle-right"></i>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- Container / End -->
+</div>
+<!-- home end -->
