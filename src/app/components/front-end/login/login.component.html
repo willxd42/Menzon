@@ -17,34 +17,96 @@
   </div>
 </div>
 
+<!-- spinner -->
+<app-loading-spinner *ngIf="loading"></app-loading-spinner>
+<!-- spinner end -->
+
+<div style="text-align: center;" *ngIf="error && !loading">
+  <div
+    class="error"
+    style="position: relative; text-align: center; width: 97%;"
+  >
+    <p>
+      Somthing went wrong please click
+      <button (click)="submit()">here</button> to reload
+    </p>
+  </div>
+</div>
+
 <!--
   Content
   ==================================================
 -->
 
 <!-- Container -->
-<div class="container">
+<div class="container" *ngIf="!loading">
   <div class="my-account">
     <div class="">
       <div class="tab-content">
         <h3 class="margin-bottom-10 margin-top-10">Login</h3>
 
-        <form class="login">
-          <p class="form-row form-row-wide">
+        <form [formGroup]="loginForm" class="login">
+          <div class="form-row form-row-wide">
             <label>Email Address:</label>
-            <input type="email" class="input-text" name="email" value="" />
-          </p>
-
-          <p class="form-row form-row-wide">
-            <label>Password:</label>
-            <input class="input-text" type="password" name="password" />
-          </p>
-
-          <p class="form-row">
-            <a type="submit" class="button" value="Login" routerLink="/profile"
-              >Login</a
+            <input
+              type="email"
+              class="input-text"
+              formControlName="email"
+              [ngClass]="{
+                'input-error':
+                  (email.invalid && email.touched) || (email.invalid && check$)
+              }"
+            />
+            <p
+              class="error2"
+              *ngIf="
+                (email.invalid && email.touched) || (email.invalid && check$)
+              "
             >
-          </p>
+              Email is required
+            </p>
+          </div>
+
+          <div class="form-row form-row-wide">
+            <label>Password:</label>
+            <input
+              type="password"
+              class="input-text"
+              formControlName="password"
+              [ngClass]="{
+                'input-error':
+                  (password.invalid && password.touched) ||
+                  (password.invalid && check$)
+              }"
+            />
+            <p
+              class="error2"
+              *ngIf="
+                (password.invalid && password.touched) ||
+                (password.invalid && check$)
+              "
+            >
+              Password is required
+            </p>
+          </div>
+
+          <button
+            *ngIf="loginForm.invalid"
+            type="submit"
+            class="button"
+            (click)="check()"
+          >
+            Login
+          </button>
+
+          <button
+            *ngIf="!loginForm.invalid"
+            type="submit"
+            class="button"
+            (click)="submit()"
+          >
+            Login
+          </button>
 
           <p class="lost_password">
             <a routerLink="/forgot-password">Lost Your Password?</a>

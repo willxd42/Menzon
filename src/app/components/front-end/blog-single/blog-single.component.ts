@@ -18,18 +18,20 @@ export class BlogSingleComponent implements OnInit {
   ) {}
 
   ngOnInit() {
+    this.loading = true
+    this.error = false
     this.getPosts();
   }
 
   getPosts() {
-    this.loading = true
-    
+    this.loading = true;
+
     const searchFilters = {
       groupOp: "AND",
       rules: [
         {
           field: "id",
-          option: "eq",
+          op: "eq",
           data: this.route.snapshot.paramMap.get("id")
         }
       ]
@@ -38,10 +40,10 @@ export class BlogSingleComponent implements OnInit {
     const filters = JSON.stringify(searchFilters);
 
     return this.postService
-      .getPosts({ rows: 10, _search: true, filters: filters })
+      .getPosts({ rows: 1, _search: true, filters: filters })
       .subscribe(
         res => {
-          this.post = res["rows"];
+          this.post = res["rows"][0];
           this.loading = false;
           console.log(res);
         },

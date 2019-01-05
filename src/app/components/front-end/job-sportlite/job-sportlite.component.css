@@ -1,0 +1,26 @@
+.item {
+  padding: 10px !important;
+  box-sizing: border-box;
+}
+
+.tile {
+  background-color: #ccc;
+  background-size: cover !important;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* .ngucarousel .ngucarousel-items {
+    padding: 0 80px !important;
+} */
+
+.leftRs {
+  top: 0px !important;
+  left: -12px !important;
+}
+
+.rightRs {
+  top: 0px !important;
+  right: -12px !important;
+}

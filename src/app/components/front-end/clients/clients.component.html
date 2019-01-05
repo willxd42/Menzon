@@ -1,0 +1,27 @@
+<div id="our-clients" class="showbiz-container fourteen carousel columns">
+  <!-- Portfolio Entries -->
+  <div
+    class="showbiz our-clients"
+    data-left="#showbiz_left_2"
+    data-right="#showbiz_right_2"
+  >
+    <ngu-carousel
+      #clientsCarousel
+      [inputs]="carouselTile"
+      [dataSource]="clients"
+    >
+      <!-- Item -->
+      <li *nguCarouselDef="let cl" class="item">
+        <img
+          class="tile"
+          [src]="'data:image/png;base64,' + cl.logo"
+          [alt]="cl.name"
+        />
+      </li>
+      <div class="clearfix"></div>
+      <div NguCarouselPrev class="leftRs">&lt;</div>
+      <div NguCarouselNext class="rightRs">&gt;</div>
+    </ngu-carousel>
+    <div class="clearfix"></div>
+  </div>
+</div>

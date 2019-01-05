@@ -1,3 +1,12 @@
-span {
+/* span {
     margin: 0px !important;
+} */
+
+.icon {
+  float: left;
+  display: inline-block;
+  margin-left: 35px;
+  margin-top: 2px;
+  width: 60px;
+  height: 60px;
 }

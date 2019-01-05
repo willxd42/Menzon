@@ -23,8 +23,8 @@ export class HomeComponent implements OnInit {
   exp: any[];
   searchForm: FormGroup;
   error: boolean;
-  loading = true;
-
+  error2: boolean;
+  loading: boolean;
   constructor(
     private stateService: StateService,
     private jobService: JobService,
@@ -36,8 +36,9 @@ export class HomeComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-    this.getAll().then(() => (this.loading = false));
-
+    this.loading = true;
+    this.error = false;
+    this.getAll();
     this.searchForm = new FormGroup({
       title: new FormControl("", Validators.compose([Validators.required])),
       state: new FormControl("", Validators.compose([Validators.required])),
@@ -47,78 +48,134 @@ export class HomeComponent implements OnInit {
 
   async getAll() {
     await this.getState();
-    await this.getCategories();
-    await this.getJobs();
-    await this.getJobSportlite();
-    await this.getPosts();
-    await this.getClients();
-    await this.getExperience();
   }
-
   getState() {
     return this.stateService
-      .getState({ rows: 1000, sord: "asc" })
-      .subscribe(res => (this.states = res["rows"]), err => console.log(err));
+      .getState({
+        rows: 1000,
+        sord: "asc"
+      })
+      .subscribe(
+        res => {
+          this.states = res["rows"];
+          this.getCategories();
+        },
+        err => {
+          this.error = true;
+          this.loading = false;
+        }
+      );
   }
-
   getJobs() {
     return this.jobService
-      .getJobs({ rows: 10 })
-      .subscribe(res => (this.jobs = res["rows"]), err => console.log(err));
+      .getJobs({
+        rows: 10
+      })
+      .subscribe(
+        res => {
+          this.jobs = res["rows"];
+          this.getJobSportlite();
+        },
+        err => {
+          this.error = true;
+          this.loading = false;
+        }
+      );
   }
-
   getJobSportlite() {
     return this.jobService
-      .getJobs({ rows: 5, sord: "desc", sdix: "salaryMax" })
+      .getJobs({
+        rows: 5,
+        sord: "desc",
+        sdix: "salaryMax"
+      })
       .subscribe(
-        res => (this.jobSportlite = res["rows"]),
-        err => console.log(err)
+        res => {
+          this.jobSportlite = res["rows"];
+          this.getPosts();
+        },
+        err => {
+          this.error = true;
+          this.loading = false;
+        }
       );
   }
-
   getCategories() {
     return this.categoryService
-      .getCategorries({ rows: 1000 })
+      .getCategorries({
+        rows: 1000
+      })
       .subscribe(
-        res => (this.categories = res["rows"]),
-        err => console.log(err)
+        res => {
+          this.categories = res["rows"];
+          this.getJobs();
+        },
+        err => {
+          this.error = true;
+          this.loading = false;
+        }
       );
   }
-
   getPosts() {
     return this.postService
-      .getPosts({ rows: 3 })
-      .subscribe(res => (this.posts = res["rows"]), err => console.log(err));
+      .getPosts({
+        rows: 3
+      })
+      .subscribe(
+        res => {
+          this.posts = res["rows"];
+          this.getClients();
+        },
+        err => {
+          this.error = true;
+          this.loading = false;
+        }
+      );
   }
-
   getClients() {
     return this.clientService
-      .getClients({ rows: 1000 })
-      .subscribe(res => (this.clients = res["rows"]), err => console.log(err));
+      .getClients({
+        rows: 1000
+      })
+      .subscribe(
+        res => {
+          this.clients = res["rows"];
+          this.getExperience();
+        },
+        err => {
+          this.error = true;
+          this.loading = false;
+        }
+      );
   }
-
   getExperience() {
     return this.expirenceService
-      .getExperience({ rows: 1000 })
-      .subscribe(res => (this.exp = res["rows"]), err => console.log(err));
+      .getExperience({
+        rows: 1000
+      })
+      .subscribe(
+        res => {
+          this.exp = res["rows"];
+          this.loading = false;
+        },
+        err => {
+          this.error = true;
+          this.loading = false;
+        }
+      );
   }
-
   get title() {
     return this.searchForm.get("title");
   }
-
   get state() {
     return this.searchForm.get("state");
   }
-
   get experience() {
     return this.searchForm.get("experience");
   }
-
   submit() {
     return this.searchForm.valid ? this.search() : this.initError();
   }
-
   search() {
     const searchFilter = {
       groupOp: "AND",
@@ -130,27 +187,23 @@ export class HomeComponent implements OnInit {
         },
         {
           field: "state",
-          op: "cn",
+          op: "eq",
           data: this.searchForm.value.state
         },
         {
-          field: "experienceLevel",
-          op: "cn",
+          field: "experienceLevel.name",
+          op: "eq",
           data: this.searchForm.value.experience
         }
       ]
     };
-
     localStorage.setItem("searchFilter", JSON.stringify(searchFilter));
-
     this.router.navigate(["/jobs"]);
   }
 
   initError() {
     console.log("yes");
-
-    this.error = true;
-
-    setTimeout(() => (this.error = false), 4000);
+    this.error2 = true;
+    setTimeout(() => (this.error2 = false), 4000);
   }
 }

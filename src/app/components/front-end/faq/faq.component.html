@@ -12,12 +12,14 @@
 <app-loading-spinner *ngIf="loading"></app-loading-spinner>
 <!-- spinner end -->
 
+<app-error *ngIf="error" (reload)="ngOnInit()"></app-error>
+
 <!--
   Content
   ==================================================
 -->
 
-<div class="container" *ngIf="!loading">
+<div class="container" *ngIf="!loading && !error">
   <!-- Blog Posts -->
   <div class="sixteen columns">
     <div class="padding-right">

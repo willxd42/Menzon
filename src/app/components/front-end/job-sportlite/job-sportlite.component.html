@@ -1,0 +1,38 @@
+<ngu-carousel
+  #jobSportliteCarousel
+  [inputs]="carouselTile"
+  [dataSource]="jobSportlite"
+  style="padding: 0 30px"
+>
+  <ul>
+    <div *nguCarouselDef="let js">
+      <div class="job-spotlight four columns ">
+        <a href="#"
+          ><h4>
+            {{ js.title }}
+            <span
+              [ngClass]="{
+                'full-time': js.employementType.name === 'Full-time',
+                'part-time': js.employementType.name === 'Part-time',
+                temporary: js.employementType.name === 'Temporary',
+                internship: js.employementType.name === 'Contract',
+                internship: js.employementType.name === 'Other'
+              }"
+            >
+              {{ js.employementType.name }}
+            </span>
+          </h4></a
+        >
+        <span>
+          <i class="fa fa-money"></i> {{ js.currency.code }}
+          {{ js.salaryMin }} - {{ js.currency.code }} {{ js.salaryMax }}
+        </span>
+        <p [froalaView]="js.shortDescription"></p>
+        <a href="job-page.html" class="button">Apply For This Job</a>
+      </div>
+    </div>
+  </ul>
+  <div class="clearfix"></div>
+  <button NguCarouselPrev class="leftRs">&lt;</button>
+  <button NguCarouselNext class="rightRs">&gt;</button>
+</ngu-carousel>

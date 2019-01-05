@@ -10,12 +10,13 @@ import { ForgotPasswordComponent } from "./forgot-password/forgot-password.compo
 import { BlogSingleComponent } from "./blog-single/blog-single.component";
 import { CompleteRegistrationComponent } from "./complete-registration/complete-registration.component";
 
-import { ArchwizardModule } from "angular-archwizard";
 import { SharedModule } from "src/app/shared/shared.module";
-import { JobsComponent } from './jobs/jobs.component';
-import { SearchComponent } from './search/search.component';
-import { UiModule } from '../ui/ui.module';
-import { JobsSingleComponent } from './jobs-single/jobs-single.component';
+import { JobsComponent } from "./jobs/jobs.component";
+import { SearchComponent } from "./search/search.component";
+import { UiModule } from "../ui/ui.module";
+import { JobsSingleComponent } from "./jobs-single/jobs-single.component";
+import { JobSportliteComponent } from './job-sportlite/job-sportlite.component';
+import { ClientsComponent } from './clients/clients.component';
 
 @NgModule({
   declarations: [
@@ -30,8 +31,10 @@ import { JobsSingleComponent } from './jobs-single/jobs-single.component';
     CompleteRegistrationComponent,
     JobsComponent,
     SearchComponent,
-    JobsSingleComponent
+    JobsSingleComponent,
+    JobSportliteComponent,
+    ClientsComponent
   ],
-  imports: [CommonModule, ArchwizardModule, SharedModule, UiModule]
+  imports: [CommonModule, SharedModule, UiModule]
 })
 export class FrontEndModule {}

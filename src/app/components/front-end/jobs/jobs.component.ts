@@ -9,8 +9,11 @@ import { FormControl } from "@angular/forms";
 })
 export class JobsComponent implements OnInit {
   jobs: any[];
-  loading = true;
-  error = false;
+  page: number;
+  records: number;
+  total: any[];
+  loading: boolean;
+  error: boolean;
   search = new FormControl();
   filters: string;
   _search: boolean;
@@ -33,16 +36,6 @@ export class JobsComponent implements OnInit {
         data: ""
       },
       {
-        field: "salaryMin",
-        op: "cn",
-        data: ""
-      },
-      {
-        field: "salaryMax",
-        op: "cn",
-        data: ""
-      },
-      {
         field: "state",
         op: "cn",
         data: ""
@@ -51,6 +44,7 @@ export class JobsComponent implements OnInit {
   };
 
   constructor(private jobService: JobService) {
+    this.filters = JSON.stringify(this.searchFilter);
     this.search.valueChanges.subscribe(value => {
       this.searchFilter.rules.map(
         rule => (rule.data = value),
@@ -62,7 +56,9 @@ export class JobsComponent implements OnInit {
   }
 
   ngOnInit() {
-    this._search = false;
+    this.loading = true;
+    this.error = false
+    this._search = true;
     this.getJobs(1);
   }
 
@@ -70,7 +66,7 @@ export class JobsComponent implements OnInit {
     this.loading = true;
     const localSearchFilter: string = localStorage.getItem("searchFilter");
 
-    if (localSearchFilter.length > 1) {
+    if (localSearchFilter && localSearchFilter.length > 1) {
       return this.jobService
         .getJobs({
           rows: 10,
@@ -81,29 +77,43 @@ export class JobsComponent implements OnInit {
         .subscribe(
           res => {
             this.jobs = res["rows"];
+            this.records = res["records"];
+            this.page = Number(res["page"]);
             this.loading = false;
             localStorage.removeItem("searchFilter");
+          },
+          err => {
+            console.log(err);
+            localStorage.removeItem("searchFilter");
+            this.loading = false;
+            this.error = true;
+          }
+        );
+    } else {
+      return this.jobService
+        .getJobs({
+          rows: 10,
+          page: pageNumber,
+          _search: this._search,
+          filters: this.filters
+        })
+        .subscribe(
+          res => {
+            {
+              this.jobs = res["rows"];
+              this.records = res["records"];
+              this.page = Number(res["page"]);
+              this.loading = false;
+            }
           },
           err => {
             console.log(err), (this.loading = false), (this.error = true);
           }
         );
-    } else {
     }
-    return this.jobService
-      .getJobs({
-        rows: 10,
-        page: pageNumber,
-        _search: this._search,
-        filters: this.filters
-      })
-      .subscribe(
-        res => {
-          (this.jobs = res["rows"]), (this.loading = false);
-        },
-        err => {
-          console.log(err), (this.loading = false), (this.error = true);
-        }
-      );
+  }
+
+  currentPage(page: number) {
+    return this.getJobs(page);
   }
 }

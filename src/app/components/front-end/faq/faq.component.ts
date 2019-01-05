@@ -8,11 +8,13 @@ import { FaqsService } from "src/app/services/faqs.service";
 })
 export class FaqComponent implements OnInit {
   faq: any[];
-  loading = true;
-  error = false;
+  loading: boolean;
+  error: boolean
   constructor(private faqService: FaqsService) {}
 
   ngOnInit() {
+    this.loading = true
+    this.error = false
     this.getFaq();
   }
 

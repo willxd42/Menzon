@@ -12,139 +12,110 @@
 <app-loading-spinner *ngIf="loading"></app-loading-spinner>
 <!-- spinner end -->
 
+<app-error *ngIf="error" (reload)="ngOnInit()"></app-error>
 <!--
       Content
       ==================================================
     -->
-<div class="container" *ngIf="!loading">
+<div class="container" *ngIf="!loading && !error">
   <!-- Recent Jobs -->
   <div *ngIf="job as j">
-      <div class="eleven columns">
-          <div class="padding-right">
-            <!-- Company Info -->
-            <div class="company-info">
-              <img src="images/company-logo.png" alt="" />
-              <div class="content">
-                <h4>King LLC</h4>
-                <span
-                  ><a href="#"><i class="fa fa-link"></i> Website</a></span
-                >
+    <div class="eleven columns">
+      <div class="padding-right">
+        <!-- Company Info -->
+        <!-- <div class="company-info">
+          <img src="images/company-logo.png" alt="" />
+          <div class="content">
+            <h4>King LLC</h4>
+            <span
+              ><a href="#"><i class="fa fa-link"></i> Website</a></span
+            >
+          </div>
+          <div class="clearfix"></div>
+        </div> -->
+        <h2>{{ j.title }}</h2>
+        <hr />
+        <P class="margin-reset"> {{ j.description }} </P>
+        <hr />
+        <ul class="list-1">
+          <li>{{ j.employementType.name }}</li>
+          <li>{{ j.jobFunction.name }}</li>
+          <li>
+            <span>
+              <i class="fa fa-money"></i> {{ j.currency.code }}
+              {{ j.salaryMin }} - {{ j.currency.code }} {{ j.salaryMax }}
+            </span>
+          </li>
+        </ul>
+        <hr />
+        <h4 class="margin-bottom-10">Job Benefits:</h4>
+        <ul class="list-1">
+          <li *ngFor="let b of benefits">{{ b }}</li>
+        </ul>
+
+        <h4 class="margin-bottom-10">Job Requirment</h4>
+        <p class="margin-reset">{{ J?.requirements }}</p>
+
+        <ul class="list-1">
+          <li>{{ j.educationLevel.name }}</li>
+          <li>{{ j.experienceLevel.name }}</li>
+        </ul>
+        <div><!-- detail --></div>
+      </div>
+    </div>
+
+    <!-- Widgets -->
+    <div class="five columns">
+      <!-- Sort by -->
+      <div class="widget">
+        <h4>Overview</h4>
+
+        <div class="job-overview">
+          <ul>
+            <li>
+              <i class="fa fa-map-marker"></i>
+              <div>
+                <strong>Location:</strong> <span>{{ j.country.name }}</span>
               </div>
-              <div class="clearfix"></div>
-            </div>
-            <P class="margin-reset">
-              {{ j.description }}
-            </P>
-            <hr>
-            <ul class="list-1">
-                <li>
-                   {{ j.employementType }}
-                </li>
-                <li>
-                    {{ j.jobFunction.name }}
-                 </li>
-                 <li>
-                    Max Payment: {{ j.salaryMax }}
-                 </li>
-                 <li>
-                    Min Payment: {{ j.salaryMin.name }}
-                 </li>
-              </ul>
-              <hr>
-            <h4 class="margin-bottom-10">Job Benefits:</h4>
-            <ul class="list-1">
-                <li *ngFor="let b of j.benefits">
-                   {{ b }}
-                </li>
-              </ul>
+            </li>
+            <li>
+              <i class="fa fa-user"></i>
+              <div>
+                <strong>Job Title:</strong> <span>{{ j.title }}</span>
+              </div>
+            </li>
+            <li>
+              <i class="fa fa-clock-o"></i>
+              <div>
+                <strong>Job Type:</strong>
+                <span> {{ j.employementType.name }} </span>
+              </div>
+            </li>
+            <li>
+              <i class="fa fa-money"></i>
+              <div>
+                <strong>Rate:</strong>
+                <span>
+                  {{ j.currency.code }} {{ j.salaryMin }} -
+                  {{ j.currency.code }} {{ j.salaryMax }}
+                </span>
+              </div>
+            </li>
+          </ul>
 
-            <h4 class="margin-bottom-10">Job Requirment</h4>
-            <p class="margin-reset">
-              {{ J.requirements }}
-            </p>
+          <a href="#small-dialog" class="popup-with-zoom-anim button"
+            >Apply For This Job</a
+          >
 
-            <ul class="list-1">
-                <li>
-                  {{ j.educationLevel.name }}
-                </li>
-                <li>
-                  {{ j.experienceLevel.name}}
-                </li>
-              </ul>
-            <div>
-              <!-- detail -->
+          <div id="small-dialog" class="zoom-anim-dialog mfp-hide apply-popup">
+            <div class="small-dialog-headline">
+              <h2>Are You Sure You Want ToThis Job</h2>
             </div>
+            <button class="send">Proceed</button>
           </div>
         </div>
-      
-        <!-- Widgets -->
-        <div class="five columns">
-          <!-- Sort by -->
-          <div class="widget">
-            <h4>Overview</h4>
-      
-            <div class="job-overview">
-              <ul>
-                <li>
-                  <i class="fa fa-map-marker"></i>
-                  <div>
-                    <strong>Location:</strong>
-                    <span>{{ j.country.name }}</span>
-                  </div>
-                </li>
-                <li>
-                  <i class="fa fa-user"></i>
-                  <div>
-                    <strong>Job Title:</strong> <span>{{ j.title }}</span>
-                  </div>
-                </li>
-                <li>
-                  <i class="fa fa-clock-o"></i>
-                  <div><span
-                    [ngClass]="{
-                      'full-time': j.employementType.name === 'Full-time',
-                      'part-time': j.employementType.name === 'Part-time',
-                      temporary: j.employementType.name === 'Temporary',
-                      internship: j.employementType.name === 'Contract',
-                      internship: j.employementType.name === 'Other'
-                    }"
-                  >
-                    {{ j.employementType.name }}
-                  </span></div>
-                </li>
-                <li>
-                  <i class="fa fa-money"></i>
-                  <div><strong>Rate:</strong> <ng-container
-                    *ngIf="j.currency.code === 'NGN'; else elseTemplate"
-                  >
-                    <span>
-                      <i class="fa fa-money"></i>
-                      <span style="margin:0">&#8358;</span> {{ j.salaryMin }} -
-                      <span style="margin:0">&#8358;</span>{{ j.salaryMax }}
-                    </span>
-                  </ng-container>
-                  <ng-template #elseTemplate>
-                    <span>
-                      <i class="fa fa-money"></i> {{ j.salaryMin }} -
-                      {{ j.salaryMax }}
-                    </span>
-                  </ng-template></div>
-                </li>
-              </ul>
-      
-              <a href="#small-dialog" class="popup-with-zoom-anim button"
-                >Apply For This Job</a
-              >
-      
-              <div id="small-dialog" class="zoom-anim-dialog mfp-hide apply-popup">
-                <div class="small-dialog-headline">
-                  <h2>Are You Sure You Want ToThis Job</h2>
-                </div>
-                <button class="send">Proceed</button>
-              </div>
-            </div>
-          </div>
-        </div>
+      </div>
+    </div>
   </div>
   <!-- Widgets / End -->
 </div>

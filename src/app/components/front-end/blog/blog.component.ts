@@ -8,22 +8,35 @@ import { PostService } from "src/app/services/post.service";
 })
 export class BlogComponent implements OnInit {
   posts: any[];
-  loading = true;
+  page: number;
+  records: number;
+  total: any[];
+  loading: boolean;
   error = false;
   constructor(private postService: PostService) {}
 
   ngOnInit() {
-    this.getPosts();
+    this.loading = true;
+    this.error = false
+    this.getPosts(1);
   }
 
-  getPosts() {
-    return this.postService.getPosts({ rows: 10 }).subscribe(
+  getPosts(pageNumber: number) {
+    return this.postService.getPosts({ rows: 10, page: pageNumber }).subscribe(
       res => {
-        (this.posts = res["rows"]), (this.loading = false);
+        this.posts = res["rows"];
+        this.records = res["records"];
+        this.page = Number(res["page"]);
+        this.loading = false;
+        this.error = false
       },
       err => {
         console.log(err), (this.error = true);
       }
     );
+  }
+
+  currentPage(page: number) {
+    return this.getPosts(page);
   }
 }

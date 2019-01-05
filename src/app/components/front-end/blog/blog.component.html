@@ -15,17 +15,44 @@
 <app-loading-spinner *ngIf="loading"></app-loading-spinner>
 <!-- spinner end -->
 
+<app-error *ngIf="error" (reload)="ngOnInit()"></app-error>
+
 <!--
   Content
   ==================================================
 -->
 
-<div class="container" *ngIf="!loading">
+<div class="container" *ngIf="!loading && !error">
   <!-- Blog Posts -->
   <div class="sixteen columns">
-    <div class="padding-right">
+    <div class="padding-right" *ngIf="posts && posts.length < 0">
+      <div style="text-align: center;" *ngIf="error">
+        <div
+          class="error"
+          style="position: relative; text-align: center; width: 97%;"
+        >
+          <p>
+            Somthing went wrong please click
+            <button (click)="ngOnInit()">here</button> to reload
+          </p>
+        </div>
+      </div>
+    </div>
+    <div class="padding-right" *ngIf="posts && posts.length > 0">
       <!-- Post -->
-      <div class="post-container" *ngFor="let p of posts">
+      <div
+        class="post-container"
+        *ngFor="
+          let p of (posts
+            | paginate
+              : {
+                  id: 'id',
+                  itemsPerPage: posts.length,
+                  currentPage: page,
+                  totalItems: records
+                })
+        "
+      >
         <!-- <div class="post-img">
           <a [routerLink]="['/blog/', 1]"
             ><img src="assets/images/recent-post-01.webp" alt=""
@@ -37,15 +64,31 @@
             <h3>{{ p.title }}</h3>
           </a>
           <div class="meta-tags">
-            <span>{{ p.dateAdded }}</span>
+            <span>{{ p.dateAdded | amDateFormat: "LL" }}</span>
           </div>
           <p>{{ p.introduction }}</p>
           <a class="button" [routerLink]="['/blog/', p.id]">Read More</a>
         </div>
       </div>
 
-      <!-- Pagination -->
       <div class="pagination-container">
+        <pagination-controls
+          id="id"
+          (pageChange)="currentPage($event)"
+          maxSize="9"
+          directionLinks="true"
+          autoHide="true"
+          responsive="true"
+          previousLabel="PREV"
+          nextLabel="NEXT"
+          screenReaderPaginationLabel="Pagination"
+          screenReaderPageLabel="page"
+          screenReaderCurrentLabel="You're on page"
+        >
+        </pagination-controls>
+
+        <!-- Pagination -->
+        <!-- <div class="pagination-container">
         <nav class="pagination">
           <ul>
             <li><a href="#" class="current-page">1</a></li>
@@ -60,8 +103,9 @@
             <li><a href="#" class="next">Next</a></li>
           </ul>
         </nav>
+      </div> -->
       </div>
     </div>
+    <!-- Blog Posts / End -->
   </div>
-  <!-- Blog Posts / End -->
 </div>

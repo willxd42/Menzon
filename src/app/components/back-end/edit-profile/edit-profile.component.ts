@@ -25,7 +25,7 @@ export class EditProfileComponent implements OnInit {
       gender: "",
       dateOfBirth: "",
       email: "",
-      phoneNumber: "",
+      mobileNumber: "",
       street_address: "",
       city: "",
       state: "",

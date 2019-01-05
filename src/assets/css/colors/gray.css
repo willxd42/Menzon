@@ -1,6 +1,8 @@
 /* ------------------------------------------------------------------- */
-/* Gray #505050
+
+/* Gray #00A66B
 ---------------------------------------------------------------------- */
+
 #current,
 a.button.gray.app-link.opened,
 ul.float-right li a:hover,
@@ -23,7 +25,7 @@ a.button.dark:hover,
 .ui-accordion .ui-accordion-header-active:hover,
 .ui-accordion .ui-accordion-header-active,
 .highlight.color,
- .plan.color-2 .plan-price,
+.plan.color-2 .plan-price,
 .plan.color-2 a.button,
 .tp-leftarrow:hover,
 .tp-rightarrow:hover,
@@ -37,10 +39,9 @@ a.button.dark:hover,
 .chosen-container .chosen-results li.highlighted,
 .chosen-container-multi .chosen-choices li.search-choice,
 .list-search button,
-.checkboxes input[type=checkbox]:checked + label:before 
-{ background-color: #505050; }
-
-
+.checkboxes input[type=checkbox]:checked+label:before {
+    background-color: #00A66B;
+}
 
 a,
 table td.title a:hover,
@@ -59,32 +60,34 @@ table.manage-table td.action a:hover,
 .infobox a:hover,
 .meta-tags span a:hover,
 .widget-text h5 a:hover,
-.app-content .info span ,
-.app-content .info ul li a:hover
-{ color: #505050; }
-
-
-
+.app-content .info span,
+.app-content .info ul li a:hover {
+    color: #00A66B;
+}
 
 .resumes-list li a:before,
 .job-list li a:before,
 table.manage-table tr:before {
-	-webkit-box-shadow: 0px 1px 0px 0px rgba(80, 80, 80,0.7);
-	-moz-box-shadow: 0px 1px 0px 0px rgba(80, 80, 80,0.7);
-	box-shadow: 0px 1px 0px 0px rgba(80, 80, 80,0.7);
+    -webkit-box-shadow: 0px 1px 0px 0px rgba(80, 80, 80, 0.7);
+    -moz-box-shadow: 0px 1px 0px 0px rgba(80, 80, 80, 0.7);
+    box-shadow: 0px 1px 0px 0px rgba(80, 80, 80, 0.7);
 }
 
 #popular-categories li a:before {
-	-webkit-box-shadow: 0px 0px 0px 1px rgba(80, 80, 80,0.7);
-	-moz-box-shadow: 0px 0px 0px 1px rgba(80, 80, 80,0.7);
-	box-shadow: 0px 0px 0px 1px rgba(80, 80, 80,0.7);
+    -webkit-box-shadow: 0px 0px 0px 1px rgba(80, 80, 80, 0.7);
+    -moz-box-shadow: 0px 0px 0px 1px rgba(80, 80, 80, 0.7);
+    box-shadow: 0px 0px 0px 1px rgba(80, 80, 80, 0.7);
 }
 
 table.manage-table tr:hover td,
 .resumes-list li:hover,
-.job-list li:hover { border-color: rgba(80, 80, 80,0.7); }
+.job-list li:hover {
+    border-color: rgba(80, 80, 80, 0.7);
+}
 
 table.manage-table tr:hover td,
 .resumes-list li:hover,
 .job-list li:hover,
-#popular-categories li a:hover { background-color: rgba(80, 80, 80,0.05); }
+#popular-categories li a:hover {
+    background-color: rgba(80, 80, 80, 0.05);
+}
