@@ -1,8 +1,4 @@
-<!--
-      Titlebar
-      ==================================================
-    -->
-<div id="titlebar" class="single submit-page">
+<div class="single submit-page">
   <div class="container">
     <div class="sixteen columns">
       <h2><i class="fa fa-plus-circle"></i> Edit Profile</h2>
@@ -10,350 +6,471 @@
   </div>
 </div>
 
-<!--
-      Content
-      ==================================================
-    -->
-<div class="container">
-  <!-- Submit Page -->
-  <div class="sixteen columns">
-    <div class="submit-page">
-      <!-- Notice -->
-      <div class="notification notice closeable margin-bottom-40">
-        <p>
-          <span>Have an account?</span> If you don’t have an account you can
-          create one below by entering your email address. A password will be
-          automatically emailed to you.
-        </p>
-      </div>
+<!-- spinner -->
+<app-loading-spinner *ngIf="loading"></app-loading-spinner>
+<!-- spinner end -->
 
+<app-error *ngIf="error" (reload)="ngOnInit()"></app-error>
+
+<div class="container">
+  <div *ngIf="!loading && !error">
+    <!-- Submit Page -->
+    <div class="sixteen columns">
+      <div class="submit-page">
+        <!-- Notice -->
+        <div class="notification notice closeable margin-bottom-40">
+          <p>
+            <span>Have an account?</span> If you don’t have an account you can
+            create one below by entering your email address. A password will be
+            automatically emailed to you.
+          </p>
+        </div>
+      </div>
+    </div>
+    <div class="container">
       <form [formGroup]="cRForm">
-        <div class="container">
+        <div class="row">
           <h3 class="margin-bottom-10 margin-top-10">Personal Information</h3>
+
+          <br />
+
+          <div class="row">
+            <div class="form-row form-row-wide four columns">
+              <label>First Name: <span class="red">*</span></label>
+              <input
+                type="text"
+                class="input-text"
+                [(ngModel)]="user.firstName"
+                formControlName="firstName"
+                [ngClass]="{
+                  'input-error':
+                    (firstName.invalid && firstName.touched) ||
+                    (checked && firstName.touched)
+                }"
+              />
+              <p
+                class="error2"
+                *ngIf="
+                  (firstName.invalid && firstName.touched) ||
+                  (checked && firstName.touched)
+                "
+              >
+                First Name is required
+              </p>
+            </div>
+
+            <div class="form-row form-row-wide four columns">
+              <label>Last Name: <span class="red">*</span></label>
+              <input
+                type="text"
+                class="input-text"
+                [(ngModel)]="user.lastName"
+                formControlName="lastName"
+                [ngClass]="{
+                  'input-error':
+                    (lastName.invalid && lastName.touched) ||
+                    (checked && lastName.touched)
+                }"
+              />
+              <p
+                class="error2"
+                *ngIf="
+                  (lastName.invalid && lastName.touched) ||
+                  (checked && lastName.touched)
+                "
+              >
+                Last Name is required
+              </p>
+            </div>
+
+            <div class="form-row form-row-wide four columns">
+              <label>Middle Name: (Optional)</label>
+              <input
+                type="text"
+                class="input-text"
+                [(ngModel)]="user.middleName"
+                formControlName="middleName"
+              />
+            </div>
+
+            <div class="form-row form-row-wide four columns">
+              <label>Gender: <span class="red">*</span></label>
+              <select
+                formControlName="gender"
+                [(ngModel)]="user.gender"
+                [ngClass]="{
+                  'input-error':
+                    (gender.invalid && gender.touched) ||
+                    (checked && gender.touched)
+                }"
+              >
+                <option value="male">Male</option>
+                <option value="female">Female</option>
+              </select>
+              <p
+                class="error2"
+                *ngIf="
+                  (gender.invalid && gender.touched) ||
+                  (checked && gender.touched)
+                "
+              >
+                Gender is required
+              </p>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="form-row form-row-wide four columns">
+              <label
+                >Date of Birth (yyyy/mm/dd): <span class="red">*</span></label
+              >
+              <input
+                style="
+                                padding: 14px 18px;
+                                outline: none;
+                                font-size: 15px;
+                                color: #909090;
+                                margin: 0;
+                                max-width: 100%;
+                                width: 100%;
+                                box-sizing: border-box;
+                                display: block;
+                                background-color: #fcfcfc;
+                                font-weight: 500;
+                                border: 1px solid #e0e0e0;
+                                opacity: 1;
+                              "
+                placeholder="yyyy-mm-dd"
+                formControlName="dateOfBirth"
+                ngbDatepicker
+                #d="ngbDatepicker"
+                (click)="d.toggle()"
+                [(ngModel)]="user.birthday"
+                [ngClass]="{
+                  'input-error':
+                    (dateOfBirth.invalid && dateOfBirth.touched) ||
+                    (checked && dateOfBirth.touched)
+                }"
+              />
+              <p
+                class="error2"
+                *ngIf="
+                  (dateOfBirth.invalid && dateOfBirth.touched) ||
+                  (checked && dateOfBirth.touched)
+                "
+              >
+                Date Of Birth is required
+              </p>
+            </div>
+
+            <div class="form-row form-row-wide four columns">
+              <label>Email Address: <span class="red">*</span></label>
+              <input
+                type="email"
+                class="input-text"
+                [(ngModel)]="user.email"
+                formControlName="email"
+                [ngClass]="{
+                  'input-error':
+                    (email.invalid && email.touched) ||
+                    (checked && email.touched)
+                }"
+              />
+              <p
+                class="error2"
+                *ngIf="
+                  (email.invalid && email.touched) || (checked && email.touched)
+                "
+              >
+                Email is required
+              </p>
+            </div>
+
+            <div class="form-row form-row-wide four columns">
+              <label>Phone Number: (Optional)</label>
+              <input
+                type="text"
+                class="input-text"
+                [(ngModel)]="user.mobileNumber"
+                formControlName="mobileNumber"
+              />
+            </div>
+
+            <div class="form-row form-row-wide four columns">
+              <label>Street Adress: (Optional)</label>
+              <input
+                type="text"
+                class="input-text"
+                [(ngModel)]="user.address1"
+                formControlName="street_address"
+              />
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="form-row form-row-wide four columns">
+              <label>City: (Optional)</label>
+              <input
+                type="text"
+                class="input-text"
+                [(ngModel)]="user.city"
+                formControlName="city"
+              />
+            </div>
+
+            <div class="form-row form-row-wide four columns">
+              <label>Country: <span class="red">*</span></label>
+              <select
+                formControlName="country"
+                [(ngModel)]="user.country"
+                [ngClass]="{
+                  'input-error':
+                    (country.invalid && country.touched) ||
+                    (checked && country.touched)
+                }"
+              >
+                <option *ngFor="let c of countries" [value]="c.id">
+                  {{ c.name }}
+                </option>
+              </select>
+
+              <p
+                class="error2"
+                *ngIf="
+                  (country.invalid && country.touched) ||
+                  (checked && country.touched)
+                "
+              >
+                Country is required
+              </p>
+            </div>
+
+            <div class="form-row form-row-wide four columns">
+              <label>Prov/State: <span class="red">*</span></label>
+              <select
+                formControlName="state"
+                [(ngModel)]="user.province"
+                [ngClass]="{
+                  'input-error':
+                    (state.invalid && state.touched) ||
+                    (checked && state.touched)
+                }"
+              >
+                <option *ngFor="let s of states" [value]="s.stateId">
+                  {{ s.stateName }}
+                </option>
+              </select>
+
+              <p
+                class="error2"
+                *ngIf="
+                  (state.invalid && state.touched) || (checked && state.touched)
+                "
+              >
+                State is required
+              </p>
+            </div>
+
+            <div class="form-row form-row-wide four columns">
+              <label>Prefared Location: (Optional)</label>
+              <select formControlName="prefaredLocation">
+                <option *ngFor="let st of states" [value]="st.stateName">
+                  {{ st.stateName }}
+                </option>
+              </select>
+            </div>
+          </div>
+        </div>
+
+        <br />
+
+        <div class="container">
+          <h3 class="margin-bottom-10 margin-top-10">Additional Information</h3>
 
           <br /><br />
 
-          <p class="form-row form-row-wide four columns">
-            <label>First Name: <span class="red">*</span></label>
-            <input type="text" class="input-text" />
-          </p>
-
-          <p class="form-row form-row-wide four columns">
-            <label>Last Name: <span class="red">*</span></label>
-            <input type="text" class="input-text" />
-          </p>
-
-          <p class="form-row form-row-wide four columns">
-            <label>Middle Name: (Optional)</label>
-            <input type="text" class="input-text" />
-          </p>
-
-          <p class="form-row form-row-wide four columns">
-            <label>Gender: <span class="red">*</span></label>
-            <select>
-              <option value="male">Male</option>
-              <option value="female">Female</option>
-            </select>
-          </p>
-        </div>
-
-        <div class="container">
-          <div class="form-row form-row-wide four columns">
-            <label>Date of Birth (mm/dd/yyyy):</label>
-            <input
-              style="
-                padding: 14px 18px;
-                outline: none;
-                font-size: 15px;
-                color: #909090;
-                margin: 0;
-                max-width: 100%;
-                width: 100%;
-                box-sizing: border-box;
-                display: block;
-                background-color: #fcfcfc;
-                font-weight: 500;
-                border: 1px solid #e0e0e0;
-                opacity: 1;
-              "
-              placeholder="yyyy-mm-dd"
-              formControlName="dateOfBirth"
-              ngbDatepicker
-              #d="ngbDatepicker"
-              (click)="d.toggle()"
-            />
+          <div style="margin-top: 50px;" class="form">
+            <h5>Photo (Optional)</h5>
+            <label class="upload-btn">
+              <input
+                type="file"
+                accept="image/jpeg,image/png,"
+                formControlName="photoFile"
+                (change)="detectPhotoFile($event)"
+              />
+              <i class="fa fa-upload"></i> Browse
+            </label>
+            <span class="fake-input" *ngIf="!selectedPhotoFile"
+              >No file selected</span
+            >
+            <span class="fake-input" *ngIf="selectedPhotoFile">{{
+              photo
+            }}</span>
           </div>
 
-          <p class="form-row form-row-wide four columns">
-            <label>Email Address: <span class="red">*</span></label>
-            <input type="email" class="input-text" />
-          </p>
+          <div style="margin-top: 50px;" class="form">
+            <h5>CV</h5>
+            <label class="upload-btn">
+              <input
+                type="file"
+                accept="application/pdf"
+                formControlName="cvFile"
+                (change)="detectCvFile($event)"
+              />
+              <i class="fa fa-upload"></i> Browse
+            </label>
+            <span class="fake-input" *ngIf="!selectedCvFile"
+              >No file selected</span
+            >
+            <span class="fake-input" *ngIf="selectedCvFile">{{ cv }}</span>
+          </div>
 
-          <p class="form-row form-row-wide four columns">
-            <label>Phone Number: (Optional)</label>
-            <input type="text" class="input-text" />
-          </p>
-
-          <p class="form-row form-row-wide four columns">
-            <label>Street Adress: (Optional)</label>
-            <input type="text" class="input-text" />
-          </p>
+          <div style="margin-top: 35px;" class="form-row form-row-wide">
+            <label>Tell Us About Your self: <span class="red">*</span></label>
+            <textarea
+              [froalaEditor]="options"
+              [(ngModel)]="user.cvText"
+              placeholder="Start Typing..."
+              formControlName="tellUsAboutYourSelf"
+              [ngClass]="{
+                'input-error':
+                  (tellUsAboutYourSelf.invalid &&
+                    tellUsAboutYourSelf.touched) ||
+                  (checked && tellUsAboutYourSelf.touched)
+              }"
+            >
+            </textarea>
+            <p
+              class="error2"
+              *ngIf="
+                (tellUsAboutYourSelf.invalid && tellUsAboutYourSelf.touched) ||
+                (checked && tellUsAboutYourSelf.touched)
+              "
+            >
+              Telling Us About Yourself is required
+            </p>
+          </div>
         </div>
 
-        <div class="container">
-          <p class="form-row form-row-wide four columns">
-            <label>City: (Optional)</label>
-            <input type="text" class="input-text" formControlName="city" />
-          </p>
-
-          <p class="form-row form-row-wide four columns">
-            <label>Country: <span class="red">*</span></label>
-            <select>
-              <option value="">demo</option>
-              <option value="">demo</option>
-              <option value="">demo</option>
-              <option value="">demo</option>
-              <option value="">demo</option>
-            </select>
-          </p>
-
-          <p class="form-row form-row-wide four columns">
-            <label>Prov/State: <span class="red">*</span></label>
-            <select>
-              <option value="">demo</option>
-              <option value="">demo</option>
-              <option value="">demo</option>
-              <option value="">demo</option>
-              <option value="">demo</option>
-            </select>
-          </p>
-
-          <p class="form-row form-row-wide four columns">
-            <label>Prefared Location: (Optional)</label>
-            <select>
-              <option value="">demo</option>
-              <option value="">demo</option>
-              <option value="">demo</option>
-              <option value="">demo</option>
-              <option value="">demo</option>
-            </select>
-          </p>
-        </div>
-
-        <div style="margin-top: 50px;" class="form">
-          <h5>Photo (Optional)</h5>
-          <label class="upload-btn">
-            <input type="file" multiple="" />
-            <i class="fa fa-upload"></i> Browse
-          </label>
-          <span class="fake-input">No file selected</span>
-        </div>
-
-        <div style="margin-top: 50px;" class="form">
-          <h5>CV (Optional)</h5>
-          <label class="upload-btn">
-            <input type="file" multiple="" />
-            <i class="fa fa-upload"></i> Browse
-          </label>
-          <span class="fake-input">No file selected</span>
-        </div>
+        <br />
+        <button *ngIf="cRForm.invalid" type="button" (click)="check()">
+          {{ Finish }}
+        </button>
+        <button *ngIf="!cRForm.invalid" type="button" (click)="submit()">
+          {{ Finish }}
+        </button>
       </form>
-      <a routerLink="/profile" class="button big margin-top-5"> SAVE </a>
     </div>
   </div>
-</div>
 
-<!--
-      Titlebar
-      ==================================================
-    -->
-<div id="titlebar" class="single">
-  <div class="container">
-    <div class="sixteen columns"><h2>Manage Education</h2></div>
+  <div class="single">
+    <div class="container">
+      <div class="sixteen columns"><h2>Manage Education</h2></div>
+    </div>
   </div>
-</div>
-<!--
-    Content
-    ==================================================
-  -->
-<div class="container">
-  <!-- Table -->
-  <div class="sixteen columns">
-    <p class="margin-bottom-25">You can manage your Education here.</p>
 
-    <table class="manage-table resumes responsive-table">
-      <tr>
-        <th><i class="fa fa-user"></i> Name</th>
-        <th><i class="fa fa-file-text"></i> Title</th>
-        <th><i class="fa fa-map-marker"></i> Location</th>
-        <th><i class="fa fa-calendar"></i> Date Posted</th>
-        <th></th>
-      </tr>
+  <div class="container" *ngIf="education && education?.length > 0">
+    <!-- Table -->
+    <div class="sixteen columns">
+      <p class="margin-bottom-25">You can manage your Education here.</p>
 
-      <!-- Item #1 -->
-      <tr>
-        <td class="title"><a href="#">John Doe</a></td>
-        <td>Front End Web Developer</td>
-        <td>New York</td>
-        <td>September 30, 2015</td>
-        <td class="action">
-          <button (click)="editEducation()">
-            <i class="fa fa-pencil"></i> Edit
-          </button>
-          <button href="#" class="delete">
-            <i class="fa fa-remove"></i> Delete
-          </button>
-        </td>
-      </tr>
+      <table class="manage-table resumes responsive-table">
+        <tr>
+          <th><i class="fa fa-user"></i> Institution</th>
+          <th><i class="fa fa-file-text"></i> Course</th>
+          <th><i class="fa fa-map-marker"></i> Years of Study</th>
+          <th></th>
+        </tr>
 
-      <!-- Item #1 -->
-      <tr>
-        <td class="title"><a href="#">John Doe</a></td>
-        <td>Logo Designer</td>
-        <td>New York</td>
-        <td>August 12, 2015</td>
-        <td class="action">
-          <button (click)="editEducation()">
-            <i class="fa fa-pencil"></i> Edit
-          </button>
-          <button href="#" class="delete">
-            <i class="fa fa-remove"></i> Delete
-          </button>
-        </td>
-      </tr>
-    </table>
+        <tr *ngFor="let e of education; let i = index">
+          <td class="title">{{ e.institution }}</td>
+          <td>{{ e.course }}</td>
+          <td>{{ e.fromYear }} - {{ e.toYear }}</td>
+          <td class="action">
+            <button (click)="editEducation(i)">
+              <i class="fa fa-pencil"></i> Edit
+            </button>
+            <button (click)="deleteEducation(i)" class="delete">
+              <i class="fa fa-remove"></i> Delete
+            </button>
+          </td>
+        </tr>
+      </table>
 
-    <br />
+      <br />
+    </div>
   </div>
-</div>
 
-<!--
-    Titlebar
-    ==================================================
-  -->
-<div id="titlebar" class="single">
-  <div class="container">
-    <div class="sixteen columns"><h2>Manage Skill's</h2></div>
+  <div class="single">
+    <div class="container">
+      <div class="sixteen columns"><h2>Manage Skill's</h2></div>
+    </div>
   </div>
-</div>
 
-<!--
-    Content
-    ==================================================
-  -->
-<div class="container">
-  <!-- Table -->
-  <div class="sixteen columns">
-    <p class="margin-bottom-25">You can manage your skills here.</p>
+  <div class="container" *ngIf="skills && skills?.length > 0">
+    <!-- Table -->
+    <div class="sixteen columns">
+      <p class="margin-bottom-25">You can manage your skills here.</p>
 
-    <table class="manage-table resumes responsive-table">
-      <tr>
-        <th><i class="fa fa-user"></i> Name</th>
-        <th><i class="fa fa-file-text"></i> Title</th>
-        <th><i class="fa fa-map-marker"></i> Location</th>
-        <th><i class="fa fa-calendar"></i> Date Posted</th>
-        <th></th>
-      </tr>
+      <table class="manage-table resumes responsive-table">
+        <tr>
+          <th><i class="fa fa-user"></i> Skill</th>
+          <th><i class="fa fa-file-text"></i> Level</th>
+          <th></th>
+        </tr>
+        <tr *ngFor="let s of skills; let i = index">
+          <td class="title">{{ s.skill }}</td>
+          <td>{{ s.skillLevel }}</td>
+          <td class="action">
+            <button (click)="editSkill(i)">
+              <i class="fa fa-pencil"></i> Edit
+            </button>
+            <button (click)="deleteSkill(i)" class="delete">
+              <i class="fa fa-remove"></i> Delete
+            </button>
+          </td>
+        </tr>
+      </table>
 
-      <!-- Item #1 -->
-      <tr>
-        <td class="title"><a href="#">John Doe</a></td>
-        <td>Front End Web Developer</td>
-        <td>New York</td>
-        <td>September 30, 2015</td>
-        <td class="action">
-          <button (click)="editSkill()">
-            <i class="fa fa-pencil"></i> Edit
-          </button>
-          <button href="#" class="delete">
-            <i class="fa fa-remove"></i> Delete
-          </button>
-        </td>
-      </tr>
-
-      <!-- Item #1 -->
-      <tr>
-        <td class="title"><a href="#">John Doe</a></td>
-        <td>Logo Designer</td>
-        <td>New York</td>
-        <td>August 12, 2015</td>
-        <td class="action">
-          <button (click)="editSkill()">
-            <i class="fa fa-pencil"></i> Edit
-          </button>
-          <button href="#" class="delete">
-            <i class="fa fa-remove"></i> Delete
-          </button>
-        </td>
-      </tr>
-    </table>
-
-    <br />
+      <br />
+    </div>
   </div>
-</div>
 
-<!--
-    Titlebar
-    ==================================================
-  -->
-<div id="titlebar" class="single">
-  <div class="container">
-    <div class="sixteen columns"><h2>Manage Work History</h2></div>
+  <div class="single">
+    <div class="container">
+      <div class="sixteen columns"><h2>Manage Work History</h2></div>
+    </div>
   </div>
-</div>
 
-<!--
-    Content
-    ==================================================
-  -->
-<div class="container">
-  <!-- Table -->
-  <div class="sixteen columns">
-    <p class="margin-bottom-25">You can manage your Work History here.</p>
+  <div class="container" *ngIf="workHistory && workHistory?.length > 0">
+    <!-- Table -->
+    <div class="sixteen columns">
+      <p class="margin-bottom-25">You can manage your Work History here.</p>
 
-    <table class="manage-table resumes responsive-table">
-      <tr>
-        <th><i class="fa fa-user"></i> Name</th>
-        <th><i class="fa fa-file-text"></i> Title</th>
-        <th><i class="fa fa-map-marker"></i> Location</th>
-        <th><i class="fa fa-calendar"></i> Date Posted</th>
-        <th></th>
-      </tr>
+      <table class="manage-table resumes responsive-table">
+        <tr>
+          <th><i class="fa fa-user"></i> Company</th>
+          <!-- <th><i class="fa fa-map-marker"></i> Year</th> -->
+          <th></th>
+        </tr>
+        <tr>
+          <td class="title" *ngFor="let w of workHistory; let i = index">
+            {{ w.company }}
+          </td>
+          <!-- <td>{{ w.formYear }} - {{ w.toYear }}</td> -->
+          <td class="action">
+            <button (click)="editWorkHistory(i)">
+              <i class="fa fa-pencil"></i> Edit
+            </button>
+            <button (click)="deleteWorkHistory(i)" class="delete">
+              <i class="fa fa-remove"></i> Delete
+            </button>
+          </td>
+        </tr>
+      </table>
 
-      <!-- Item #1 -->
-      <tr>
-        <td class="title"><a href="#">John Doe</a></td>
-        <td>Front End Web Developer</td>
-        <td>New York</td>
-        <td>September 30, 2015</td>
-        <td class="action">
-          <button (click)="editWorkHistory()">
-            <i class="fa fa-pencil"></i> Edit
-          </button>
-          <button href="#" class="delete">
-            <i class="fa fa-remove"></i> Delete
-          </button>
-        </td>
-      </tr>
-
-      <!-- Item #1 -->
-      <tr>
-        <td class="title"><a href="#">John Doe</a></td>
-        <td>Logo Designer</td>
-        <td>New York</td>
-        <td>August 12, 2015</td>
-        <td class="action">
-          <button (click)="editWorkHistory()">
-            <i class="fa fa-pencil"></i> Edit
-          </button>
-          <button href="#" class="delete">
-            <i class="fa fa-remove"></i> Delete
-          </button>
-        </td>
-      </tr>
-    </table>
-
-    <br />
+      <br />
+    </div>
   </div>
 </div>
 

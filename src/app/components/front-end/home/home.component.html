@@ -74,7 +74,7 @@
 
         <!-- Browse Jobs -->
         <div class="browse-jobs">
-          Browse job offers by <a href="browse-categories.html"> category</a>
+          Browse job offers by <a href="#"> category</a>
         </div>
 
         <!-- Announce -->
@@ -104,7 +104,7 @@
         <div class="three columns" *ngFor="let c of categories">
           <ul>
             <li>
-              <a routerLink="#">{{ c.name }}</a>
+              <a (click)="searchCategory(c.id)">{{ c.name }}</a>
             </li>
           </ul>
         </div>
@@ -118,7 +118,7 @@
   <!-- Recent Works -->
   <div class="container">
     <!-- Recent Jobs -->
-    <div class="ten columns">
+    <div class="eleven columns">
       <div class="padding-right">
         <h3 class="margin-bottom-25">Recent Jobs</h3>
         <ul class="job-list">
@@ -169,7 +169,7 @@
     </div>
 
     <!-- Job Spotlight -->
-    <div class="six columns">
+    <div class="five columns">
       <h3 class="margin-bottom-5">Job Spotlight</h3>
       <div id="job-spotlight" class="showbiz-container">
         <app-job-sportlite [jobSportlite]="jobSportlite"></app-job-sportlite>

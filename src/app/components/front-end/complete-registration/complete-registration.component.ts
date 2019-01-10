@@ -239,9 +239,23 @@ export class CompleteRegistrationComponent implements OnInit {
       institution: ["", Validators.required],
       degree: ["", Validators.required],
       country: ["", Validators.required],
-      fromYear: ["", Validators.required],
+      fromYear: [
+        "",
+        Validators.compose([
+          Validators.required,
+          Validators.minLength(4),
+          Validators.maxLength(4)
+        ])
+      ],
       fromMonth: ["", Validators.required],
-      toYear: ["", Validators.required],
+      toYear: [
+        "",
+        Validators.compose([
+          Validators.required,
+          Validators.minLength(4),
+          Validators.maxLength(4)
+        ])
+      ],
       toMonth: ["", Validators.required],
       course: ["", Validators.required]
     });
@@ -262,9 +276,9 @@ export class CompleteRegistrationComponent implements OnInit {
       company: ["", Validators.required],
       jobTitle: ["", Validators.required],
       country: ["", Validators.required],
-      fromYear: ["", Validators.required],
+      fromYear: ["", Validators.required, Validators.min(4), Validators.max(4)],
       fromMonth: ["", Validators.required],
-      toYear: ["", Validators.required],
+      toYear: ["", Validators.required, Validators.min(4), Validators.max(4)],
       toMonth: ["", Validators.required]
     });
 
@@ -283,7 +297,12 @@ export class CompleteRegistrationComponent implements OnInit {
     const skill = this.fb.group({
       skill: ["", Validators.required],
       skillLevel: ["", Validators.required],
-      lastYearUsed: ["", Validators.required],
+      lastYearUsed: [
+        "",
+        Validators.required,
+        Validators.min(4),
+        Validators.max(4)
+      ],
       lastMonthUsed: ["", Validators.required],
       yearsOfExperience: ["", Validators.required]
     });
@@ -455,6 +474,8 @@ export class CompleteRegistrationComponent implements OnInit {
   }
 
   submit() {
+    console.log(this.cRForm.value);
+
     this.Finish = "Loading...";
     this.error2 = false;
     const upload = this.fileUpload();
@@ -466,7 +487,9 @@ export class CompleteRegistrationComponent implements OnInit {
       lastName: this.cRForm.value.lastName,
       birthday: this.cRForm.value.dateOfBirth,
       gender: this.cRForm.value.gender,
+      province: this.cRForm.value.state,
       cvTitle: this.cv,
+      cvText: this.cRForm.value.tellUsAboutYourSelf,
       address1: this.cRForm.value.street_address,
       city: this.cRForm.value.city,
       country: this.cRForm.value.country,
@@ -495,9 +518,4 @@ export class CompleteRegistrationComponent implements OnInit {
         }
       );
   }
-
-  // log() {
-  //   console.log(this.documents);
-  //   console.log(this.selectedCvFile);
-  // }
 }

@@ -5,3 +5,7 @@
 .fa {
   color: rgb(34, 33, 33) !important;
 }
+
+button {
+  margin: 10px !important;
+}

@@ -8,9 +8,9 @@ import { HttpClient } from "@angular/common/http";
 export class FaqsService {
   constructor(private http: HttpClient) {}
 
-  getFaqs(paylad) {
+  getFaqs(payload) {
     return this.http.get(`${environment.BASE_URL}/public/faq/`, {
-      params: paylad
+      params: payload
     });
   }
 }

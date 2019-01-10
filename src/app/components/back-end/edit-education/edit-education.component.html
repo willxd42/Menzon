@@ -1,167 +1,266 @@
-<form [formGroup]="cRForm" class="container">
-  <div formGroupName="education">
-    <h3 class="margin-bottom-10 margin-top-10">Edit Education</h3>
+<app-loading-spinner *ngIf="loading"></app-loading-spinner>
 
-    <br /><br />
+<app-error *ngIf="error" (reload)="ngOnInit()"></app-error>
 
-    <div
-      *ngFor="let e of educationForms.controls; let i = index"
-      [formGroupName]="i"
-    >
-      <p class="form-row form-row-wide four columns">
-        <label>Institution: <span class="red">*</span></label>
-        <input type="text" class="input-text" formControlName="institution" />
-      </p>
-
-      <p class="form-row form-row-wide four columns">
-        <label>Diploma/Degree: <span class="red">*</span></label>
-        <input type="text" class="input-text" formControlName="degree" />
-      </p>
-
-      <p class="form-row form-row-wide four columns">
-        <label>Country: <span class="red">*</span></label>
-        <select formControlName="country">
-          <option value="">demo</option>
-          <option value="">demo</option>
-          <option value="">demo</option>
-          <option value="">demo</option>
-          <option value="">demo</option>
-        </select>
-      </p>
-
-      <p class="form-row form-row-wide four columns">
-        <label>From Year: <span class="red">*</span></label>
-        <select formControlName="fromYear">
-          <option value="">demo</option>
-          <option value="">demo</option>
-          <option value="">demo</option>
-          <option value="">demo</option>
-          <option value="">demo</option>
-        </select>
-      </p>
-
-      <p class="form-row form-row-wide four columns">
-        <label>From Month: <span class="red">*</span></label>
-        <select formControlName="fromMonth">
-          <option value="">demo</option>
-          <option value="">demo</option>
-          <option value="">demo</option>
-          <option value="">demo</option>
-          <option value="">demo</option>
-        </select>
-      </p>
-
-      <p class="form-row form-row-wide four columns">
-        <label>To Year: <span class="red">*</span></label>
-        <select formControlName="toYear">
-          <option value="">demo</option>
-          <option value="">demo</option>
-          <option value="">demo</option>
-          <option value="">demo</option>
-          <option value="">demo</option>
-        </select>
-      </p>
-
-      <p class="form-row form-row-wide four columns">
-        <label>To Month: <span class="red">*</span></label>
-        <select formControlName="toMonth">
-          <option value="">demo</option>
-          <option value="">demo</option>
-          <option value="">demo</option>
-          <option value="">demo</option>
-          <option value="">demo</option>
-        </select>
-      </p>
-
-      <p class="form-row form-row-wide four columns">
-        <label>Course of Study: <span class="red">*</span></label>
-        <select formControlName="course">
-          <option value="">demo</option>
-          <option value="">demo</option>
-          <option value="">demo</option>
-          <option value="">demo</option>
-          <option value="">demo</option>
-        </select>
-      </p>
+<form [formGroup]="cRForm" *ngIf="!loading && !error">
+  <div class="container">
+    <div formGroupName="education">
+      <h3 class="margin-bottom-10 margin-top-10">Education</h3>
 
       <br />
-      <a
-        style="color: #fff; background: red"
-        *ngIf="educationForms.controls?.length > 1"
-        (click)="deleteEducation(i)"
-        class="button gray"
-        ><i class="fa fa-plus-circle"></i>Delete</a
+      <div
+        class="row"
+        *ngFor="let e of educationForms.controls; let i = index"
+        [formGroupName]="i"
       >
+        <br /><br />
+        <div class="row">
+          <div class="form-row form-row-wide four columns">
+            <label>Institution: <span class="red">*</span></label>
+            <input
+              type="text"
+              class="input-text"
+              [(ngModel)]="education.institution"
+              formControlName="institution"
+              [ngClass]="{
+                'input-error':
+                  (e.controls.institution.invalid &&
+                    e.controls.institution.touched) ||
+                  (e.controls.institution.invalid && check$)
+              }"
+            />
+            <p
+              class="error2"
+              *ngIf="
+                (e.controls.institution.invalid &&
+                  e.controls.institution.touched) ||
+                (e.controls.institution.invalid && check$)
+              "
+            >
+              Institution is required
+            </p>
+          </div>
+
+          <div class="form-row form-row-wide four columns">
+            <label>Diploma/Degree: <span class="red">*</span></label>
+            <input
+              type="text"
+              class="input-text"
+              [(ngModel)]="education.degree"
+              formControlName="degree"
+              [ngClass]="{
+                'input-error':
+                  (e.controls.degree.invalid && e.controls.degree.touched) ||
+                  (e.controls.degree.invalid && check$)
+              }"
+            />
+            <p
+              class="error2"
+              *ngIf="
+                (e.controls.degree.invalid && e.controls.degree.touched) ||
+                (e.controls.degree.invalid && check$)
+              "
+            >
+              Degree is required
+            </p>
+          </div>
+
+          <div class="form-row form-row-wide four columns">
+            <label>Country: <span class="red">*</span></label>
+            <select
+              formControlName="country"
+              [(ngModel)]="education.country"
+              [ngClass]="{
+                'input-error':
+                  (e.controls.country.invalid && e.controls.country.touched) ||
+                  (e.controls.country.invalid && check$)
+              }"
+            >
+              <option *ngFor="let c of countries" [value]="c.id">
+                {{ c.name }}
+              </option>
+            </select>
+
+            <p
+              class="error2"
+              *ngIf="
+                (e.controls.country.invalid && e.controls.country.touched) ||
+                (e.controls.country.invalid && check$)
+              "
+            >
+              Country is required
+            </p>
+          </div>
+
+          <div class="form-row form-row-wide four columns">
+            <label>From Year: <span class="red">*</span></label>
+            <input
+              type="number"
+              class="input-text"
+              [(ngModel)]="education.fromYear"
+              formControlName="fromYear"
+              [ngClass]="{
+                'input-error':
+                  (e.controls.fromYear.invalid &&
+                    e.controls.fromYear.touched) ||
+                  (e.controls.fromYear.invalid && check$)
+              }"
+            />
+            <p
+              class="error2"
+              *ngIf="
+                (e.controls.fromYear.invalid && e.controls.fromYear.touched) ||
+                (e.controls.fromYear.invalid && check$)
+              "
+            >
+              From Year is required
+            </p>
+            <p
+              class="error2"
+              *ngIf="
+                (e.controls.fromYear.errors?.minLength ||
+                  e.controls.fromYear.errors?.maxLength) &&
+                e.controls.fromYear.touched
+              "
+            >
+              Invalid Year
+            </p>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="form-row form-row-wide four columns">
+            <label>From Month: <span class="red">*</span></label>
+            <select
+              [(ngModel)]="education.fromMonth"
+              formControlName="fromMonth"
+              [ngClass]="{
+                'input-error':
+                  (e.controls.fromMonth.invalid &&
+                    e.controls.fromMonth.touched) ||
+                  (e.controls.fromMonth.invalid && check$)
+              }"
+            >
+              <option *ngFor="let m of months" [value]="m">{{ m }}</option>
+            </select>
+            <p
+              class="error2"
+              *ngIf="
+                (e.controls.fromMonth.invalid &&
+                  e.controls.fromMonth.touched) ||
+                (e.controls.fromMonth.invalid && check$)
+              "
+            >
+              From Month is required
+            </p>
+          </div>
+
+          <div class="form-row form-row-wide four columns">
+            <label>To Year: <span class="red">*</span></label>
+            <input
+              type="number"
+              class="input-text"
+              [(ngModel)]="education.toYear"
+              formControlName="toYear"
+              [ngClass]="{
+                'input-error':
+                  (e.controls.toYear.invalid && e.controls.toYear.touched) ||
+                  (e.controls.toYear.invalid && check$)
+              }"
+            />
+            <p
+              class="error2"
+              *ngIf="
+                (e.controls.toYear.invalid && e.controls.toYear.touched) ||
+                (e.controls.toYear.invalid && check$)
+              "
+            >
+              To Year is required
+            </p>
+
+            <p
+              class="error2"
+              *ngIf="
+                (e.controls.toYear.errors?.minLength ||
+                  e.controls.toYear.errors?.maxLength) &&
+                e.controls.toYear.touched
+              "
+            >
+              Invalid Year
+            </p>
+          </div>
+
+          <div class="form-row form-row-wide four columns">
+            <label>To Month: <span class="red">*</span></label>
+            <select
+              formControlName="toMonth"
+              [(ngModel)]="education.toMonth"
+              [ngClass]="{
+                'input-error':
+                  (e.controls.toMonth.invalid && e.controls.toMonth.touched) ||
+                  (e.controls.toMonth.invalid && check$)
+              }"
+            >
+              <option *ngFor="let m of months" [value]="m"> {{ m }} </option>
+            </select>
+
+            <p
+              class="error2"
+              *ngIf="
+                (e.controls.toMonth.invalid && e.controls.toMonth.touched) ||
+                (e.controls.toMonth.invalid && check$)
+              "
+            >
+              To Month is required
+            </p>
+          </div>
+
+          <div class="form-row form-row-wide four columns">
+            <label>Course of Study: <span class="red">*</span></label>
+            <input
+              type="text"
+              class="input-text"
+              [(ngModel)]="education.course"
+              formControlName="course"
+              [ngClass]="{
+                'input-error':
+                  (e.controls.course.invalid && e.controls.course.touched) ||
+                  (e.controls.course.invalid && check$)
+              }"
+            />
+
+            <p
+              class="error2"
+              *ngIf="
+                (e.controls.course.invalid && e.controls.course.touched) ||
+                (e.controls.course.invalid && check$)
+              "
+            >
+              Course is required
+            </p>
+          </div>
+        </div>
+
+        <br />
+        <a
+          style="color: #fff; background: red"
+          *ngIf="educationForms.controls?.length > 1"
+          (click)="deleteEducation(i)"
+          class="button gray"
+          ><i class="fa fa-plus-circle"></i>Delete</a
+        >
+      </div>
     </div>
+
+    <a (click)="addEducation()" class="button gray"
+      ><i class="fa fa-plus-circle"></i> Add Education</a
+    >
   </div>
 
-  <br />
+  <app-error *ngIf="error2" (reload)="submit()"></app-error>
 
-  <!-- static -->
   <div class="container">
-    <h3 class="margin-bottom-10 margin-top-10">NYSC Information</h3>
-
-    <br /><br />
-
-    <p class="form-row form-row-wide four columns">
-      <label>NYSC Completed: (Optional)</label>
-      <select formControlName="NTSCcompleted">
-        <option value="yes">Yes</option>
-        <option value="no">No</option>
-        <option value="not gone">Not Gone</option>
-      </select>
-    </p>
-
-    <p class="form-row form-row-wide four columns">
-      <label>Date(dd/mm/yyyy): (Optional)</label>
-      <input
-        style="
-        padding: 14px 18px;
-        outline: none;
-        font-size: 15px;
-        color: #909090;
-        margin: 0;
-        max-width: 100%;
-        width: 100%;
-        box-sizing: border-box;
-        display: block;
-        background-color: #fcfcfc;
-        font-weight: 500;
-        border: 1px solid #e0e0e0;
-        opacity: 1;
-      "
-        placeholder="yyyy-mm-dd"
-        formControlName="NYSCDdate"
-        ngbDatepicker
-        #d2="ngbDatepicker"
-        (click)="d2.toggle()"
-      />
-    </p>
-
-    <p class="form-row form-row-wide four columns">
-      <label>NYSC Date of Completion: (Optional)</label>
-      <input
-        style="
-        padding: 14px 18px;
-        outline: none;
-        font-size: 15px;
-        color: #909090;
-        margin: 0;
-        max-width: 100%;
-        width: 100%;
-        box-sizing: border-box;
-        display: block;
-        background-color: #fcfcfc;
-        font-weight: 500;
-        border: 1px solid #e0e0e0;
-        opacity: 1;
-      "
-        placeholder="yyyy-mm-dd"
-        formControlName="NTSCcompletedDate"
-        ngbDatepicker
-        #d3="ngbDatepicker"
-        (click)="d3.toggle()"
-      />
-    </p>
+    <button type="button" (click)="submit()">{{ Submit }}</button>
   </div>
 </form>
+<br /><br /><br />

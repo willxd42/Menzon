@@ -15,8 +15,8 @@ import { JobsComponent } from "./jobs/jobs.component";
 import { SearchComponent } from "./search/search.component";
 import { UiModule } from "../ui/ui.module";
 import { JobsSingleComponent } from "./jobs-single/jobs-single.component";
-import { JobSportliteComponent } from './job-sportlite/job-sportlite.component';
-import { ClientsComponent } from './clients/clients.component';
+import { JobSportliteComponent } from "./job-sportlite/job-sportlite.component";
+import { ClientsComponent } from "./clients/clients.component";
 
 @NgModule({
   declarations: [

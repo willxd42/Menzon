@@ -8,9 +8,9 @@ import { environment } from "src/environments/environment";
 export class PostService {
   constructor(private http: HttpClient) {}
 
-  getPosts(paylad) {
+  getPosts(payload) {
     return this.http.get(`${environment.BASE_URL}/public/posts/`, {
-      params: paylad
+      params: payload
     });
   }
 }

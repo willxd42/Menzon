@@ -1,6 +1,10 @@
 import { NgModule } from "@angular/core";
 import { CommonModule } from "@angular/common";
-import { NgbModule } from "@ng-bootstrap/ng-bootstrap";
+import {
+  NgbModule,
+  NgbPaginationModule,
+  NgbAlertModule
+} from "@ng-bootstrap/ng-bootstrap";
 import { ReactiveFormsModule, FormsModule } from "@angular/forms";
 import { RouterModule } from "@angular/router";
 import { HttpClientModule } from "@angular/common/http";
@@ -24,7 +28,9 @@ import { NgxPaginationModule } from "ngx-pagination";
     FroalaViewModule.forRoot(),
     MomentModule,
     NguCarouselModule,
-    NgxPaginationModule
+    NgxPaginationModule,
+    NgbPaginationModule,
+    NgbAlertModule
   ],
   exports: [
     NgbModule,
@@ -37,7 +43,9 @@ import { NgxPaginationModule } from "ngx-pagination";
     FroalaViewModule,
     MomentModule,
     NguCarouselModule,
-    NgxPaginationModule
+    NgxPaginationModule,
+    NgbPaginationModule,
+    NgbAlertModule
   ]
 })
 export class SharedModule {}

@@ -8,9 +8,9 @@ import { environment } from "src/environments/environment";
 export class CategoryService {
   constructor(private http: HttpClient) {}
 
-  getCategorries(paylad) {
+  getCategorries(payload) {
     return this.http.get(`${environment.BASE_URL}/public/categories/`, {
-      params: paylad
+      params: payload
     });
   }
 }

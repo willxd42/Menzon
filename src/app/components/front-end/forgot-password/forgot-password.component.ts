@@ -50,7 +50,7 @@ export class ForgotPasswordComponent implements OnInit {
   }
 
   strated(res) {
-    localStorage.setItem("token", res.token);
+    localStorage.setItem("appUserToken", res.token);
     localStorage.setItem("appUser", JSON.stringify(res.appUser));
     localStorage.setItem("configs", JSON.stringify(res.configs));
     localStorage.setItem("permissions", JSON.stringify(res.permissions));

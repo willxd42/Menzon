@@ -9,6 +9,7 @@ import { ManageEducationComponent } from "./manage-education/manage-education.co
 import { EditEducationComponent } from "./edit-education/edit-education.component";
 import { EditSkillsComponent } from "./edit-skills/edit-skills.component";
 import { EditWorkHistoryComponent } from "./edit-work-history/edit-work-history.component";
+import { UiModule } from "../ui/ui.module";
 
 @NgModule({
   declarations: [
@@ -21,6 +22,6 @@ import { EditWorkHistoryComponent } from "./edit-work-history/edit-work-history.
     EditSkillsComponent,
     EditWorkHistoryComponent
   ],
-  imports: [CommonModule, SharedModule]
+  imports: [CommonModule, SharedModule, UiModule]
 })
 export class BackEndModule {}

@@ -1,7 +1,6 @@
 import { Component, OnInit } from "@angular/core";
 import { JobService } from "src/app/services/job.service";
-import { ActivatedRoute } from "@angular/router";
-
+import { ActivatedRoute, Router } from "@angular/router";
 @Component({
   selector: "app-jobs-single",
   templateUrl: "./jobs-single.component.html",
@@ -11,16 +10,24 @@ export class JobsSingleComponent implements OnInit {
   job: any;
   loading: boolean;
   error: boolean;
+  success: boolean;
   benefits: any[];
+  user: any;
+  submit = "Apply For This Job";
+  error2: boolean;
+  errMessage: any;
 
-  constructor(private jobService: JobService, private route: ActivatedRoute) {}
-
+  constructor(
+    private jobService: JobService,
+    private route: ActivatedRoute,
+    private router: Router
+  ) {}
   ngOnInit() {
-    this.loading = true
-    this.error = false
+    this.user = JSON.parse(localStorage.getItem("appUser"));
+    this.loading = true;
+    this.error = false;
     this.getJobs(1);
   }
-
   getJobs(pageNumber: number) {
     const searchFilters = {
       groupOp: "AND",
@@ -32,7 +39,6 @@ export class JobsSingleComponent implements OnInit {
         }
       ]
     };
-
     const filters = JSON.stringify(searchFilters);
     this.loading = true;
     return this.jobService
@@ -46,12 +52,42 @@ export class JobsSingleComponent implements OnInit {
         res => {
           this.job = res["rows"][0];
           this.benefits = JSON.parse(this.job.benefits);
-
           this.loading = false;
         },
         err => {
           console.log(err), (this.loading = false), (this.error = true);
         }
       );
+  }
+  apply(id: string) {
+    this.submit = "appling";
+    this.jobService
+      .applyForJob({
+        appUserId: this.user.appUserId,
+        jobId: id
+      })
+      .subscribe(
+        res => {
+          this.submit = "Apply For This Job";
+          this.success = true;
+          setTimeout(() => {
+            this.success = false;
+          }, 2000);
+        },
+        err => {
+          this.submit = "Apply For This Job";
+          this.error2 = true;
+          this.errMessage = err["error"];
+          setTimeout(() => {
+            console.log(err);
+            this.error2 = false;
+          }, 2000);
+        }
+      );
+  }
+
+  login() {
+    localStorage.setItem("returnUrl", this.router.url);
+    this.router.navigate([`/login`]);
   }
 }

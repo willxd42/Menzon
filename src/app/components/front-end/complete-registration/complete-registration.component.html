@@ -123,7 +123,7 @@
 
           <div class="row">
             <div class="form-row form-row-wide four columns">
-              <label>Date of Birth (mm/dd/yyyy):</label>
+              <label>Date of Birth (yyyy/mm/dd): <span class="red">*</span></label>
               <input
                 style="
                     padding: 14px 18px;
@@ -437,6 +437,16 @@
                   >
                     From Year is required
                   </p>
+                  <p 
+                    class="error2" 
+                    *ngIf="
+                      (e.controls.fromYear.errors?.minLength || 
+                      e.controls.fromYear.errors?.maxLength) && 
+                      (e.controls.fromYear.touched)
+                      "
+                    >
+                    Invalid Year
+                  </p>
                 </div>
               </div>
 
@@ -490,6 +500,17 @@
                     "
                   >
                     To Year is required
+                  </p>
+
+                  <p 
+                    class="error2" 
+                    *ngIf="
+                      (e.controls.toYear.errors?.minLength ||
+                      e.controls.toYear.errors?.maxLength) && 
+                      (e.controls.toYear.touched)
+                      "
+                    >
+                    Invalid Year
                   </p>
                 </div>
 
@@ -766,6 +787,16 @@
                   >
                     From Year is required
                   </p>
+                  <p 
+                    class="error2" 
+                    *ngIf="
+                      (wH.controls.fromYear.errors?.minLength ||
+                      wH.controls.fromYear.errors?.maxLength) &&
+                      (wH.controls.fromYear.touched)
+                    "
+                  >
+                    Invalid Year
+                  </p>
                 </div>
                 <div class="form-row form-row-wide four columns">
                   <label>From Month: <span class="red">*</span></label>
@@ -817,6 +848,16 @@
                     "
                   >
                     To Year is required
+                  </p>
+                  <p 
+                    class="error2"
+                    *ngIf="
+                      (wH.controls.toYear.errors?.minLength || 
+                      wH.controls.toYear.errors?.maxLength) && 
+                      (wH.controls.toYear.touched)
+                    "
+                  >
+                    Invalid Year
                   </p>
                 </div>
 

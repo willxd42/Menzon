@@ -1,64 +1,173 @@
-<form [formGroup]="cRForm" class="container">
-  <div formGroupName="skills">
-    <h3 class="margin-bottom-10 margin-top-10">Edit Skills</h3>
+<app-loading-spinner *ngIf="loading"></app-loading-spinner>
 
-    <br /><br />
+<app-error *ngIf="error" (reload)="ngOnInit()"></app-error>
 
-    <div
-      *ngFor="let s of skillsForms.controls; let i = index"
-      [formGroupName]="i"
-    >
-      <div class="form-row form-row-wide three columns">
-        <label>Skill: <span class="red">*</span></label>
-        <input type="text" class="input-text" formControlName="skill" />
+<form [formGroup]="cRForm" *ngIf="!loading && !error">
+  <div class="container">
+    <div formGroupName="skills">
+      <h3 class="margin-bottom-10 margin-top-10">Skills</h3>
+
+      <br /><br />
+
+      <div
+        class="row"
+        *ngFor="let s of skillsForms.controls; let i = index"
+        [formGroupName]="i"
+      >
+        <div class="row">
+          <div class="form-row form-row-wide three columns">
+            <label>Skill: <span class="red">*</span></label>
+            <input
+              type="text"
+              class="input-text"
+              [(ngModel)]="skills.skill"
+              formControlName="skill"
+              [ngClass]="{
+                'input-error':
+                  (s.controls.skill.invalid && s.controls.skill.touched) ||
+                  (s.controls.skill.invalid && check$)
+              }"
+            />
+            <p
+              class="error2"
+              *ngIf="
+                (s.controls.skill.invalid && s.controls.skill.touched) ||
+                (s.controls.skill.invalid && check$)
+              "
+            >
+              Skill is required
+            </p>
+          </div>
+
+          <div class="form-row form-row-wide three columns">
+            <label>Skill Level: <span class="red">*</span></label>
+            <select
+              [(ngModel)]="skills.skillLevel"
+              formControlName="skillLevel"
+              [ngClass]="{
+                'input-error':
+                  (s.controls.skillLevel.invalid &&
+                    s.controls.skillLevel.touched) ||
+                  (s.controls.skillLevel.invalid && check$)
+              }"
+            >
+              <option *ngFor="let sk of skillLevel" [value]="sk">
+                {{ sk }}
+              </option>
+            </select>
+
+            <p
+              class="error2"
+              *ngIf="
+                (s.controls.skillLevel.invalid &&
+                  s.controls.skillLevel.touched) ||
+                (s.controls.skillLevel.invalid && check$)
+              "
+            >
+              Skill Level is required
+            </p>
+          </div>
+
+          <div class="form-row form-row-wide three columns">
+            <label>Last Year Used: <span class="red">*</span></label>
+            <input
+              type="number"
+              class="input-text"
+              [(ngModel)]="skills.lastYearUsed"
+              formControlName="lastYearUsed"
+              [ngClass]="{
+                'input-error':
+                  (s.controls.lastYearUsed.invalid &&
+                    s.controls.lastYearUsed.touched) ||
+                  (s.controls.lastYearUsed.invalid && check$)
+              }"
+            />
+            <p
+              class="error2"
+              *ngIf="
+                (s.controls.lastYearUsed.invalid &&
+                  s.controls.lastYearUsed.touched) ||
+                (s.controls.lastYearUsed.invalid && check$)
+              "
+            >
+              Last Year Used is required
+            </p>
+          </div>
+
+          <div class="form-row form-row-wide three columns">
+            <label>Last Month Used: <span class="red">*</span></label>
+            <select
+              [(ngModel)]="skills.lastMonthUsed"
+              formControlName="lastMonthUsed"
+              [ngClass]="{
+                'input-error':
+                  (s.controls.lastMonthUsed.invalid &&
+                    s.controls.lastMonthUsed.touched) ||
+                  (s.controls.lastMonthUsed.invalid && check$)
+              }"
+            >
+              <option *ngFor="let m of months" [value]="m"> {{ m }} </option>
+            </select>
+
+            <p
+              class="error2"
+              *ngIf="
+                (s.controls.lastMonthUsed.invalid &&
+                  s.controls.lastMonthUsed.touched) ||
+                (s.controls.lastMonthUsed.invalid && check$)
+              "
+            >
+              Last Month Used is required
+            </p>
+          </div>
+
+          <div class="form-row form-row-wide three columns">
+            <label>Years of Experience: <span class="red">*</span></label>
+            <input
+              type="text"
+              class="input-text"
+              [(ngModel)]="skills.yearsOfExperience"
+              formControlName="yearsOfExperience"
+              [ngClass]="{
+                'input-error':
+                  (s.controls.yearsOfExperience.invalid &&
+                    s.controls.yearsOfExperience.touched) ||
+                  (s.controls.yearsOfExperience.invalid && check$)
+              }"
+            />
+            <p
+              class="error2"
+              *ngIf="
+                (s.controls.yearsOfExperience.invalid &&
+                  s.controls.yearsOfExperience.touched) ||
+                (s.controls.yearsOfExperience.invalid && check$)
+              "
+            >
+              Years Of Experience is required
+            </p>
+          </div>
+        </div>
+
+        <br />
+        <a
+          style="color: #fff; background: red"
+          *ngIf="skillsForms.controls?.length > 1"
+          (click)="deleteSkill(i)"
+          class="button gray"
+          ><i class="fa fa-plus-circle"></i>Delete</a
+        >
       </div>
-
-      <div class="form-row form-row-wide three columns">
-        <label>Skill Level: <span class="red">*</span></label>
-        <select formControlName="skillLevel">
-          <option value="">demo</option>
-          <option value="">demo</option>
-          <option value="">demo</option>
-          <option value="">demo</option>
-          <option value="">demo</option>
-        </select>
-      </div>
-
-      <div class="form-row form-row-wide three columns">
-        <label>Last Year Used: <span class="red">*</span></label>
-        <select formControlName="lastYearUsed">
-          <option value="">demo</option>
-          <option value="">demo</option>
-          <option value="">demo</option>
-          <option value="">demo</option>
-          <option value="">demo</option>
-        </select>
-      </div>
-
-      <div class="form-row form-row-wide three columns">
-        <label>Last Month Used: <span class="red">*</span></label>
-        <select formControlName="lastMonthUsed">
-          <option value="">demo</option>
-          <option value="">demo</option>
-          <option value="">demo</option>
-          <option value="">demo</option>
-          <option value="">demo</option>
-        </select>
-      </div>
-
-      <div class="form-row form-row-wide three columns">
-        <label>Years of Experience: <span class="red">*</span></label>
-        <input
-          type="text"
-          class="input-text"
-          formControlName="yearsOfExperience"
-        />
-      </div>
-
-      <br />
-      <br />
-      <br />
-      <br />
     </div>
+
+    <br />
+    <a (click)="addSkill()" class="button gray"
+      ><i class="fa fa-plus-circle"></i> Add Skill</a
+    >
+  </div>
+
+  <app-error *ngIf="error2" (reload)="submit()"></app-error>
+
+  <div class="container">
+    <button type="button" (click)="submit()">{{ Submit }}</button>
   </div>
 </form>

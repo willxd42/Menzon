@@ -103,16 +103,25 @@
             </li>
           </ul>
 
-          <a href="#small-dialog" class="popup-with-zoom-anim button"
-            >Apply For This Job</a
-          >
+          <p *ngIf="error2" class="error2">{{ errMessage }}</p>
 
-          <div id="small-dialog" class="zoom-anim-dialog mfp-hide apply-popup">
-            <div class="small-dialog-headline">
-              <h2>Are You Sure You Want ToThis Job</h2>
-            </div>
-            <button class="send">Proceed</button>
-          </div>
+          <p *ngIf="success" class="success">Applied for job Successfully!</p>
+
+          <a
+            *ngIf="user"
+            (click)="apply(j.id)"
+            class="popup-with-zoom-anim button"
+          >
+            {{ submit }}
+          </a>
+
+          <a
+            *ngIf="!user"
+            (click)="login()"
+            class="popup-with-zoom-anim button"
+          >
+            Login To Apply
+          </a>
         </div>
       </div>
     </div>

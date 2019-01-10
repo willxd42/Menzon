@@ -8,9 +8,9 @@ import { HttpClient } from "@angular/common/http";
 export class CountriesService {
   constructor(private http: HttpClient) {}
 
-  getCountries(paylad) {
+  getCountries(payload) {
     return this.http.get(`${environment.BASE_URL}/public/countries/`, {
-      params: paylad
+      params: payload
     });
   }
 }

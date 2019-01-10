@@ -8,9 +8,9 @@ import { environment } from "src/environments/environment";
 export class ClientsService {
   constructor(private http: HttpClient) {}
 
-  getClients(paylad) {
+  getClients(payload) {
     return this.http.get(`${environment.BASE_URL}/public/clients/`, {
-      params: paylad
+      params: payload
     });
   }
 }

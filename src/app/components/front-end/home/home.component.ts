@@ -201,6 +201,21 @@ export class HomeComponent implements OnInit {
     this.router.navigate(["/jobs"]);
   }
 
+  searchCategory(val : string) {
+    const searchFilter = {
+      groupOp: "AND",
+      rules: [
+        {
+          field: "jobFunction.id",
+          op: "eq",
+          data: val
+        },
+      ]
+    };
+    localStorage.setItem("searchFilter", JSON.stringify(searchFilter));
+    this.router.navigate(["/jobs"]);
+  }
+
   initError() {
     console.log("yes");
     this.error2 = true;

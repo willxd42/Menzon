@@ -72,15 +72,15 @@ const routes: Routes = [
     component: EditProfileComponent
   },
   {
-    path: "edit-work-history",
+    path: "edit-work-history/:id",
     component: EditWorkHistoryComponent
   },
   {
-    path: "edit-skill",
+    path: "edit-skill/:id",
     component: EditSkillsComponent
   },
   {
-    path: "edit-education",
+    path: "edit-education/:id",
     component: EditEducationComponent
   },
   {

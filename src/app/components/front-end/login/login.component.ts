@@ -35,6 +35,8 @@ export class LoginComponent implements OnInit {
   }
 
   submit() {
+    console.log("d");
+
     this.loading = true;
     this.error = false;
     this.userService
@@ -57,12 +59,16 @@ export class LoginComponent implements OnInit {
   }
 
   strated(res) {
-    localStorage.setItem("token", res.token);
+    localStorage.setItem("appUserToken", res.token);
     localStorage.setItem("appUser", JSON.stringify(res.appUser));
     localStorage.setItem("configs", JSON.stringify(res.configs));
     localStorage.setItem("permissions", JSON.stringify(res.permissions));
 
-    this.router.navigate(["/profile"]);
+    const url = localStorage.getItem("returnUrl") || "/profile";
+
+    this.router.navigateByUrl(url);
+
+    localStorage.removeItem("returnUrl");
   }
 
   check() {

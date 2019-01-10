@@ -1,81 +1,232 @@
 <form [formGroup]="cRForm" class="container">
-  <div class="container">
-    <div formGroupName="workHistory">
-      <h3 class="margin-bottom-10 margin-top-10">Edit Work History</h3>
+  <div formGroupName="workHistory">
+    <h3 class="margin-bottom-10 margin-top-10">Work History</h3>
 
-      <br /><br />
+    <br /><br />
 
-      <div
-        *ngFor="let wH of workHistoryForms.controls; let i = index"
-        [formGroupName]="i"
-      >
-        <p class="form-row form-row-wide five columns">
-          <label>Company:</label>
-          <input type="text" class="input-text" formControlName="company" />
-        </p>
+    <div
+      class="row"
+      *ngFor="let wH of workHistoryForms.controls; let i = index"
+      [formGroupName]="i"
+    >
+      <div class="row">
+        <div class="form-row form-row-wide five columns">
+          <label>Company: <span class="red">*</span></label>
+          <input
+            type="text"
+            class="input-text"
+            [(ngModel)]="workHistory.company"
+            formControlName="company"
+            [ngClass]="{
+              'input-error':
+                (wH.controls.company.invalid && wH.controls.company.touched) ||
+                (wH.controls.company.invalid && check$)
+            }"
+          />
+          <p
+            class="error2"
+            *ngIf="
+              (wH.controls.company.invalid && wH.controls.company.touched) ||
+              (wH.controls.company.invalid && check$)
+            "
+          >
+            Company is required
+          </p>
+        </div>
 
-        <p class="form-row form-row-wide five columns">
-          <label>Job Title:</label>
-          <input type="number" class="input-text" formControlName="jobTitle" />
-        </p>
+        <div class="form-row form-row-wide five columns">
+          <label>Job Title: <span class="red">*</span></label>
+          <input
+            type="text"
+            class="input-text"
+            [(ngModel)]="workHistory.jobTitle"
+            formControlName="jobTitle"
+            [ngClass]="{
+              'input-error':
+                (wH.controls.jobTitle.invalid &&
+                  wH.controls.jobTitle.touched) ||
+                (wH.controls.jobTitle.invalid && check$)
+            }"
+          />
+          <p
+            class="error2"
+            *ngIf="
+              (wH.controls.jobTitle.invalid && wH.controls.jobTitle.touched) ||
+              (wH.controls.jobTitle.invalid && check$)
+            "
+          >
+            Job Title is required
+          </p>
+        </div>
 
-        <p class="form-row form-row-wide five columns">
-          <label>Country:</label>
-          <select formControlName="country">
-            <option value="">demo</option>
-            <option value="">demo</option>
-            <option value="">demo</option>
-            <option value="">demo</option>
-            <option value="">demo</option>
+        <div class="form-row form-row-wide five columns">
+          <label>Country: <span class="red">*</span></label>
+          <select
+            formControlName="country"
+            [(ngModel)]="workHistory.country"
+            [ngClass]="{
+              'input-error':
+                (wH.controls.country.invalid && wH.controls.country.touched) ||
+                (wH.controls.country.invalid && check$)
+            }"
+          >
+            <option *ngFor="let c of countries" [value]="c.id">
+              {{ c.name }}
+            </option>
           </select>
-        </p>
-
-        <p class="form-row form-row-wide four columns">
-          <label>From Year:</label>
-          <select formControlName="fromYear">
-            <option value="">demo</option>
-            <option value="">demo</option>
-            <option value="">demo</option>
-            <option value="">demo</option>
-            <option value="">demo</option>
-          </select>
-        </p>
-
-        <p class="form-row form-row-wide four columns">
-          <label>From Month:</label>
-          <select formControlName="fromMonth">
-            <option value="">demo</option>
-            <option value="">demo</option>
-            <option value="">demo</option>
-            <option value="">demo</option>
-            <option value="">demo</option>
-          </select>
-        </p>
-
-        <p class="form-row form-row-wide four columns">
-          <label>To Year:</label>
-          <select formControlName="toYear">
-            <option value="">demo</option>
-            <option value="">demo</option>
-            <option value="">demo</option>
-            <option value="">demo</option>
-            <option value="">demo</option>
-          </select>
-        </p>
-
-        <p class="form-row form-row-wide four columns">
-          <label>To Month:</label>
-          <select formControlName="toMonth">
-            <option value="">demo</option>
-            <option value="">demo</option>
-            <option value="">demo</option>
-            <option value="">demo</option>
-            <option value="">demo</option>
-          </select>
-        </p>
-
-        <br />
+          <p
+            class="error2"
+            *ngIf="
+              (wH.controls.country.invalid && wH.controls.country.touched) ||
+              (wH.controls.country.invalid && check$)
+            "
+          >
+            Country is required
+          </p>
+        </div>
       </div>
+
+      <div class="row">
+        <div class="form-row form-row-wide four columns">
+          <label>From Year: <span class="red">*</span></label>
+          <input
+            type="number"
+            class="input-text"
+            formControlName="fromYear"
+            [(ngModel)]="workHistory.fromYear"
+            [ngClass]="{
+              'input-error':
+                (wH.controls.fromYear.invalid &&
+                  wH.controls.fromYear.touched) ||
+                (wH.controls.fromYear.invalid && check$)
+            }"
+          />
+          <p
+            class="error2"
+            *ngIf="
+              (wH.controls.fromYear.invalid && wH.controls.fromYear.touched) ||
+              (wH.controls.fromYear.invalid && check$)
+            "
+          >
+            From Year is required
+          </p>
+          <p
+            class="error2"
+            *ngIf="
+              (wH.controls.fromYear.errors?.minLength ||
+                wH.controls.fromYear.errors?.maxLength) &&
+              wH.controls.fromYear.touched
+            "
+          >
+            Invalid Year
+          </p>
+        </div>
+        <div class="form-row form-row-wide four columns">
+          <label>From Month: <span class="red">*</span></label>
+          <select
+            formControlName="fromMonth"
+            [(ngModel)]="workHistory.fromMonth"
+            [ngClass]="{
+              'input-error':
+                (wH.controls.fromMonth.invalid &&
+                  wH.controls.fromMonth.touched) ||
+                (wH.controls.fromMonth.invalid && check$)
+            }"
+          >
+            <option *ngFor="let m of months" [value]="m"> {{ m }} </option>
+          </select>
+          <p
+            class="error2"
+            *ngIf="
+              (wH.controls.fromMonth.invalid &&
+                wH.controls.fromMonth.touched) ||
+              (wH.controls.fromMonth.invalid && check$)
+            "
+          >
+            From Month is required
+          </p>
+        </div>
+
+        <div class="form-row form-row-wide four columns">
+          <label>To Year: <span class="red">*</span></label>
+          <input
+            type="number"
+            class="input-text"
+            [(ngModel)]="workHistory.toYear"
+            formControlName="toYear"
+            [ngClass]="{
+              'input-error':
+                (wH.controls.toYear.invalid && wH.controls.toYear.touched) ||
+                (wH.controls.toYear.invalid && check$)
+            }"
+          />
+
+          <p
+            class="error2"
+            *ngIf="
+              (wH.controls.toYear.invalid && wH.controls.toYear.touched) ||
+              (wH.controls.toYear.invalid && check$)
+            "
+          >
+            To Year is required
+          </p>
+          <p
+            class="error2"
+            *ngIf="
+              (wH.controls.toYear.errors?.minLength ||
+                wH.controls.toYear.errors?.maxLength) &&
+              wH.controls.toYear.touched
+            "
+          >
+            Invalid Year
+          </p>
+        </div>
+
+        <div class="form-row form-row-wide four columns">
+          <label>To Month: <span class="red">*</span></label>
+          <select
+            formControlName="toMonth"
+            [(ngModel)]="workHistory.toMonth"
+            [ngClass]="{
+              'input-error':
+                (wH.controls.toMonth.invalid && wH.controls.toMonth.touched) ||
+                (wH.controls.toMonth.invalid && check$)
+            }"
+          >
+            <option *ngFor="let m of months" [value]="m"> {{ m }} </option>
+          </select>
+
+          <p
+            class="error2"
+            *ngIf="
+              (wH.controls.toYear.invalid && wH.controls.toYear.touched) ||
+              (wH.controls.toYear.invalid && check$)
+            "
+          >
+            To Year is required
+          </p>
+        </div>
+      </div>
+
+      <br />
+      <a
+        *ngIf="workHistoryForms.controls?.length > 1"
+        (click)="deleteWorkHistory(i)"
+        class="button gray"
+        style="color: #fff; background: red"
+        ><i class="fa fa-plus-circle"></i>Delete</a
+      >
     </div>
+  </div>
+
+  <br />
+  <a (click)="addWorkHistory()" class="button gray"
+    ><i class="fa fa-plus-circle"></i> Add Work History</a
+  >
+
+  <app-error *ngIf="error2" (reload)="submit()"></app-error>
+
+  <div class="container">
+    <button type="button" (click)="submit()">{{ Submit }}</button>
   </div>
 </form>

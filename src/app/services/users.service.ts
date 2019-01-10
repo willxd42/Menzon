@@ -9,13 +9,13 @@ export class UsersService {
   httpOptions = {
     headers: new HttpHeaders({
       "Content-Type": "application/json",
-      Authorization: localStorage.getItem("token")
+      Authorization: localStorage.getItem("appUserToken")
     })
   };
 
   httpOptionsForMultipartData = {
     headers: new HttpHeaders({
-      Authorization: localStorage.getItem("token")
+      Authorization: localStorage.getItem("appUserToken")
     })
   };
   constructor(private http: HttpClient) {}
@@ -37,11 +37,7 @@ export class UsersService {
   }
 
   loginUser(payload) {
-    return this.http.post(
-      `${environment.BASE_URL}/auth/login/`,
-      payload,
-      this.httpOptions
-    );
+    return this.http.post(`${environment.BASE_URL}/auth/login/`, payload);
   }
 
   completeRegistration(payload) {
@@ -49,6 +45,13 @@ export class UsersService {
       `${environment.BASE_URL}/users/${payload.appUserId}/candidate/`,
       payload.body,
       this.httpOptionsForMultipartData
+    );
+  }
+
+  getSingleUserDetails(payload) {
+    return this.http.get(
+      `${environment.BASE_URL}/users/${payload}/candidate/`,
+      this.httpOptions
     );
   }
 }

@@ -7,6 +7,7 @@ import {
   Input
 } from "@angular/core";
 import { NguCarousel, NguCarouselConfig } from "@ngu/carousel";
+import { NgbModal } from "@ng-bootstrap/ng-bootstrap";
 
 @Component({
   selector: "app-job-sportlite",
@@ -20,7 +21,7 @@ export class JobSportliteComponent implements OnInit, AfterViewInit {
 
   @ViewChild("jobSportliteCarousel") jobSportliteCarousel: NguCarousel<any>;
 
-  constructor(private cdr: ChangeDetectorRef) {}
+  constructor(private cdr: ChangeDetectorRef, private modalService: NgbModal) {}
 
   ngOnInit() {
     this.carouselTile = {

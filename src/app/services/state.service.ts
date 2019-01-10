@@ -13,9 +13,9 @@ export class StateService {
   };
   constructor(private http: HttpClient) {}
 
-  getState(paylad) {
+  getState(payload) {
     return this.http.get(`${environment.BASE_URL}/public/states/`, {
-      params: paylad
+      params: payload
     });
   }
 }
