@@ -5,7 +5,7 @@
 <form [formGroup]="cRForm" *ngIf="!loading && !error">
   <div class="container">
     <div formGroupName="education">
-      <h3 class="margin-bottom-10 margin-top-10">Edit Education</h3>
+      <h3 class="margin-bottom-10 margin-top-10">Add Education</h3>
 
       <br />
       <div
@@ -20,7 +20,6 @@
             <input
               type="text"
               class="input-text"
-              [(ngModel)]="education.institution"
               formControlName="institution"
               [ngClass]="{
                 'input-error':
@@ -46,7 +45,6 @@
             <input
               type="text"
               class="input-text"
-              [(ngModel)]="education.degree"
               formControlName="degree"
               [ngClass]="{
                 'input-error':
@@ -69,7 +67,6 @@
             <label>Country: <span class="red">*</span></label>
             <select
               formControlName="country"
-              [(ngModel)]="education.country"
               [ngClass]="{
                 'input-error':
                   (e.controls.country.invalid && e.controls.country.touched) ||
@@ -97,7 +94,6 @@
             <input
               type="number"
               class="input-text"
-              [(ngModel)]="education.fromYear"
               formControlName="fromYear"
               [ngClass]="{
                 'input-error':
@@ -132,7 +128,6 @@
           <div class="form-row form-row-wide four columns">
             <label>From Month: <span class="red">*</span></label>
             <select
-              [(ngModel)]="education.fromMonth"
               formControlName="fromMonth"
               [ngClass]="{
                 'input-error':
@@ -160,7 +155,6 @@
             <input
               type="number"
               class="input-text"
-              [(ngModel)]="education.toYear"
               formControlName="toYear"
               [ngClass]="{
                 'input-error':
@@ -194,7 +188,6 @@
             <label>To Month: <span class="red">*</span></label>
             <select
               formControlName="toMonth"
-              [(ngModel)]="education.toMonth"
               [ngClass]="{
                 'input-error':
                   (e.controls.toMonth.invalid && e.controls.toMonth.touched) ||
@@ -220,7 +213,6 @@
             <input
               type="text"
               class="input-text"
-              [(ngModel)]="education.course"
               formControlName="course"
               [ngClass]="{
                 'input-error':
@@ -252,9 +244,9 @@
       </div>
     </div>
 
-    <!-- <a (click)="addEducation()" class="button gray"
+    <a (click)="addEducation()" class="button gray"
       ><i class="fa fa-plus-circle"></i> Add Education</a
-    > -->
+    >
   </div>
 
   <app-error *ngIf="error2" (reload)="submit()"></app-error>

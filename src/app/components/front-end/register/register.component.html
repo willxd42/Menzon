@@ -131,19 +131,21 @@
               </p>
             </div>
           </div>
-          <div class="error2" *ngIf="!comfirmPassword$ && password2.touched">
-            Your password did not match please re - enter your password
-          </div>
+          <div class="container" style="padding-left: 10px">
+            <div class="error2" *ngIf="!comfirmPassword$ && password2.touched">
+              Your password did not match please re - enter your password
+            </div>
 
-          <div class="form-row">
-            <button
-              type="submit"
-              class="button"
-              [disabled]="registerForm.invalid"
-              (click)="submit()"
-            >
-              Register
-            </button>
+            <div class="form-row">
+              <button
+                type="submit"
+                class="button"
+                [disabled]="registerForm.invalid"
+                (click)="submit()"
+              >
+                Register
+              </button>
+            </div>
           </div>
         </form>
       </div>

@@ -12,17 +12,19 @@
 
 <app-error *ngIf="error" (reload)="ngOnInit()"></app-error>
 
-<div class="container">
-  <div *ngIf="!loading && !error">
+<div class="container" *ngIf="!loading && !error">
+  <div>
     <!-- Submit Page -->
     <div class="sixteen columns">
       <div class="submit-page">
         <!-- Notice -->
-        <div class="notification notice closeable margin-bottom-40">
+        <div
+          class="notification notice closeable margin-bottom-40"
+          *ngIf="!u.emailVerified"
+        >
           <p>
-            <span>Have an account?</span> If you don’t have an account you can
-            create one below by entering your email address. A password will be
-            automatically emailed to you.
+            <span>Your Email is not verified</span> Please click <a>here</a> to
+            verify
           </p>
         </div>
       </div>
@@ -96,16 +98,16 @@
             <div class="form-row form-row-wide four columns">
               <label>Gender: <span class="red">*</span></label>
               <select
-                formControlName="gender"
                 [(ngModel)]="user.gender"
+                formControlName="gender"
                 [ngClass]="{
                   'input-error':
                     (gender.invalid && gender.touched) ||
                     (checked && gender.touched)
                 }"
               >
-                <option value="male">Male</option>
-                <option value="female">Female</option>
+                <option value="Male">Male</option>
+                <option value="Female">Female</option>
               </select>
               <p
                 class="error2"
@@ -124,7 +126,7 @@
               <label
                 >Date of Birth (yyyy/mm/dd): <span class="red">*</span></label
               >
-              <input
+              <!-- <input
                 style="
                                 padding: 14px 18px;
                                 outline: none;
@@ -145,7 +147,17 @@
                 ngbDatepicker
                 #d="ngbDatepicker"
                 (click)="d.toggle()"
-                [(ngModel)]="user.birthday"
+                [ngClass]="{
+                  'input-error':
+                    (dateOfBirth.invalid && dateOfBirth.touched) ||
+                    (checked && dateOfBirth.touched)
+                }"
+              /> -->
+              <input
+                type="text"
+                [(ngModel)]="birthday"
+                placeholder="yyyy-mm-dd"
+                formControlName="dateOfBirth"
                 [ngClass]="{
                   'input-error':
                     (dateOfBirth.invalid && dateOfBirth.touched) ||
@@ -191,7 +203,7 @@
               <input
                 type="text"
                 class="input-text"
-                [(ngModel)]="user.mobileNumber"
+                [(ngModel)]="user.mobilePhone"
                 formControlName="mobileNumber"
               />
             </div>
@@ -285,9 +297,79 @@
         <br />
 
         <div class="container">
-          <h3 class="margin-bottom-10 margin-top-10">Additional Information</h3>
+          <h3 class="margin-bottom-10 margin-top-10">NYSC Information</h3>
 
           <br /><br />
+
+          <div class="form-row form-row-wide five columns">
+            <label>NYSC Completed: (Optional)</label>
+            <select
+              [(ngModel)]="user.nyscCompleted"
+              formControlName="NTSCcompleted"
+            >
+              <option value="yes">Yes</option>
+              <option value="no">No</option>
+              <option value="not gone">Not Gone</option>
+            </select>
+          </div>
+
+          <div class="form-row form-row-wide five columns">
+            <label>Date(dd/mm/yyyy): (Optional)</label>
+            <input
+              type="text"
+              style="
+                padding: 14px 18px;
+                outline: none;
+                font-size: 15px;
+                color: #909090;
+                margin: 0;
+                max-width: 100%;
+                width: 100%;
+                box-sizing: border-box;
+                display: block;
+                background-color: #fcfcfc;
+                font-weight: 500;
+                border: 1px solid #e0e0e0;
+                opacity: 1;
+              "
+              class="input-text"
+              placeholder="yyyy-mm-dd"
+              [(ngModel)]="dateNyscStarted"
+              formControlName="NYSCDate"
+            />
+          </div>
+
+          <div class="form-row form-row-wide five columns">
+            <label>NYSC Date of Completion: (Optional)</label>
+            <input
+              type="text"
+              style="
+                padding: 14px 18px;
+                outline: none;
+                font-size: 15px;
+                color: #909090;
+                margin: 0;
+                max-width: 100%;
+                width: 100%;
+                box-sizing: border-box;
+                display: block;
+                background-color: #fcfcfc;
+                font-weight: 500;
+                border: 1px solid #e0e0e0;
+                opacity: 1;
+              "
+              class="input-text"
+              placeholder="yyyy-mm-dd"
+              [(ngModel)]="dateNyscCompleted"
+              formControlName="NTSCcompletedDate"
+            />
+          </div>
+        </div>
+
+        <div class="container">
+          <h3 class="margin-bottom-10 margin-top-10">Additional Information</h3>
+
+          <br />
 
           <div style="margin-top: 50px;" class="form">
             <h5>Photo (Optional)</h5>
@@ -306,6 +388,32 @@
             <span class="fake-input" *ngIf="selectedPhotoFile">{{
               photo
             }}</span>
+          </div>
+
+          <div style="margin-top: 35px;" class="form-row form-row-wide">
+            <label>Resume Headline: <span class="red">*</span></label>
+            <input
+              type="text"
+              class="input-text"
+              formControlName="cvTitle"
+              [(ngModel)]="user.cvTitle"
+              cols="30"
+              rows="3"
+              [ngClass]="{
+                'input-error':
+                  (cvTitle.invalid && cvTitle.touched) ||
+                  (cvTitle.invalid && checked)
+              }"
+            />
+            <p
+              class="error2"
+              *ngIf="
+                (cvTitle.invalid && cvTitle.touched) ||
+                (cvTitle.invalid && checked)
+              "
+            >
+              Your Resume Headline is required
+            </p>
           </div>
 
           <div style="margin-top: 50px;" class="form">
@@ -329,7 +437,7 @@
             <label>Tell Us About Your self: <span class="red">*</span></label>
             <textarea
               [froalaEditor]="options"
-              [(ngModel)]="user.cvText"
+              [(ngModel)]="user.cvtext"
               placeholder="Start Typing..."
               formControlName="tellUsAboutYourSelf"
               [ngClass]="{
@@ -353,12 +461,6 @@
         </div>
 
         <br />
-        <button *ngIf="cRForm.invalid" type="button" (click)="check()">
-          {{ Finish }}
-        </button>
-        <button *ngIf="!cRForm.invalid" type="button" (click)="submit()">
-          {{ Finish }}
-        </button>
       </form>
     </div>
   </div>
@@ -376,9 +478,9 @@
 
       <table class="manage-table resumes responsive-table">
         <tr>
-          <th><i class="fa fa-user"></i> Institution</th>
-          <th><i class="fa fa-file-text"></i> Course</th>
-          <th><i class="fa fa-map-marker"></i> Years of Study</th>
+          <th>Institution</th>
+          <th>Course</th>
+          <th>Years of Study</th>
           <th></th>
         </tr>
 
@@ -398,6 +500,9 @@
       </table>
 
       <br />
+      <a [routerLink]="['/add-education']" class="button gray"
+        ><i class="fa fa-plus-circle"></i> Add Education</a
+      >
     </div>
   </div>
 
@@ -414,8 +519,8 @@
 
       <table class="manage-table resumes responsive-table">
         <tr>
-          <th><i class="fa fa-user"></i> Skill</th>
-          <th><i class="fa fa-file-text"></i> Level</th>
+          <th>Skill</th>
+          <th>Level</th>
           <th></th>
         </tr>
         <tr *ngFor="let s of skills; let i = index">
@@ -433,6 +538,9 @@
       </table>
 
       <br />
+      <a [routerLink]="['/add-skill']" class="button gray"
+        ><i class="fa fa-plus-circle"></i> Add Skill</a
+      >
     </div>
   </div>
 
@@ -449,15 +557,13 @@
 
       <table class="manage-table resumes responsive-table">
         <tr>
-          <th><i class="fa fa-user"></i> Company</th>
-          <!-- <th><i class="fa fa-map-marker"></i> Year</th> -->
+          <th>Company</th>
+          <th>Year</th>
           <th></th>
         </tr>
-        <tr>
-          <td class="title" *ngFor="let w of workHistory; let i = index">
-            {{ w.company }}
-          </td>
-          <!-- <td>{{ w.formYear }} - {{ w.toYear }}</td> -->
+        <tr *ngFor="let w of workHistory; let i = index">
+          <td class="title">{{ w.company }}</td>
+          <td>{{ w.fromYear }} - {{ w.toYear }}</td>
           <td class="action">
             <button (click)="editWorkHistory(i)">
               <i class="fa fa-pencil"></i> Edit
@@ -470,8 +576,22 @@
       </table>
 
       <br />
+      <a [routerLink]="['/add-work-history']" class="button gray"
+        ><i class="fa fa-plus-circle"></i> Add Work History</a
+      >
     </div>
   </div>
+
+  <p *ngIf="error2" class="error2">{{ errMessage }}</p>
+  <br />
+  <button *ngIf="cRForm.invalid" type="button" (click)="check()">
+    {{ Finish }}
+  </button>
+  <button *ngIf="!cRForm.invalid" type="button" (click)="submit()">
+    {{ Finish }}
+  </button>
 </div>
 
 <div class="divider margin-top-0 padding-reset"></div>
+
+<br /><br />

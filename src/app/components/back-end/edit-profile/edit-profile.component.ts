@@ -1,17 +1,11 @@
 import { Component, OnInit } from "@angular/core";
 import { Router } from "@angular/router";
-import {
-  FormGroup,
-  FormBuilder,
-  FormControl,
-  Validators
-} from "@angular/forms";
+import { FormGroup, FormControl, Validators } from "@angular/forms";
 import { NgbCalendar } from "@ng-bootstrap/ng-bootstrap";
-import { monthOfTheYear } from "src/app/mock/months";
-import { skillLevel } from "src/app/mock/stillLevel";
 import { StateService } from "src/app/services/state.service";
 import { CountriesService } from "src/app/services/countries.service";
 import { UsersService } from "src/app/services/users.service";
+import { GloberService } from 'src/app/services/glober.service';
 
 @Component({
   selector: "app-edit-profile",
@@ -38,7 +32,8 @@ export class EditProfileComponent implements OnInit {
   check$: boolean;
   cvFile$: any;
   photoFile$: any;
-  Finish = "Finish";
+  Finish = "Save";
+  u: any;
   public options: Object = {
     charCounterCount: true,
     // Set the image upload parameter.
@@ -122,14 +117,20 @@ export class EditProfileComponent implements OnInit {
     }
   };
 
+  birthday: string;
+  dateNyscStarted: string;
+  dateNyscCompleted: string;
+  errMessage: string;
+
   constructor(
-    private fb: FormBuilder,
-    private calendar: NgbCalendar,
     private router: Router,
     private stateService: StateService,
     private countryService: CountriesService,
-    private userService: UsersService
-  ) {
+    private userService: UsersService,    
+    public globalService: GloberService
+    ) {
+      this.globalService.change$.subscribe(res => this.ngOnInit());
+  
     this.cRForm = new FormGroup({
       firstName: new FormControl("", Validators.compose([Validators.required])),
       lastName: new FormControl("", Validators.compose([Validators.required])),
@@ -154,18 +155,32 @@ export class EditProfileComponent implements OnInit {
         Validators.compose([Validators.required])
       ),
       cvFile: new FormControl(""),
-      photoFile: new FormControl("")
+      cvTitle: new FormControl("", Validators.compose([Validators.required])),
+      photoFile: new FormControl(""),
+      NYSCDate: new FormControl("", Validators.compose([Validators.required])),
+      NTSCcompleted: new FormControl(
+        "",
+        Validators.compose([Validators.required])
+      ),
+      NTSCcompletedDate: new FormControl(
+        "",
+        Validators.compose([Validators.required])
+      )
     });
   }
 
   ngOnInit() {
     this.loading = true;
     this.error = false;
+    this.u = JSON.parse(localStorage.getItem("appUser"));
     this.user = JSON.parse(localStorage.getItem("appUser"));
     this.userService.getSingleUserDetails(this.user.appUserId).subscribe(
       res => {
         console.log(res);
         this.user = res;
+        this.birthday = this.formatDate(this.user.birthday);
+        this.dateNyscStarted = this.formatDate(this.user.dateNyscStarted);
+        this.dateNyscCompleted = this.formatDate(this.user.dateNyscCompleted);
         this.skills = JSON.parse(res["skills"]);
         this.education = JSON.parse(res["education"]);
         this.workHistory = JSON.parse(res["workHistory"]);
@@ -180,6 +195,18 @@ export class EditProfileComponent implements OnInit {
     );
 
     this.getAll();
+  }
+
+  formatDate(date) {
+    var d = new Date(date),
+      month = "" + (d.getMonth() + 1),
+      day = "" + d.getDate(),
+      year = d.getFullYear();
+
+    if (month.length < 2) month = "0" + month;
+    if (day.length < 2) day = "0" + day;
+
+    return [year, month, day].join("-");
   }
 
   getAll() {
@@ -268,13 +295,29 @@ export class EditProfileComponent implements OnInit {
     return this.cRForm.get("cvFile");
   }
 
+  get cvTitle() {
+    return this.cRForm.get("cvTitle");
+  }
+
   get photoFile() {
     return this.cRForm.get("photoFile");
   }
 
-  deleteEducation(index) {
+  get NYSCDate() {
+    return this.cRForm.get("NYSCDate");
+  }
+
+  get NTSCcompleted() {
+    return this.cRForm.get("NTSCcompleted");
+  }
+
+  get NTSCcompletedDate() {
+    return this.cRForm.get("NTSCcompletedDate");
+  }
+
+  deleteEducation(index: number) {
     for (let i = 0; i < this.education.length; i++) {
-      if (this.education[i] === index) {
+      if (i === index) {
         this.education.splice(i, 1);
       }
     }
@@ -282,7 +325,7 @@ export class EditProfileComponent implements OnInit {
 
   deleteSkill(index) {
     for (let i = 0; i < this.skills.length; i++) {
-      if (this.skills[i] === index) {
+      if (i === index) {
         this.skills.splice(i, 1);
       }
     }
@@ -290,7 +333,7 @@ export class EditProfileComponent implements OnInit {
 
   deleteWorkHistory(index) {
     for (let i = 0; i < this.workHistory.length; i++) {
-      if (this.workHistory[i] === index) {
+      if (i === index) {
         this.workHistory.splice(i, 1);
       }
     }
@@ -343,17 +386,13 @@ export class EditProfileComponent implements OnInit {
 
     if (this.photoFile$) {
       formData.append(
-        this.photoFile$.documentName,
+        "profile",
         this.photoFile$.file,
         this.photoFile$.file.name
       );
     }
 
-    formData.append(
-      this.cvFile$.documentName,
-      this.cvFile$.file,
-      this.cvFile$.file.name
-    );
+    formData.append("cv", this.cvFile$.file, this.cvFile$.file.name);
 
     // this.documents.forEach(doc => {
     //   formData.append(doc.documentName, doc.file, doc.file.name);
@@ -367,16 +406,23 @@ export class EditProfileComponent implements OnInit {
     this.Finish = "Loading...";
     this.error2 = false;
 
-    if (!this.selectedCvFile && this.cvFile.invalid) {
+    if (!this.cvFile$ && !this.photoFile$) {
+      console.log(1);
+
       const upload: FormData = new FormData();
       const jsonse = JSON.stringify({
+        cv: this.user.cv,
+        cvTitle: this.cRForm.value.cvTitle,
+        profileImage: this.user.profileImage,
+        nyscCompleted: this.cRForm.value.NTSCcompleted,
+        dateNyscCompleted: this.cRForm.value.NYSCDate,
+        dateNyscStarted: this.cRForm.value.NTSCcompletedDate,
         firstName: this.cRForm.value.firstName,
         lastName: this.cRForm.value.lastName,
         birthday: this.cRForm.value.dateOfBirth,
         gender: this.cRForm.value.gender,
         province: this.cRForm.value.state,
-        cvTitle: this.cv,
-        cvText: this.cRForm.value.tellUsAboutYourSelf,
+        cvtext: this.cRForm.value.tellUsAboutYourSelf,
         address1: this.cRForm.value.street_address,
         city: this.cRForm.value.city,
         country: this.cRForm.value.country,
@@ -390,30 +436,130 @@ export class EditProfileComponent implements OnInit {
       upload.append("data", data);
       this.userService
         .completeRegistration({
-          appUserId: this.user.appUserId,
+          appUserId: this.u.appUserId,
           body: upload
         })
         .subscribe(
           res => {
-            console.log(res);
             this.router.navigate(["/profile"]);
           },
           err => {
-            console.log(err);
-            this.Finish = "Finish";
+            this.Finish = "Save";
+            this.errMessage = err.error;
             this.error2 = true;
+
+            setTimeout(() => {
+              this.error2 = false;
+            }, 2000);
+          }
+        );
+    } else if (this.cvFile$ && this.photoFile$) {
+      console.log(2);
+
+      const upload = this.fileUpload();
+      const jsonse = JSON.stringify({
+        cvTitle: this.cRForm.value.cvTitle,
+        nyscCompleted: this.cRForm.value.NTSCcompleted,
+        dateNyscCompleted: this.cRForm.value.NYSCDate,
+        dateNyscStarted: this.cRForm.value.NTSCcompletedDate,
+        firstName: this.cRForm.value.firstName,
+        lastName: this.cRForm.value.lastName,
+        birthday: this.cRForm.value.dateOfBirth,
+        gender: this.cRForm.value.gender,
+        province: this.cRForm.value.state,
+        cvtext: this.cRForm.value.tellUsAboutYourSelf,
+        address1: this.cRForm.value.street_address,
+        city: this.cRForm.value.city,
+        country: this.cRForm.value.country,
+        email: this.cRForm.value.email,
+        mobilePhone: this.cRForm.value.mobileNumber,
+        workHistory: JSON.stringify(this.workHistory),
+        education: JSON.stringify(this.education),
+        skills: JSON.stringify(this.skills)
+      });
+      const data = new Blob([jsonse], { type: "application/json" });
+      upload.append("data", data);
+      this.userService
+        .completeRegistration({
+          appUserId: this.u.appUserId,
+          body: upload
+        })
+        .subscribe(
+          res => {
+            this.router.navigate(["/profile"]);
+          },
+          err => {
+            this.Finish = "Save";
+            this.errMessage = err.error;
+            this.error2 = true;
+
+            setTimeout(() => {
+              this.error2 = false;
+            }, 2000);
+          }
+        );
+    } else if (this.photoFile$) {
+      console.log(3);
+
+      const upload = this.fileUpload();
+      const jsonse = JSON.stringify({
+        cv: this.user.cv,
+        cvTitle: this.cRForm.value.cvTitle,
+        nyscCompleted: this.cRForm.value.NTSCcompleted,
+        dateNyscCompleted: this.cRForm.value.NYSCDate,
+        dateNyscStarted: this.cRForm.value.NTSCcompletedDate,
+        firstName: this.cRForm.value.firstName,
+        lastName: this.cRForm.value.lastName,
+        birthday: this.cRForm.value.dateOfBirth,
+        gender: this.cRForm.value.gender,
+        province: this.cRForm.value.state,
+        cvtext: this.cRForm.value.tellUsAboutYourSelf,
+        address1: this.cRForm.value.street_address,
+        city: this.cRForm.value.city,
+        country: this.cRForm.value.country,
+        email: this.cRForm.value.email,
+        mobilePhone: this.cRForm.value.mobileNumber,
+        workHistory: JSON.stringify(this.workHistory),
+        education: JSON.stringify(this.education),
+        skills: JSON.stringify(this.skills)
+      });
+      const data = new Blob([jsonse], { type: "application/json" });
+      upload.append("data", data);
+      this.userService
+        .completeRegistration({
+          appUserId: this.u.appUserId,
+          body: upload
+        })
+        .subscribe(
+          res => {
+            this.router.navigate(["/profile"]);
+          },
+          err => {
+            this.Finish = "Save";
+            this.errMessage = err.error;
+            this.error2 = true;
+
+            setTimeout(() => {
+              this.error2 = false;
+            }, 2000);
           }
         );
     } else {
+      console.log(4);
+
       const upload = this.fileUpload();
       const jsonse = JSON.stringify({
+        profileImage: this.user.profileImage,
+        nyscCompleted: this.cRForm.value.NTSCcompleted,
+        dateNyscCompleted: this.cRForm.value.NYSCDate,
+        dateNyscStarted: this.cRForm.value.NTSCcompletedDate,
         firstName: this.cRForm.value.firstName,
         lastName: this.cRForm.value.lastName,
         birthday: this.cRForm.value.dateOfBirth,
         gender: this.cRForm.value.gender,
         province: this.cRForm.value.state,
-        cvTitle: this.cv,
-        cvText: this.cRForm.value.tellUsAboutYourSelf,
+        cvTitle: this.cRForm.value.cvTitle,
+        cvtext: this.cRForm.value.tellUsAboutYourSelf,
         address1: this.cRForm.value.street_address,
         city: this.cRForm.value.city,
         country: this.cRForm.value.country,
@@ -427,7 +573,7 @@ export class EditProfileComponent implements OnInit {
       upload.append("data", data);
       this.userService
         .completeRegistration({
-          appUserId: this.user.appUserId,
+          appUserId: this.u.appUserId,
           body: upload
         })
         .subscribe(
@@ -436,9 +582,13 @@ export class EditProfileComponent implements OnInit {
             this.router.navigate(["/profile"]);
           },
           err => {
-            console.log(err);
-            this.Finish = "Finish";
+            this.Finish = "Save";
+            this.errMessage = err.error;
             this.error2 = true;
+
+            setTimeout(() => {
+              this.error2 = false;
+            }, 2000);
           }
         );
     }

@@ -1,5 +1,7 @@
 import { Component, OnInit } from "@angular/core";
 import { UsersService } from "src/app/services/users.service";
+import { CountriesService } from "src/app/services/countries.service";
+import { GloberService } from "src/app/services/glober.service";
 
 @Component({
   selector: "app-profile",
@@ -10,29 +12,77 @@ export class ProfileComponent implements OnInit {
   loading: boolean;
   error: boolean;
   user: any;
-  skills: any[]
-  education: any[]
-  workHistory: any[]
+  skills: any[];
+  education: any[];
+  workHistory: any[];
+  contries;
 
-  constructor(private userService: UsersService) {}
+  constructor(
+    private userService: UsersService,
+    private countryService: CountriesService,
+    public globalService: GloberService
+  ) {
+    this.globalService.change$.subscribe(res => this.getUser());
+  }
 
   ngOnInit() {
     this.loading = true;
+    this.error = false;
+    this.getUser();
+  }
+
+  getUser() {
     const user = JSON.parse(localStorage.getItem("appUser"));
-    this.userService.getSingleUserDetails(user.appUserId).subscribe(
-      res => {
-        console.log(res);
-        this.user = res
-        this.skills = JSON.parse(res['skills']) 
-        this.education = JSON.parse(res['education']) 
-        this.workHistory = JSON.parse(res['workHistory']) 
-        this.loading = false;
-      },
-      err => {
-        console.log(err);
-        this.error = true;
-        this.loading = false;
-      }
-    );
+    if (user) {
+      this.userService.getSingleUserDetails(user.appUserId).subscribe(
+        res => {
+          this.user = res;
+          this.skills = JSON.parse(res["skills"]);
+          this.education = JSON.parse(res["education"]);
+          this.workHistory = JSON.parse(res["workHistory"]);
+          console.log(this.user);
+          this.getCountries();
+        },
+        err => {
+          console.log(err);
+          this.error = true;
+          this.loading = false;
+        }
+      );
+    } else {
+      window.location.reload();
+    }
+  }
+
+  getCountries() {
+    this.error = false;
+    const searchFilter = {
+      groupOp: "AND",
+      rules: [
+        {
+          field: "id",
+          op: "eq",
+          data: this.user.country
+        }
+      ]
+    };
+    return this.countryService
+      .getCountries({
+        rows: 1,
+        page: 1,
+        _search: true,
+        filters: JSON.stringify(searchFilter)
+      })
+      .subscribe(
+        res => {
+          this.contries = res["rows"][0];
+
+          this.loading = false;
+        },
+        err => {
+          this.error = true;
+          this.loading = false;
+        }
+      );
   }
 }

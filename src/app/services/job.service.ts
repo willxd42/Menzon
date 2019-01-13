@@ -1,6 +1,7 @@
 import { Injectable } from "@angular/core";
 import { HttpClient, HttpHeaders } from "@angular/common/http";
 import { environment } from "src/environments/environment";
+import { GloberService } from "./glober.service";
 
 @Injectable({
   providedIn: "root"
@@ -12,7 +13,9 @@ export class JobService {
       Authorization: localStorage.getItem("appUserToken")
     })
   };
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient, public gS: GloberService) {
+    this.gS.change$.subscribe(res => this.httpOptions);
+  }
 
   getJobs(payload) {
     return this.http.get(`${environment.BASE_URL}/public/jobs/`, {

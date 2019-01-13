@@ -1,6 +1,6 @@
 import { Component, OnInit } from "@angular/core";
 import { PostService } from "src/app/services/post.service";
-import { ActivatedRoute } from "@angular/router";
+import { ActivatedRoute, Router } from "@angular/router";
 
 @Component({
   selector: "app-blog-single",
@@ -11,13 +11,16 @@ export class BlogSingleComponent implements OnInit {
   post: any;
   loading = true;
   error = false;
+  url: string
 
   constructor(
     private postService: PostService,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private router: Router
   ) {}
 
   ngOnInit() {
+    this.url = this.router.url 
     this.loading = true
     this.error = false
     this.getPosts();

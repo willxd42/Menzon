@@ -20,7 +20,6 @@
             <input
               type="text"
               class="input-text"
-              [(ngModel)]="skills.skill"
               formControlName="skill"
               [ngClass]="{
                 'input-error':
@@ -43,7 +42,6 @@
             <label>Skill Level: <span class="red">*</span></label>
             <select
               formControlName="skillLevel"
-              [(ngModel)]="skills.skillLevel"
               [ngClass]="{
                 'input-error':
                   (s.controls.skillLevel.invalid &&
@@ -74,7 +72,6 @@
               type="number"
               class="input-text"
               formControlName="lastYearUsed"
-              [(ngModel)]="skills.lastYearUsed"
               [ngClass]="{
                 'input-error':
                   (s.controls.lastYearUsed.invalid &&
@@ -98,7 +95,6 @@
             <label>Last Month Used: <span class="red">*</span></label>
             <select
               formControlName="lastMonthUsed"
-              [(ngModel)]="skills.lastMonthUsed"
               [ngClass]="{
                 'input-error':
                   (s.controls.lastMonthUsed.invalid &&
@@ -126,7 +122,6 @@
             <input
               type="text"
               class="input-text"
-              [(ngModel)]="skills.yearsOfExperience"
               formControlName="yearsOfExperience"
               [ngClass]="{
                 'input-error':
@@ -159,10 +154,10 @@
       </div>
     </div>
 
-    <!-- <br />
+    <br />
     <a (click)="addSkill()" class="button gray"
       ><i class="fa fa-plus-circle"></i> Add Skill</a
-    > -->
+    >
   </div>
 
   <app-error *ngIf="error2" (reload)="submit()"></app-error>

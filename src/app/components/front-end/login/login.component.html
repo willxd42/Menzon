@@ -44,6 +44,14 @@
     <div class="">
       <div class="tab-content">
         <h3 class="margin-bottom-10 margin-top-10">Login</h3>
+        <div style="text-align: center;" *ngIf="notify">
+          <div
+            class="error"
+            style="position: relative; text-align: center; width: 97%;"
+          >
+            <p>{{ notify }}</p>
+          </div>
+        </div>
 
         <form [formGroup]="loginForm" class="login">
           <div class="form-row form-row-wide">

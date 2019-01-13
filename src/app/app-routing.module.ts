@@ -16,7 +16,11 @@ import { EditWorkHistoryComponent } from "./components/back-end/edit-work-histor
 import { EditSkillsComponent } from "./components/back-end/edit-skills/edit-skills.component";
 import { EditEducationComponent } from "./components/back-end/edit-education/edit-education.component";
 import { JobsComponent } from "./components/front-end/jobs/jobs.component";
-import { JobsSingleComponent } from './components/front-end/jobs-single/jobs-single.component';
+import { JobsSingleComponent } from "./components/front-end/jobs-single/jobs-single.component";
+import { AddWorkHistoryComponent } from "./components/back-end/add-work-history/add-work-history.component";
+import { AddSkillComponent } from "./components/back-end/add-skill/add-skill.component";
+import { AddEducationComponent } from "./components/back-end/add-education/add-education.component";
+import { AuthGuard } from "./guard/auth.guard";
 
 const routes: Routes = [
   {
@@ -53,7 +57,8 @@ const routes: Routes = [
   },
   {
     path: "complete-registration",
-    component: CompleteRegistrationComponent
+    component: CompleteRegistrationComponent,
+    canActivate: [AuthGuard]
   },
   {
     path: "forgot-password",
@@ -65,23 +70,43 @@ const routes: Routes = [
   },
   {
     path: "profile",
-    component: ProfileComponent
+    component: ProfileComponent,
+    canActivate: [AuthGuard]
   },
   {
     path: "edit-profile",
-    component: EditProfileComponent
+    component: EditProfileComponent,
+    canActivate: [AuthGuard]
+  },
+  {
+    path: "add-work-history",
+    component: AddWorkHistoryComponent,
+    canActivate: [AuthGuard]
   },
   {
     path: "edit-work-history/:id",
-    component: EditWorkHistoryComponent
+    component: EditWorkHistoryComponent,
+    canActivate: [AuthGuard]
+  },
+  {
+    path: "add-skill",
+    component: AddSkillComponent,
+    canActivate: [AuthGuard]
   },
   {
     path: "edit-skill/:id",
-    component: EditSkillsComponent
+    component: EditSkillsComponent,
+    canActivate: [AuthGuard]
+  },
+  {
+    path: "add-education",
+    component: AddEducationComponent,
+    canActivate: [AuthGuard]
   },
   {
     path: "edit-education/:id",
-    component: EditEducationComponent
+    component: EditEducationComponent,
+    canActivate: [AuthGuard]
   },
   {
     path: "**",

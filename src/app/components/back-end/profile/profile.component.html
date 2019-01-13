@@ -4,88 +4,87 @@
 
 <app-error *ngIf="error" (reload)="ngOnInit()"></app-error>
 
-<!--
-      Titlebar
-      ==================================================
-    -->
-<div id="titlebar" class="resume" *ngIf="!loading">
-  <div class="container">
-    <div class="ten columns">
-      <div class="resume-titlebar">
-        <img src="assets/images/resumes-list-avatar-01.png" alt="" />
-        <div class="resumes-list-content">
-          <h4>
-            <span>{{ user.firstName }} {{ user.lastName }}</span>
-          </h4>
-          <span class="icons"
-            ><i class="fa fa-map-marker"></i> {{ user.country }}</span
-          >
-          <span class="icons"
-            ><a href="mailto:{{ user.email }}"
-              ><i class="fa fa-envelope"></i> {{ user.email }}</a
-            ></span
-          >
-          <div class="clearfix"></div>
+<div *ngIf="!loading && !error">
+  <div id="titlebar" class="resume">
+    <div class="container">
+      <div class="ten columns">
+        <div class="resume-titlebar">
+          <img src="assets/images/resumes-list-avatar-01.png" alt="" />
+          <div class="resumes-list-content">
+            <h4>
+              <span>{{ user.firstName }} {{ user.lastName }}</span>
+            </h4>
+            <span class="icons"
+              ><i class="fa fa-map-marker"></i> {{ contries.name }}</span
+            >
+            <span class="icons"
+              ><a href="mailto:{{ user.email }}"
+                ><i class="fa fa-envelope"></i> {{ user.email }}</a
+              ></span
+            >
+            <div class="clearfix"></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="six columns">
+        <div class="two-buttons">
+          <a [routerLink]="['/edit-profile']" class="button">Edit Profile</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!--
+        Content
+        ==================================================
+      -->
+  <div class="container" *ngIf="user">
+    <!-- Recent Jobs -->
+    <div class="eight columns">
+      <div class="padding-right">
+        <h3 class="margin-bottom-15">About Me</h3>
+
+        <p class="margin-reset" [froalaView]="user.cvtext"></p>
+
+        <br />
+
+        <div *ngIf="workHistory && workHistory?.length > 0">
+          <p>Below are my expirence working over the years:</p>
+          <ul class="list-1">
+            <li *ngFor="let w of workHistory">
+              {{ w.company }} from {{ w.fromMonth }} {{ w.fromYear }} to
+              {{ w.toMonth }} {{ w.toYear }}.
+            </li>
+          </ul>
+        </div>
+
+        <div *ngIf="skills && skills?.length > 0">
+          <p>Over the Years i've aquired the following skills:</p>
+          <ul class="list-1">
+            <li *ngFor="let s of skills">
+              {{ s.skill }} to a level of {{ s.skillLevel }} and was last used
+              {{ s.lastYearUsed }}.
+            </li>
+          </ul>
         </div>
       </div>
     </div>
 
-    <div class="six columns">
-      <div class="two-buttons">
-        <a [routerLink]="['/edit-profile']" class="button"
-          ><i class="fa fa-envelope"></i> Edit Profile</a
-        >
-      </div>
+    <!-- Widgets -->
+    <div class="eight columns" *ngIf="education && education?.length > 0">
+      <h3 class="margin-bottom-20">Education</h3>
+
+      <!-- Resume Table -->
+      <dl class="resume-table">
+        <dt *ngFor="let e of education">
+          <small class="date">{{ e.fromYear }} - {{ e.toYear }}</small>
+          <strong>{{ e.institution }}</strong>
+          <p>{{ e.course }}</p>
+        </dt>
+      </dl>
     </div>
   </div>
 </div>
 
-<!--
-      Content
-      ==================================================
-    -->
-<div class="container" *ngIf="user">
-  <!-- Recent Jobs -->
-  <div class="eight columns">
-    <div class="padding-right">
-      <h3 class="margin-bottom-15">About Me</h3>
-
-      <p class="margin-reset">{{ user.cvText }}</p>
-
-      <br />
-
-      <div *ngIf="workHistory && workHistory?.length > 0">
-        <p>Below are my expirence working over the years:</p>
-        <ul class="list-1">
-          <li *ngFor="let w of workHistory">
-            {{ w.company }} from {{ w.fromMonth }} {{ w.fromYear }} to
-            {{ w.toMonth }} {{ w.toYear }}.
-          </li>
-        </ul>
-      </div>
-
-      <div *ngIf="skills && skills?.length > 0">
-        <p>Over the Years i've aquired the following skills:</p>
-        <ul class="list-1">
-          <li *ngFor="let s of skills">
-            {{ s.skill }} to a level of {{ s.skillLevel }} and was last used
-            {{ s.lastYearUsed }}.
-          </li>
-        </ul>
-      </div>
-    </div>
-  </div>
-
-  <!-- Widgets -->
-  <div class="eight columns" *ngIf="education && education?.length > 0">
-    <h3 class="margin-bottom-20">Education</h3>
-
-    <!-- Resume Table -->
-    <dl class="resume-table">
-      <dt *ngFor="let e of education">
-        <small class="date">{{ e.fromYear }} - {{ e.toYear }}</small>
-        <strong>{{ e.course }}</strong>
-      </dt>
-    </dl>
-  </div>
-</div>
+<br /><br />

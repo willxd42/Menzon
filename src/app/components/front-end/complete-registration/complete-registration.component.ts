@@ -13,6 +13,7 @@ import { CountriesService } from "src/app/services/countries.service";
 import { monthOfTheYear } from "src/app/mock/months";
 import { skillLevel } from "src/app/mock/stillLevel";
 import { UsersService } from "src/app/services/users.service";
+import { GloberService } from 'src/app/services/glober.service';
 
 @Component({
   selector: "app-complete-registration",
@@ -136,8 +137,11 @@ export class CompleteRegistrationComponent implements OnInit {
     private router: Router,
     private stateService: StateService,
     private countryService: CountriesService,
-    private userService: UsersService
-  ) {
+    private userService: UsersService,    
+    public globalService: GloberService 
+    ) {
+      this.globalService.change$.subscribe(res => this.ngOnInit());
+    
     this.cRForm = new FormGroup({
       firstName: new FormControl("", Validators.compose([Validators.required])),
       lastName: new FormControl("", Validators.compose([Validators.required])),
@@ -174,6 +178,7 @@ export class CompleteRegistrationComponent implements OnInit {
         "",
         Validators.compose([Validators.required])
       ),
+      cvTitle: new FormControl("", Validators.compose([Validators.required])),
       cvFile: new FormControl("", Validators.compose([Validators.required])),
       photoFile: new FormControl(""),
       education: this.fb.array([]),
@@ -276,9 +281,19 @@ export class CompleteRegistrationComponent implements OnInit {
       company: ["", Validators.required],
       jobTitle: ["", Validators.required],
       country: ["", Validators.required],
-      fromYear: ["", Validators.required, Validators.min(4), Validators.max(4)],
+      fromYear: [
+        "",
+        Validators.compose([
+          Validators.required
+        ])
+      ],
       fromMonth: ["", Validators.required],
-      toYear: ["", Validators.required, Validators.min(4), Validators.max(4)],
+      toYear: [
+        "",
+        Validators.compose([
+          Validators.required
+        ])
+      ],
       toMonth: ["", Validators.required]
     });
 
@@ -386,6 +401,10 @@ export class CompleteRegistrationComponent implements OnInit {
     return this.cRForm.get("cvFile");
   }
 
+  get cvTitle() {
+    return this.cRForm.get("cvTitle");
+  }
+
   get photoFile() {
     return this.cRForm.get("photoFile");
   }
@@ -453,17 +472,13 @@ export class CompleteRegistrationComponent implements OnInit {
 
     if (this.photoFile$) {
       formData.append(
-        this.photoFile$.documentName,
+        "profile",
         this.photoFile$.file,
         this.photoFile$.file.name
       );
     }
 
-    formData.append(
-      this.cvFile$.documentName,
-      this.cvFile$.file,
-      this.cvFile$.file.name
-    );
+    formData.append("cv", this.cvFile$.file, this.cvFile$.file.name);
 
     // this.documents.forEach(doc => {
     //   formData.append(doc.documentName, doc.file, doc.file.name);
@@ -488,8 +503,8 @@ export class CompleteRegistrationComponent implements OnInit {
       birthday: this.cRForm.value.dateOfBirth,
       gender: this.cRForm.value.gender,
       province: this.cRForm.value.state,
-      cvTitle: this.cv,
-      cvText: this.cRForm.value.tellUsAboutYourSelf,
+      cvTitle: this.cRForm.value.cvTitle,
+      cvtext: this.cRForm.value.tellUsAboutYourSelf,
       address1: this.cRForm.value.street_address,
       city: this.cRForm.value.city,
       country: this.cRForm.value.country,

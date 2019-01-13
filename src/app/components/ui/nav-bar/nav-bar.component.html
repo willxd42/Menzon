@@ -35,14 +35,27 @@
         </ul>
 
         <ul class="responsive float-right">
-          <li>
+          <li *ngIf="!user">
             <a [routerLink]="['/register']" routerLinkActive="active current"
               ><i class="fa fa-user"></i> Sign Up</a
             >
           </li>
-          <li>
+          <li *ngIf="!user">
             <a [routerLink]="['/login']" routerLinkActive="active current"
               ><i class="fa fa-lock"></i> Log In</a
+            >
+          </li>
+
+          <li *ngIf="user">
+            <a [routerLink]="['/profile']" routerLinkActive="active current"
+              ><i class="fa fa-user"></i> {{ user.firstName }}
+              {{ user.lastName }}</a
+            >
+          </li>
+
+          <li *ngIf="user">
+            <a (click)="logOut()" routerLinkActive="active current"
+              ><i class="fa fa-lock"></i> Log Out</a
             >
           </li>
         </ul>

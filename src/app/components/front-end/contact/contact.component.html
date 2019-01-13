@@ -9,7 +9,7 @@
       <nav id="breadcrumbs">
         <ul>
           <li>You are here:</li>
-          <li><a href="#">Home</a></li>
+          <li><a [routerLink]="['/']">Home</a></li>
           <li>Contact</li>
         </ul>
       </nav>
@@ -32,31 +32,69 @@
       <mark id="message"></mark>
 
       <!-- Form -->
-      <form method="post" name="contactform" id="contactform">
+      <form [formGroup]="Form" id="contactform">
         <fieldset>
           <div>
-            <label>Name:</label> <input name="name" type="text" id="name" />
+            <label>Name:</label>
+            <input
+              type="text"
+              formControlName="Name"
+              [ngClass]="{
+                'input-error':
+                  (Name.invalid && Name.touched) || (Name.invalid && check$)
+              }"
+            />
+
+            <p
+              class="error2"
+              *ngIf="(Name.invalid && Name.touched) || (Name.invalid && check$)"
+            >
+              Name is required
+            </p>
           </div>
 
           <div>
             <label>Email: <span>*</span></label>
             <input
-              name="email"
               type="email"
-              id="email"
-              pattern="^[A-Za-z0-9](([_\.\-]?[a-zA-Z0-9]+)*)@([A-Za-z0-9]+)(([\.\-]?[a-zA-Z0-9]+)*)\.([A-Za-z]{2,})$"
+              formControlName="Email"
+              [ngClass]="{
+                'input-error':
+                  (Email.invalid && Email.touched) || (Email.invalid && check$)
+              }"
             />
+
+            <p
+              class="error2"
+              *ngIf="
+                (Email.invalid && Email.touched) || (Email.invalid && check$)
+              "
+            >
+              Email is required
+            </p>
           </div>
 
           <div>
             <label>Subject: <span>*</span></label>
-            <select>
-              <option value="">demo</option>
-              <option value="">demo</option>
-              <option value="">demo</option>
-              <option value="">demo</option>
-              <option value="">demo</option>
-            </select>
+            <input
+              type="text"
+              formControlName="Subject"
+              [ngClass]="{
+                'input-error':
+                  (Subject.invalid && Subject.touched) ||
+                  (Subject.invalid && check$)
+              }"
+            />
+
+            <p
+              class="error2"
+              *ngIf="
+                (Subject.invalid && Subject.touched) ||
+                (Subject.invalid && check$)
+              "
+            >
+              Subject is required
+            </p>
           </div>
 
           <br /><br /><br />
@@ -64,12 +102,26 @@
           <div>
             <label>Message: <span>*</span></label>
             <textarea
-              name="comment"
               cols="40"
               rows="3"
-              id="comment"
               spellcheck="true"
+              formControlName="Message"
+              [ngClass]="{
+                'input-error':
+                  (Message.invalid && Message.touched) ||
+                  (Message.invalid && check$)
+              }"
             ></textarea>
+
+            <p
+              class="error2"
+              *ngIf="
+                (Message.invalid && Message.touched) ||
+                (Message.invalid && check$)
+              "
+            >
+              Message is required
+            </p>
           </div>
         </fieldset>
         <div id="result"></div>

@@ -1,49 +1,45 @@
 import { Component, OnInit } from "@angular/core";
 import { FormGroup, FormBuilder, FormArray, Validators } from "@angular/forms";
 import { Router, ActivatedRoute } from "@angular/router";
-import { UsersService } from "src/app/services/users.service";
 import { monthOfTheYear } from "src/app/mock/months";
-import { skillLevel } from "src/app/mock/stillLevel";
+import { UsersService } from "src/app/services/users.service";
+import { CountriesService } from "src/app/services/countries.service";
 import { GloberService } from 'src/app/services/glober.service';
 
 @Component({
-  selector: "app-edit-skills",
-  templateUrl: "./edit-skills.component.html",
-  styleUrls: ["./edit-skills.component.css"]
+  selector: 'app-add-work-history',
+  templateUrl: './add-work-history.component.html',
+  styleUrls: ['./add-work-history.component.css']
 })
-export class EditSkillsComponent implements OnInit {
+export class AddWorkHistoryComponent implements OnInit {
   user: any;
   cRForm: FormGroup;
   loading: boolean;
   error: boolean;
   error2: boolean;
-  skills: any;
-  allSkills: any[];
+  allWorkHistory: any[];
   months = monthOfTheYear;
+  countries: any[];
   Submit = "Submit";
   check$: boolean;
-  skillLevel = skillLevel;
 
   constructor(
     private fb: FormBuilder,
     private router: Router,
     private userService: UsersService,
-    private route: ActivatedRoute,    
-    public globalService: GloberService 
-    ) {
+    private route: ActivatedRoute,
+    private countryService: CountriesService,    
+    public globalService: GloberService ) {
       this.globalService.change$.subscribe(res => this.ngOnInit());
     }
+
   ngOnInit() {
-    this.loading = true;
-    this.error = false;
-
-    this.getUser();
-
+    this.getCountries();
     this.cRForm = this.fb.group({
-      skills: this.fb.array([])
+      workHistory: this.fb.array([])
     });
 
-    this.addSkill();
+    this.addWorkHistory();
   }
 
   getUser() {
@@ -51,14 +47,7 @@ export class EditSkillsComponent implements OnInit {
     this.userService.getSingleUserDetails(user.appUserId).subscribe(
       res => {
         this.user = res;
-        this.allSkills = JSON.parse(res["skills"]);
-        this.skills = JSON.parse(res["skills"])[
-          this.route.snapshot.paramMap.get("id")
-        ];
-
-        console.log(this.skills);
-
-        this.loading = false;
+        this.allWorkHistory = JSON.parse(res["workHistory"]);
       },
       err => {
         console.log(err);
@@ -68,24 +57,40 @@ export class EditSkillsComponent implements OnInit {
     );
   }
 
-  get skillsForms() {
-    return this.cRForm.get("skills") as FormArray;
+  getCountries() {
+    this.loading = true;
+    return this.countryService.getCountries({ rows: 1000 }).subscribe(
+      res => {
+        this.countries = res["rows"];
+        this.getUser();
+      },
+      err => {
+        this.error = true;
+        this.loading = false;
+      }
+    );
   }
 
-  addSkill() {
-    const skill = this.fb.group({
-      skill: ["", Validators.required],
-      skillLevel: ["", Validators.required],
-      lastYearUsed: ["", Validators.required],
-      lastMonthUsed: ["", Validators.required],
-      yearsOfExperience: ["", Validators.required]
+  get workHistoryForms() {
+    return this.cRForm.get("workHistory") as FormArray;
+  }
+
+  addWorkHistory() {
+    const workHistory = this.fb.group({
+      company: ["", Validators.required],
+      jobTitle: ["", Validators.required],
+      country: ["", Validators.required],
+      fromYear: ["", Validators.required],
+      fromMonth: ["", Validators.required],
+      toYear: ["", Validators.required],
+      toMonth: ["", Validators.required]
     });
 
-    this.skillsForms.push(skill);
+    this.workHistoryForms.push(workHistory);
   }
 
-  deleteSkill(i) {
-    this.skillsForms.removeAt(i);
+  deleteWorkHistory(i) {
+    this.workHistoryForms.removeAt(i);
   }
 
   check() {
@@ -93,17 +98,15 @@ export class EditSkillsComponent implements OnInit {
   }
 
   submit() {
-    if (this.skillsForms.invalid) {
+    if (this.workHistoryForms.invalid) {
       this.check$ = true;
     } else {
       this.Submit = "Loading...";
       this.error2 = false;
       const upload: FormData = new FormData();
-      this.allSkills[
-        this.route.snapshot.paramMap.get("id")
-      ] = this.cRForm.value.skills[0];
+      const finalWorkHistory = [...this.allWorkHistory, ...this.cRForm.value.workHistory]
 
-      this.user.skills = JSON.stringify(this.allSkills);
+      this.user.education = JSON.stringify(finalWorkHistory);
 
       const jsonse = JSON.stringify(this.user);
       console.log(jsonse);

@@ -9,7 +9,7 @@
       <nav id="breadcrumbs">
         <ul>
           <li>You are here:</li>
-          <li><a (click)="log()">Home</a></li>
+          <li><a [routerLink]="['/']">Home</a></li>
           <li>complete registrationn</li>
         </ul>
       </nav>
@@ -123,7 +123,9 @@
 
           <div class="row">
             <div class="form-row form-row-wide four columns">
-              <label>Date of Birth (yyyy/mm/dd): <span class="red">*</span></label>
+              <label
+                >Date of Birth (yyyy/mm/dd): <span class="red">*</span></label
+              >
               <input
                 style="
                     padding: 14px 18px;
@@ -437,14 +439,14 @@
                   >
                     From Year is required
                   </p>
-                  <p 
-                    class="error2" 
+                  <p
+                    class="error2"
                     *ngIf="
-                      (e.controls.fromYear.errors?.minLength || 
-                      e.controls.fromYear.errors?.maxLength) && 
-                      (e.controls.fromYear.touched)
-                      "
-                    >
+                      (e.controls.fromYear.errors?.minLength ||
+                        e.controls.fromYear.errors?.maxLength) &&
+                      e.controls.fromYear.touched
+                    "
+                  >
                     Invalid Year
                   </p>
                 </div>
@@ -502,14 +504,14 @@
                     To Year is required
                   </p>
 
-                  <p 
-                    class="error2" 
+                  <p
+                    class="error2"
                     *ngIf="
                       (e.controls.toYear.errors?.minLength ||
-                      e.controls.toYear.errors?.maxLength) && 
-                      (e.controls.toYear.touched)
-                      "
-                    >
+                        e.controls.toYear.errors?.maxLength) &&
+                      e.controls.toYear.touched
+                    "
+                  >
                     Invalid Year
                   </p>
                 </div>
@@ -773,7 +775,7 @@
                     [ngClass]="{
                       'input-error':
                         (wH.controls.fromYear.invalid &&
-                          wH.controls.fromYear.touched) ||
+                        wH.controls.fromYear.touched) ||
                         (wH.controls.fromYear.invalid && thirdCheck$)
                     }"
                   />
@@ -786,16 +788,6 @@
                     "
                   >
                     From Year is required
-                  </p>
-                  <p 
-                    class="error2" 
-                    *ngIf="
-                      (wH.controls.fromYear.errors?.minLength ||
-                      wH.controls.fromYear.errors?.maxLength) &&
-                      (wH.controls.fromYear.touched)
-                    "
-                  >
-                    Invalid Year
                   </p>
                 </div>
                 <div class="form-row form-row-wide four columns">
@@ -848,16 +840,6 @@
                     "
                   >
                     To Year is required
-                  </p>
-                  <p 
-                    class="error2"
-                    *ngIf="
-                      (wH.controls.toYear.errors?.minLength || 
-                      wH.controls.toYear.errors?.maxLength) && 
-                      (wH.controls.toYear.touched)
-                    "
-                  >
-                    Invalid Year
                   </p>
                 </div>
 
@@ -1131,6 +1113,31 @@
             }}</span>
           </div>
 
+          <div style="margin-top: 35px;" class="form-row form-row-wide">
+            <label>Resume Headline: <span class="red">*</span></label>
+            <input
+              type="text"
+              class="input-text"
+              formControlName="cvTitle"
+              cols="30"
+              rows="3"
+              [ngClass]="{
+                'input-error':
+                  (cvTitle.invalid && cvTitle.touched) ||
+                  (cvTitle.invalid && fifthCheck$)
+              }"
+            />
+            <p
+              class="error2"
+              *ngIf="
+                (cvTitle.invalid && cvTitle.touched) ||
+                (cvTitle.invalid && fifthCheck$)
+              "
+            >
+              Your Resume Headline is required
+            </p>
+          </div>
+
           <div style="margin-top: 50px;" class="form">
             <h5>CV <span class="red">*</span></h5>
             <label class="upload-btn">
@@ -1247,8 +1254,9 @@
         <button
           *ngIf="
             !howDidYouHereAboutUs.invalid &&
-              !tellUsAboutYourSelf.invalid &&
-              selectedCvFile && !cvFile.invalid
+            !tellUsAboutYourSelf.invalid &&
+            selectedCvFile &&
+            !cvFile.invalid
           "
           type="fifthCheck"
           type="button"
@@ -1256,7 +1264,6 @@
         >
           {{ Finish }}
         </button>
-
       </aw-wizard-step>
     </aw-wizard>
   </form>

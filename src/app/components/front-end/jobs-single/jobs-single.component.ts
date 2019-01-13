@@ -1,6 +1,7 @@
 import { Component, OnInit } from "@angular/core";
 import { JobService } from "src/app/services/job.service";
 import { ActivatedRoute, Router } from "@angular/router";
+import { GloberService } from 'src/app/services/glober.service';
 @Component({
   selector: "app-jobs-single",
   templateUrl: "./jobs-single.component.html",
@@ -20,8 +21,11 @@ export class JobsSingleComponent implements OnInit {
   constructor(
     private jobService: JobService,
     private route: ActivatedRoute,
-    private router: Router
-  ) {}
+    private router: Router,    
+    public globalService: GloberService 
+    ) {
+      this.globalService.change$.subscribe(res => this.ngOnInit());
+    }
   ngOnInit() {
     this.user = JSON.parse(localStorage.getItem("appUser"));
     this.loading = true;

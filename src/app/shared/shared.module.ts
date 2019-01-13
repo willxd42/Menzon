@@ -13,6 +13,7 @@ import { FroalaEditorModule, FroalaViewModule } from "angular-froala-wysiwyg";
 import { MomentModule } from "ngx-moment";
 import { NguCarouselModule } from "@ngu/carousel";
 import { NgxPaginationModule } from "ngx-pagination";
+import { DisqusModule } from "ngx-disqus";
 
 @NgModule({
   declarations: [],
@@ -30,7 +31,8 @@ import { NgxPaginationModule } from "ngx-pagination";
     NguCarouselModule,
     NgxPaginationModule,
     NgbPaginationModule,
-    NgbAlertModule
+    NgbAlertModule,
+    DisqusModule.forRoot("menzon")
   ],
   exports: [
     NgbModule,
@@ -45,7 +47,8 @@ import { NgxPaginationModule } from "ngx-pagination";
     NguCarouselModule,
     NgxPaginationModule,
     NgbPaginationModule,
-    NgbAlertModule
+    NgbAlertModule,
+    DisqusModule
   ]
 })
 export class SharedModule {}

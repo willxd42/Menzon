@@ -7,17 +7,16 @@ import { skillLevel } from "src/app/mock/stillLevel";
 import { GloberService } from 'src/app/services/glober.service';
 
 @Component({
-  selector: "app-edit-skills",
-  templateUrl: "./edit-skills.component.html",
-  styleUrls: ["./edit-skills.component.css"]
+  selector: 'app-add-skill',
+  templateUrl: './add-skill.component.html',
+  styleUrls: ['./add-skill.component.css']
 })
-export class EditSkillsComponent implements OnInit {
+export class AddSkillComponent implements OnInit {
   user: any;
   cRForm: FormGroup;
   loading: boolean;
   error: boolean;
   error2: boolean;
-  skills: any;
   allSkills: any[];
   months = monthOfTheYear;
   Submit = "Submit";
@@ -29,10 +28,10 @@ export class EditSkillsComponent implements OnInit {
     private router: Router,
     private userService: UsersService,
     private route: ActivatedRoute,    
-    public globalService: GloberService 
-    ) {
+    public globalService: GloberService) {
       this.globalService.change$.subscribe(res => this.ngOnInit());
     }
+
   ngOnInit() {
     this.loading = true;
     this.error = false;
@@ -52,11 +51,6 @@ export class EditSkillsComponent implements OnInit {
       res => {
         this.user = res;
         this.allSkills = JSON.parse(res["skills"]);
-        this.skills = JSON.parse(res["skills"])[
-          this.route.snapshot.paramMap.get("id")
-        ];
-
-        console.log(this.skills);
 
         this.loading = false;
       },
@@ -99,11 +93,9 @@ export class EditSkillsComponent implements OnInit {
       this.Submit = "Loading...";
       this.error2 = false;
       const upload: FormData = new FormData();
-      this.allSkills[
-        this.route.snapshot.paramMap.get("id")
-      ] = this.cRForm.value.skills[0];
+      const finalSkills = [...this.allSkills, ...this.cRForm.value.skills]
 
-      this.user.skills = JSON.stringify(this.allSkills);
+      this.user.skills = JSON.stringify(finalSkills);
 
       const jsonse = JSON.stringify(this.user);
       console.log(jsonse);

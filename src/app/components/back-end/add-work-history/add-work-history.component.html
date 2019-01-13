@@ -1,6 +1,6 @@
 <form [formGroup]="cRForm" class="container">
   <div formGroupName="workHistory">
-    <h3 class="margin-bottom-10 margin-top-10">Edit Work History</h3>
+    <h3 class="margin-bottom-10 margin-top-10">Add Work History</h3>
 
     <br /><br />
 
@@ -15,7 +15,6 @@
           <input
             type="text"
             class="input-text"
-            [(ngModel)]="workHistory.company"
             formControlName="company"
             [ngClass]="{
               'input-error':
@@ -39,7 +38,6 @@
           <input
             type="text"
             class="input-text"
-            [(ngModel)]="workHistory.jobTitle"
             formControlName="jobTitle"
             [ngClass]="{
               'input-error':
@@ -62,8 +60,8 @@
         <div class="form-row form-row-wide five columns">
           <label>Country: <span class="red">*</span></label>
           <select
-            [(ngModel)]="workHistory.country"
             formControlName="country"
+            
             [ngClass]="{
               'input-error':
                 (wH.controls.country.invalid && wH.controls.country.touched) ||
@@ -92,7 +90,6 @@
           <input
             type="number"
             class="input-text"
-            [(ngModel)]="workHistory.fromYear"
             formControlName="fromYear"
             [ngClass]="{
               'input-error':
@@ -114,8 +111,8 @@
         <div class="form-row form-row-wide four columns">
           <label>From Month: <span class="red">*</span></label>
           <select
-            [(ngModel)]="workHistory.fromMonth"
             formControlName="fromMonth"
+            
             [ngClass]="{
               'input-error':
                 (wH.controls.fromMonth.invalid &&
@@ -142,7 +139,6 @@
           <input
             type="number"
             class="input-text"
-            [(ngModel)]="workHistory.toYear"
             formControlName="toYear"
             [ngClass]="{
               'input-error':
@@ -166,7 +162,6 @@
           <label>To Month: <span class="red">*</span></label>
           <select
             formControlName="toMonth"
-            [(ngModel)]="workHistory.toMonth"
             [ngClass]="{
               'input-error':
                 (wH.controls.toMonth.invalid && wH.controls.toMonth.touched) ||
@@ -199,10 +194,10 @@
     </div>
   </div>
 
-  <!-- <br />
+  <br />
   <a (click)="addWorkHistory()" class="button gray"
     ><i class="fa fa-plus-circle"></i> Add Work History</a
-  > -->
+  >
 
   <app-error *ngIf="error2" (reload)="submit()"></app-error>
 

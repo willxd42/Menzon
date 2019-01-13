@@ -3,6 +3,8 @@ import { FormGroup, FormBuilder, FormArray, Validators } from "@angular/forms";
 import { Router, ActivatedRoute } from "@angular/router";
 import { monthOfTheYear } from "src/app/mock/months";
 import { UsersService } from "src/app/services/users.service";
+import { CountriesService } from "src/app/services/countries.service";
+import { GloberService } from 'src/app/services/glober.service';
 
 @Component({
   selector: "app-edit-work-history",
@@ -10,25 +12,31 @@ import { UsersService } from "src/app/services/users.service";
   styleUrls: ["./edit-work-history.component.css"]
 })
 export class EditWorkHistoryComponent implements OnInit {
-  cRForm: FormGroup;
   user: any;
-  months = monthOfTheYear;
-  workHistory: any;
+  cRForm: FormGroup;
   loading: boolean;
   error: boolean;
   error2: boolean;
-  check$: boolean;
+  workHistory: any;
+  allWorkHistory: any[];
+  months = monthOfTheYear;
+  countries: any[];
   Submit = "Submit";
+  check$: boolean;
 
   constructor(
     private fb: FormBuilder,
     private router: Router,
     private userService: UsersService,
-    private route: ActivatedRoute
-  ) {}
+    private route: ActivatedRoute,
+    private countryService: CountriesService,    
+    public globalService: GloberService 
+    ) {
+      this.globalService.change$.subscribe(res => this.ngOnInit());
+    }
 
   ngOnInit() {
-    this.getUser();
+    this.getCountries();
     this.cRForm = this.fb.group({
       workHistory: this.fb.array([])
     });
@@ -41,14 +49,27 @@ export class EditWorkHistoryComponent implements OnInit {
     this.userService.getSingleUserDetails(user.appUserId).subscribe(
       res => {
         this.user = res;
+        this.allWorkHistory = JSON.parse(res["workHistory"]);
         this.workHistory = JSON.parse(res["workHistory"])[
           this.route.snapshot.paramMap.get("id")
         ];
-
-        this.loading = false;
       },
       err => {
         console.log(err);
+        this.error = true;
+        this.loading = false;
+      }
+    );
+  }
+
+  getCountries() {
+    this.loading = true;
+    return this.countryService.getCountries({ rows: 1000 }).subscribe(
+      res => {
+        this.countries = res["rows"];
+        this.getUser();
+      },
+      err => {
         this.error = true;
         this.loading = false;
       }
@@ -64,9 +85,9 @@ export class EditWorkHistoryComponent implements OnInit {
       company: ["", Validators.required],
       jobTitle: ["", Validators.required],
       country: ["", Validators.required],
-      fromYear: ["", Validators.required, Validators.min(4), Validators.max(4)],
+      fromYear: ["", Validators.required],
       fromMonth: ["", Validators.required],
-      toYear: ["", Validators.required, Validators.min(4), Validators.max(4)],
+      toYear: ["", Validators.required],
       toMonth: ["", Validators.required]
     });
 
@@ -88,12 +109,15 @@ export class EditWorkHistoryComponent implements OnInit {
       this.Submit = "Loading...";
       this.error2 = false;
       const upload: FormData = new FormData();
-      const jsonse = JSON.stringify({
-        cvTitle: "My Cv",
-        firstName: this.user.firstName,
-        lastName: this.user.lastName,
-        workHistory: JSON.stringify(this.cRForm.value.workHistory)
-      });
+      this.allWorkHistory[
+        this.route.snapshot.paramMap.get("id")
+      ] = this.cRForm.value.workHistory[0];
+
+      this.user.workHistory = JSON.stringify(this.allWorkHistory);
+
+      const jsonse = JSON.stringify(this.user);
+      console.log(jsonse);
+
       const data = new Blob([jsonse], { type: "application/json" });
       upload.append("data", data);
 

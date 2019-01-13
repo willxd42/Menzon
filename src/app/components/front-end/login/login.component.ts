@@ -1,7 +1,8 @@
 import { Component, OnInit } from "@angular/core";
 import { FormGroup, FormControl, Validators } from "@angular/forms";
 import { UsersService } from "src/app/services/users.service";
-import { Router } from "@angular/router";
+import { Router, ActivatedRoute } from "@angular/router";
+import { GloberService } from "src/app/services/glober.service";
 
 @Component({
   selector: "app-login",
@@ -14,9 +15,24 @@ export class LoginComponent implements OnInit {
   loading: boolean;
   error: boolean;
   check$: boolean;
-  constructor(private userService: UsersService, private router: Router) {}
+  notify: string;
+  constructor(
+    private userService: UsersService,
+    private router: Router,
+    private route: ActivatedRoute,
+    public globalService: GloberService
+  ) {
+    this.globalService.change$.subscribe(res => this.ngOnInit());
+  }
 
   ngOnInit() {
+    if (localStorage.getItem("notify")) {
+      this.notify = localStorage.getItem("notify");
+
+      setTimeout(() => {
+        localStorage.removeItem("notify");
+      }, 2000);
+    }
     this.loginForm = new FormGroup({
       email: new FormControl(
         "",
@@ -35,8 +51,6 @@ export class LoginComponent implements OnInit {
   }
 
   submit() {
-    console.log("d");
-
     this.loading = true;
     this.error = false;
     this.userService
@@ -64,7 +78,11 @@ export class LoginComponent implements OnInit {
     localStorage.setItem("configs", JSON.stringify(res.configs));
     localStorage.setItem("permissions", JSON.stringify(res.permissions));
 
-    const url = localStorage.getItem("returnUrl") || "/profile";
+    this.globalService.change();
+    const url =
+      this.route.snapshot.queryParamMap.get("returnUrl") ||
+      localStorage.getItem("returnUrl") ||
+      "/profile";
 
     this.router.navigateByUrl(url);
 

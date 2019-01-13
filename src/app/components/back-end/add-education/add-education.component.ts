@@ -7,17 +7,17 @@ import { CountriesService } from "src/app/services/countries.service";
 import { GloberService } from 'src/app/services/glober.service';
 
 @Component({
-  selector: "app-edit-education",
-  templateUrl: "./edit-education.component.html",
-  styleUrls: ["./edit-education.component.css"]
+  selector: 'app-add-education',
+  templateUrl: './add-education.component.html',
+  styleUrls: ['./add-education.component.css']
 })
-export class EditEducationComponent implements OnInit {
+export class AddEducationComponent implements OnInit {
+
   user: any;
   cRForm: FormGroup;
   loading: boolean;
   error: boolean;
   error2: boolean;
-  education: any;
   allEducation: any[];
   months = monthOfTheYear;
   countries: any[];
@@ -30,7 +30,7 @@ export class EditEducationComponent implements OnInit {
     private route: ActivatedRoute,
     private countryService: CountriesService,
     private userService: UsersService,    
-    public globalService: GloberService ) {
+    public globalService: GloberService) {
       this.globalService.change$.subscribe(res => this.ngOnInit());
     }
 
@@ -49,10 +49,6 @@ export class EditEducationComponent implements OnInit {
       res => {
         this.user = res;
         this.allEducation = JSON.parse(res["education"]);
-        this.education = JSON.parse(res["education"])[
-          this.route.snapshot.paramMap.get("id")
-        ];
-
         this.loading = false;
       },
       err => {
@@ -124,11 +120,10 @@ export class EditEducationComponent implements OnInit {
       this.Submit = "Loading...";
       this.error2 = false;
       const upload: FormData = new FormData();
-      this.allEducation[
-        this.route.snapshot.paramMap.get("id")
-      ] = this.cRForm.value.education[0];
 
-      this.user.education = JSON.stringify(this.allEducation);
+      const finalEducation = [...this.allEducation, ...this.cRForm.value.education]
+
+      this.user.education = JSON.stringify(finalEducation);
 
       const jsonse = JSON.stringify(this.user);
       console.log(jsonse);

@@ -10,6 +10,9 @@ import { EditEducationComponent } from "./edit-education/edit-education.componen
 import { EditSkillsComponent } from "./edit-skills/edit-skills.component";
 import { EditWorkHistoryComponent } from "./edit-work-history/edit-work-history.component";
 import { UiModule } from "../ui/ui.module";
+import { AddSkillComponent } from './add-skill/add-skill.component';
+import { AddEducationComponent } from './add-education/add-education.component';
+import { AddWorkHistoryComponent } from './add-work-history/add-work-history.component';
 
 @NgModule({
   declarations: [
@@ -20,7 +23,10 @@ import { UiModule } from "../ui/ui.module";
     ManageEducationComponent,
     EditEducationComponent,
     EditSkillsComponent,
-    EditWorkHistoryComponent
+    EditWorkHistoryComponent,
+    AddSkillComponent,
+    AddEducationComponent,
+    AddWorkHistoryComponent
   ],
   imports: [CommonModule, SharedModule, UiModule]
 })
