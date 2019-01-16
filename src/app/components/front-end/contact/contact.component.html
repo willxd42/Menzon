@@ -17,19 +17,43 @@
   </div>
 </div>
 
+<!-- spinner -->
+<app-loading-spinner *ngIf="loading"></app-loading-spinner>
+<!-- spinner end -->
+
+<div style="text-align: center;" *ngIf="error && !loading">
+  <div
+    class="error"
+    style="position: relative; text-align: center; width: 97%;"
+  >
+    <p>
+      Somthing went wrong please click
+      <button (click)="submit()">here</button> to retry
+    </p>
+  </div>
+
+  <div class="sixteen columns" *ngIf="message">
+    <div class="submit-page">
+      <!-- Notice -->
+      <div class="notification notice closeable margin-bottom-40">
+        <p><span>Message Sent! </span> we'll get to you shortly</p>
+      </div>
+    </div>
+  </div>
+</div>
 <!--
   Content
   ==================================================
 -->
 <!-- Container -->
-<div class="container">
+<div class="container" *ngIf="!loading">
   <div class="eleven columns">
     <h3 class="margin-bottom-15">Contact Form</h3>
 
     <!-- Contact Form -->
     <section id="contact" class="padding-right">
       <!-- Success Message -->
-      <mark id="message"></mark>
+      <mark *ngIf="message" id="message">Message Sent!</mark>
 
       <!-- Form -->
       <form [formGroup]="Form" id="contactform">
@@ -125,7 +149,12 @@
           </div>
         </fieldset>
         <div id="result"></div>
-        <input type="submit" class="submit" id="submit" value="Send Message" />
+        <input
+          type="submit"
+          class="submit"
+          (click)="submit()"
+          value="Send Message"
+        />
         <div class="clearfix"></div>
         <div class="margin-bottom-40"></div>
       </form>
@@ -142,28 +171,32 @@
     <!-- Information -->
     <h3 class="margin-bottom-10">Information</h3>
     <div class="widget-box">
-      <p>
-        Morbi eros bibendum lorem ipsum dolor pellentesque pellentesque
-        bibendum.
-      </p>
+      <h3>We love to hear from you</h3>
 
       <ul class="contact-informations">
-        <li>45 Park Avenue, Apt. 303</li>
-        <li>New York, NY 10016</li>
+        <li>
+          2nd Floor, Nicon Insurance Plaza, Plot 242, Muhammadu Buhari Way,
+          Central Business District,
+        </li>
+        <li>FCT Abuja.</li>
       </ul>
 
       <ul class="contact-informations second">
         <li>
           <i class="fa fa-phone"></i>
-          <p>+48 880 440 110</p>
+          <p>+234 818 808 1889</p>
         </li>
         <li>
           <i class="fa fa-envelope"></i>
-          <p>mail@Menzon Limited.com</p>
+          <p>hr@menzonlimited.com</p>
         </li>
         <li>
           <i class="fa fa-globe"></i>
-          <p>www.Menzon Limited.com</p>
+          <p>
+            <a href="www.menzonlimited.com" target="_blank"
+              >www.menzonlimited.com</a
+            >
+          </p>
         </li>
       </ul>
     </div>

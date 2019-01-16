@@ -101,4 +101,11 @@ export class UsersService {
       }
     );
   }
+
+  contactUs(payload) {
+    return this.http.post(
+      `${environment.BASE_URL}/public/contact-us/`,
+      payload
+    );
+  }
 }

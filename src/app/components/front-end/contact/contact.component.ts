@@ -11,7 +11,7 @@ export class ContactComponent implements OnInit {
   Form: FormGroup;
   loading: boolean;
   error: boolean;
-  message: string;
+  message: boolean;
   check$: boolean;
 
   constructor(private userService: UsersService) {}
@@ -50,17 +50,22 @@ export class ContactComponent implements OnInit {
 
     this.loading = true;
     this.error = false;
-    // this.userService
-    //   .contactUs(this.Form.value)
-    //   .subscribe(
-    //     res => {
-    //       this.message = "Message Sent!"
-    //     },
-    //     err => {
-    //       console.log(err);
-    //       // this.error = true
-    //       this.loading = false;
-    //     }
-    //   );
+    this.message = false;
+    this.userService.contactUs(this.Form.value).subscribe(
+      res => {
+        this.loading = false;
+        this.message = true;
+        this.Form.reset();
+
+        setTimeout(() => {
+          this.message = false;
+        }, 3000);
+      },
+      err => {
+        console.log(err);
+        this.error = true;
+        this.loading = false;
+      }
+    );
   }
 }
