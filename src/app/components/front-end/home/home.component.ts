@@ -103,7 +103,7 @@ export class HomeComponent implements OnInit {
   getCategories() {
     return this.categoryService
       .getCategorries({
-        rows: 1000
+        rows: 20
       })
       .subscribe(
         res => {

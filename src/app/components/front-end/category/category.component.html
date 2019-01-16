@@ -1,0 +1,31 @@
+<!--
+      Titlebar
+      ==================================================
+    -->
+<div id="titlebar">
+  <div class="container">
+    <div class="ten columns"><h2>All Category</h2></div>
+  </div>
+</div>
+
+<!-- spinner -->
+<app-loading-spinner *ngIf="loading"></app-loading-spinner>
+<!-- spinner end -->
+
+<app-error *ngIf="error" (reload)="ngOnInit()"></app-error>
+
+<div id="categories" *ngIf="!loading && !error">
+  <!-- Categories Group -->
+  <div class="categories-group">
+    <div class="container">
+      <h2>Categories</h2>
+      <div class="four columns" *ngFor="let c of categories">
+        <ul>
+          <li>
+            <a (click)="searchCategory(c.id)">{{ c.name }}</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>

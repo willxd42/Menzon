@@ -1,7 +1,7 @@
 import { Component, OnInit } from "@angular/core";
 import { JobService } from "src/app/services/job.service";
 import { ActivatedRoute, Router } from "@angular/router";
-import { GloberService } from 'src/app/services/glober.service';
+import { GloberService } from "src/app/services/glober.service";
 @Component({
   selector: "app-jobs-single",
   templateUrl: "./jobs-single.component.html",
@@ -21,11 +21,11 @@ export class JobsSingleComponent implements OnInit {
   constructor(
     private jobService: JobService,
     private route: ActivatedRoute,
-    private router: Router,    
-    public globalService: GloberService 
-    ) {
-      this.globalService.change$.subscribe(res => this.ngOnInit());
-    }
+    private router: Router,
+    public globalService: GloberService
+  ) {
+    this.globalService.change$.subscribe(res => this.ngOnInit());
+  }
   ngOnInit() {
     this.user = JSON.parse(localStorage.getItem("appUser"));
     this.loading = true;
@@ -64,6 +64,33 @@ export class JobsSingleComponent implements OnInit {
       );
   }
   apply(id: string) {
+    this.submit = "appling";
+    this.jobService
+      .applyForJob({
+        appUserId: this.user.appUserId,
+        jobId: id
+      })
+      .subscribe(
+        res => {
+          this.submit = "Apply For This Job";
+          this.success = true;
+          setTimeout(() => {
+            this.success = false;
+          }, 2000);
+        },
+        err => {
+          this.submit = "Apply For This Job";
+          this.error2 = true;
+          this.errMessage = err["error"];
+          setTimeout(() => {
+            console.log(err);
+            this.error2 = false;
+          }, 2000);
+        }
+      );
+  }
+
+  apply2(id: string) {
     this.submit = "appling";
     this.jobService
       .applyForJob({

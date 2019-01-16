@@ -19,6 +19,7 @@ import { JobSportliteComponent } from "./job-sportlite/job-sportlite.component";
 import { ClientsComponent } from "./clients/clients.component";
 import { VerifyEmailComponent } from './verify-email/verify-email.component';
 import { ResetPasswordComponent } from './reset-password/reset-password.component';
+import { CategoryComponent } from './category/category.component';
 
 @NgModule({
   declarations: [
@@ -37,7 +38,8 @@ import { ResetPasswordComponent } from './reset-password/reset-password.componen
     JobSportliteComponent,
     ClientsComponent,
     VerifyEmailComponent,
-    ResetPasswordComponent
+    ResetPasswordComponent,
+    CategoryComponent
   ],
   imports: [CommonModule, SharedModule, UiModule]
 })

@@ -23,6 +23,7 @@ import { AddEducationComponent } from "./components/back-end/add-education/add-e
 import { AuthGuard } from "./guard/auth.guard";
 import { VerifyEmailComponent } from "./components/front-end/verify-email/verify-email.component";
 import { ResetPasswordComponent } from "./components/front-end/reset-password/reset-password.component";
+import { CategoryComponent } from "./components/front-end/category/category.component";
 
 const routes: Routes = [
   {
@@ -40,6 +41,10 @@ const routes: Routes = [
   {
     path: "blog",
     component: BlogComponent
+  },
+  {
+    path: "categories",
+    component: CategoryComponent
   },
   {
     path: "blog/:id",

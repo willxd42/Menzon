@@ -27,10 +27,7 @@ export class ResetPasswordComponent implements OnInit {
     localStorage.removeItem("permissions");
 
     this.Form = new FormGroup({
-      password: new FormControl(
-        "",
-        Validators.compose([Validators.required, Validators.email])
-      ),
+      password: new FormControl("", Validators.compose([Validators.required])),
       confirm_password: new FormControl(
         "",
         Validators.compose([Validators.required])
@@ -51,6 +48,7 @@ export class ResetPasswordComponent implements OnInit {
     this.error = false;
     this.userService
       .resetPassword({
+        captcha: "this.Form.value.password",
         password: this.Form.value.password,
         token: this.route.snapshot.queryParamMap.get("token")
       })

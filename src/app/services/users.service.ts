@@ -33,11 +33,7 @@ export class UsersService {
   }
 
   registerUser(payload) {
-    return this.http.post(`${environment.BASE_URL}/auth/sign-up/`, payload, {
-      headers: {
-        Authorization: this.getToken()
-      }
-    });
+    return this.http.post(`${environment.BASE_URL}/auth/sign-up/`, payload);
   }
 
   forgotPassword(payload) {

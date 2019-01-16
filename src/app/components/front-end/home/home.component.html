@@ -20,7 +20,7 @@
             <input
               type="text"
               class="six columns inputs fit"
-              placeholder="job title"
+              placeholder="Job title"
               formControlName="title"
               [ngClass]="{ 'input-error': title.invalid && title.touched }"
             />
@@ -73,9 +73,9 @@
         <div class="error" *ngIf="error2">Please Fill the form above.</div>
 
         <!-- Browse Jobs -->
-        <!-- <div class="browse-jobs">
-          Browse job offers by <a href="#"> category</a>
-        </div> -->
+        <div class="browse-jobs">
+          Browse job offers by <a [routerLink]="['/categories']"> category</a>
+        </div>
 
         <!-- Announce -->
         <div class="announce">
@@ -101,6 +101,7 @@
     <!-- Categories Group -->
     <div class="categories-group">
       <div class="container">
+        <h2>Categories</h2>
         <div class="three columns" *ngFor="let c of categories">
           <ul>
             <li>
@@ -108,6 +109,12 @@
             </li>
           </ul>
         </div>
+      </div>
+      <br /><br />
+      <div class="container">
+        <a [routerLink]="['/categories']" class="button gray"
+          ><i class="fa fa-eye"></i>View More</a
+        >
       </div>
     </div>
   </div>
@@ -209,7 +216,7 @@
         <div class="meta-tags">
           <span>{{ p.dateAdded | amDateFormat: "LL" }}</span>
         </div>
-        <p>{{ p.introduction }}</p>
+        <p>{{ p.introduction.substring(0, 150) + "..." }}</p>
         <a [routerLink]="['/blog/', p.id]" class="button">Read More</a>
       </div>
     </div>
