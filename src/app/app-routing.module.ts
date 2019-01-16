@@ -21,6 +21,8 @@ import { AddWorkHistoryComponent } from "./components/back-end/add-work-history/
 import { AddSkillComponent } from "./components/back-end/add-skill/add-skill.component";
 import { AddEducationComponent } from "./components/back-end/add-education/add-education.component";
 import { AuthGuard } from "./guard/auth.guard";
+import { VerifyEmailComponent } from "./components/front-end/verify-email/verify-email.component";
+import { ResetPasswordComponent } from "./components/front-end/reset-password/reset-password.component";
 
 const routes: Routes = [
   {
@@ -69,6 +71,14 @@ const routes: Routes = [
     component: LoginComponent
   },
   {
+    path: "user/email-verification",
+    component: VerifyEmailComponent
+  },
+  {
+    path: "user/password-reset",
+    component: ResetPasswordComponent
+  },
+  {
     path: "profile",
     component: ProfileComponent,
     canActivate: [AuthGuard]
@@ -115,7 +125,7 @@ const routes: Routes = [
 ];
 
 @NgModule({
-  imports: [RouterModule.forRoot(routes)],
+  imports: [RouterModule.forRoot(routes, { useHash: true })],
   exports: [RouterModule]
 })
 export class AppRoutingModule {}

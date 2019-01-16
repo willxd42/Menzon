@@ -79,4 +79,20 @@ export class UsersService {
       }
     );
   }
+
+  verifyEmail(payload) {
+    return this.http.put(
+      `${
+        environment.BASE_URL
+      }/auth/finalize_email_verification/?token=${payload}`,
+      { token: payload }
+    );
+  }
+
+  resetPassword(payload) {
+    return this.http.put(
+      `${environment.BASE_URL}/auth/reset-password/`,
+      payload
+    );
+  }
 }

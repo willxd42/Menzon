@@ -2,6 +2,7 @@ import { Component, OnInit } from "@angular/core";
 import { UsersService } from "src/app/services/users.service";
 import { CountriesService } from "src/app/services/countries.service";
 import { GloberService } from "src/app/services/glober.service";
+import { environment } from "src/environments/environment";
 
 @Component({
   selector: "app-profile",
@@ -15,7 +16,8 @@ export class ProfileComponent implements OnInit {
   skills: any[];
   education: any[];
   workHistory: any[];
-  contries;
+  contries: any;
+  photo: any;
 
   constructor(
     private userService: UsersService,
@@ -40,6 +42,9 @@ export class ProfileComponent implements OnInit {
           this.skills = JSON.parse(res["skills"]);
           this.education = JSON.parse(res["education"]);
           this.workHistory = JSON.parse(res["workHistory"]);
+          this.photo = `${environment.BASE_URL}/public/image/?media=${
+            this.user.profileImage
+          }`;
           console.log(this.user);
           this.getCountries();
         },

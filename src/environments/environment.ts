@@ -4,7 +4,7 @@
 
 export const environment = {
   production: false,
-  BASE_URL: "http://hr.menzonlimited.com:9000"
+  BASE_URL: "http://jobs.menzonlimited.com"
 };
 
 /*

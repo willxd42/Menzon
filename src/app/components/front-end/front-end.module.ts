@@ -17,6 +17,8 @@ import { UiModule } from "../ui/ui.module";
 import { JobsSingleComponent } from "./jobs-single/jobs-single.component";
 import { JobSportliteComponent } from "./job-sportlite/job-sportlite.component";
 import { ClientsComponent } from "./clients/clients.component";
+import { VerifyEmailComponent } from './verify-email/verify-email.component';
+import { ResetPasswordComponent } from './reset-password/reset-password.component';
 
 @NgModule({
   declarations: [
@@ -33,7 +35,9 @@ import { ClientsComponent } from "./clients/clients.component";
     SearchComponent,
     JobsSingleComponent,
     JobSportliteComponent,
-    ClientsComponent
+    ClientsComponent,
+    VerifyEmailComponent,
+    ResetPasswordComponent
   ],
   imports: [CommonModule, SharedModule, UiModule]
 })

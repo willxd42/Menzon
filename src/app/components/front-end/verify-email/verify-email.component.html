@@ -1,0 +1,53 @@
+<!--
+  Titlebar
+  ==================================================
+-->
+<div id="titlebar" class="single">
+  <div class="container">
+    <div class="sixteen columns">
+      <h2>Email Verification</h2>
+      <nav id="breadcrumbs">
+        <ul>
+          <li>You are here:</li>
+          <li><a routerLink="/">Home</a></li>
+          <li>email verification</li>
+        </ul>
+      </nav>
+    </div>
+  </div>
+</div>
+
+<!-- spinner -->
+<app-loading-spinner *ngIf="loading"></app-loading-spinner>
+<!-- spinner end -->
+
+<div style="text-align: center;" *ngIf="error && !loading">
+  <div
+    class="error"
+    style="position: relative; text-align: center; width: 97%;"
+  >
+    <p *ngIf="message === 'Verification Link has expired!'">
+      {{ message }} <button (click)="submit()">here</button> to retry
+    </p>
+
+    <p *ngIf="message !== 'Verification Link has expired!'">
+      {{ message }} <button (click)="submit()">here</button> to retry
+    </p>
+  </div>
+</div>
+
+<!--
+  Content
+  ==================================================
+-->
+
+<!-- Container -->
+<div class="container" *ngIf="!loading && !error">
+  <div class="my-account">
+    <div class="">
+      <div class="tab-content">
+        <h3 class="margin-bottom-10 margin-top-10">Email Verified!</h3>
+      </div>
+    </div>
+  </div>
+</div>
