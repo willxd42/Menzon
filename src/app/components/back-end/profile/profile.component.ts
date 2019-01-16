@@ -18,7 +18,6 @@ export class ProfileComponent implements OnInit {
   workHistory: any[];
   contries: any;
   photo: any;
-
   constructor(
     private userService: UsersService,
     private countryService: CountriesService,

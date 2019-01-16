@@ -43,13 +43,7 @@ export class UsersService {
   forgotPassword(payload) {
     return this.http.post(
       `${environment.BASE_URL}/auth/reset-password/${payload}/`,
-      payload,
-      {
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: this.getToken()
-        }
-      }
+      payload
     );
   }
 
@@ -93,6 +87,18 @@ export class UsersService {
     return this.http.put(
       `${environment.BASE_URL}/auth/reset-password/`,
       payload
+    );
+  }
+
+  resendEmailVerification(payload) {
+    return this.http.put(
+      `${environment.BASE_URL}/users/${payload}/initate_email_verification/`,
+      payload,
+      {
+        headers: {
+          Authorization: this.getToken()
+        }
+      }
     );
   }
 }

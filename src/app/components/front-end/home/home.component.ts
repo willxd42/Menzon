@@ -69,7 +69,7 @@ export class HomeComponent implements OnInit {
   getJobs() {
     return this.jobService
       .getJobs({
-        rows: 10
+        rows: 5
       })
       .subscribe(
         res => {
@@ -85,7 +85,7 @@ export class HomeComponent implements OnInit {
   getJobSportlite() {
     return this.jobService
       .getJobs({
-        rows: 5,
+        rows: 3,
         sord: "desc",
         sdix: "salaryMax"
       })
@@ -201,7 +201,7 @@ export class HomeComponent implements OnInit {
     this.router.navigate(["/jobs"]);
   }
 
-  searchCategory(val : string) {
+  searchCategory(val: string) {
     const searchFilter = {
       groupOp: "AND",
       rules: [
@@ -209,7 +209,7 @@ export class HomeComponent implements OnInit {
           field: "jobFunction.id",
           op: "eq",
           data: val
-        },
+        }
       ]
     };
     localStorage.setItem("searchFilter", JSON.stringify(searchFilter));

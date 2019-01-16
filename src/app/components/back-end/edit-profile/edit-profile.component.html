@@ -12,7 +12,36 @@
 
 <app-error *ngIf="error" (reload)="ngOnInit()"></app-error>
 
-<div class="container" *ngIf="!loading && !error">
+<div class="sixteen columns">
+  <div class="submit-page">
+    <!-- Notice -->
+    <div
+      class="notification notice closeable margin-bottom-40"
+      *ngIf="error3"
+    >
+      <p>
+        <span>Somthing went worong</span> Please click <button (click)="resendEmailVerification()">here</button> to
+        verify
+      </p>
+    </div>
+  </div>
+</div>
+
+<div class="sixteen columns">
+  <div class="submit-page">
+    <!-- Notice -->
+    <div
+      class="notification notice closeable margin-bottom-40"
+      *ngIf="success"
+    >
+      <p>
+        <span>Verification Sent! </span> Please check your Email
+      </p>
+    </div>
+  </div>
+</div>
+
+<div class="container" *ngIf="!loading && !error && !error3">
   <div>
     <!-- Submit Page -->
     <div class="sixteen columns">
@@ -23,7 +52,7 @@
           *ngIf="!u.emailVerified"
         >
           <p>
-            <span>Your Email is not verified</span> Please click <a>here</a> to
+            <span>Your Email is not verified</span> Please click <button (click)="resendEmailVerification()">here</button> to
             verify
           </p>
         </div>

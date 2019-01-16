@@ -194,5 +194,8 @@ a {
 
 input {
     border: 1px solid #e0e0e0 !important;
-    
+}
+
+.container {
+    height: 75%;
 }

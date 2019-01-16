@@ -5,7 +5,7 @@ import { NgbCalendar } from "@ng-bootstrap/ng-bootstrap";
 import { StateService } from "src/app/services/state.service";
 import { CountriesService } from "src/app/services/countries.service";
 import { UsersService } from "src/app/services/users.service";
-import { GloberService } from 'src/app/services/glober.service';
+import { GloberService } from "src/app/services/glober.service";
 
 @Component({
   selector: "app-edit-profile",
@@ -29,6 +29,8 @@ export class EditProfileComponent implements OnInit {
   photo: string;
   error: boolean;
   error2: boolean;
+  error3: boolean;
+  success: boolean;
   check$: boolean;
   cvFile$: any;
   photoFile$: any;
@@ -126,11 +128,11 @@ export class EditProfileComponent implements OnInit {
     private router: Router,
     private stateService: StateService,
     private countryService: CountriesService,
-    private userService: UsersService,    
+    private userService: UsersService,
     public globalService: GloberService
-    ) {
-      this.globalService.change$.subscribe(res => this.ngOnInit());
-  
+  ) {
+    this.globalService.change$.subscribe(res => this.ngOnInit());
+
     this.cRForm = new FormGroup({
       firstName: new FormControl("", Validators.compose([Validators.required])),
       lastName: new FormControl("", Validators.compose([Validators.required])),
@@ -606,5 +608,25 @@ export class EditProfileComponent implements OnInit {
     console.log(i);
 
     this.router.navigate([`/edit-work-history/${i}`]);
+  }
+
+  resendEmailVerification() {
+    this.loading = true;
+    this.error3 = false;
+    this.success = false;
+    this.userService.resendEmailVerification(this.u.appUserId).subscribe(
+      res => {
+        this.loading = false;
+        this.success = true;
+
+        setTimeout(() => {
+          this.success = false;
+        }, 2000);
+      },
+      err => {
+        this.error3 = true;
+        this.loading = false;
+      }
+    );
   }
 }

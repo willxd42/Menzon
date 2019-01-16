@@ -13,6 +13,7 @@ export class ForgotPasswordComponent implements OnInit {
   comfirmPassword$: boolean;
   loading: boolean;
   error: boolean;
+  success: boolean;
   check$: boolean;
   constructor(private userService: UsersService, private router: Router) {}
 
@@ -33,6 +34,7 @@ export class ForgotPasswordComponent implements OnInit {
   submit() {
     this.loading = true;
     this.error = false;
+    this.success = false;
     this.userService
       .forgotPassword(this.forgotPasswordForm.value.email)
       .subscribe(
@@ -40,6 +42,7 @@ export class ForgotPasswordComponent implements OnInit {
           localStorage.setItem("user", JSON.stringify(res));
           console.log(res);
           this.strated(res);
+          this.success = true;
         },
         err => {
           console.log(err);
