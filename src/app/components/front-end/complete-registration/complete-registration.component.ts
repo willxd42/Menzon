@@ -6,7 +6,7 @@ import {
   FormControl,
   Validators
 } from "@angular/forms";
-import { NgbDateStruct, NgbCalendar } from "@ng-bootstrap/ng-bootstrap";
+import {NgbDatepickerConfig, NgbCalendar, NgbDate, NgbDateStruct} from '@ng-bootstrap/ng-bootstrap';
 import { Router } from "@angular/router";
 import { StateService } from "src/app/services/state.service";
 import { CountriesService } from "src/app/services/countries.service";
@@ -22,6 +22,7 @@ import { GloberService } from 'src/app/services/glober.service';
 })
 export class CompleteRegistrationComponent implements OnInit {
   user: any;
+  model: NgbDateStruct;
   firstName$: string;
   lastName$: string;
   mobileNumber$: string;
@@ -133,13 +134,20 @@ export class CompleteRegistrationComponent implements OnInit {
 
   constructor(
     private fb: FormBuilder,
-    private calendar: NgbCalendar,
     private router: Router,
     private stateService: StateService,
     private countryService: CountriesService,
     private userService: UsersService,    
-    public globalService: GloberService 
-    ) {
+    public globalService: GloberService,
+    config: NgbDatepickerConfig, calendar: NgbCalendar) {
+      // customize default values of datepickers used by this component tree
+      config.minDate = {year: 1900, month: 1, day: 1};
+  
+      // days that don't belong to current month are not visible
+      config.outsideDays = 'hidden';
+  
+      // weekends are disabled
+      config.markDisabled = (date: NgbDate) => calendar.getWeekday(date) >= 6;
       this.globalService.change$.subscribe(res => this.ngOnInit());
     
     this.cRForm = new FormGroup({

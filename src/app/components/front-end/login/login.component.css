@@ -1,3 +1,7 @@
 .container {
-  height: 90% !important;
+    height: 60% !important;
+}
+
+.error {
+    margin: 0px !important
 }
