@@ -17,6 +17,10 @@ export class JobService {
     this.gS.change$.subscribe(res => this.httpOptions);
   }
 
+  getToken() {
+    return localStorage.getItem("appUserToken");
+  }
+
   getJobs(payload) {
     return this.http.get(`${environment.BASE_URL}/public/jobs/`, {
       params: payload
@@ -29,7 +33,24 @@ export class JobService {
         payload.jobId
       }/`,
       payload,
-      this.httpOptions
+      {
+        headers: {
+          Authorization: this.getToken()
+        }
+      }
+    );
+  }
+
+  checkForAppliedJob(payload) {
+    return this.http.get(
+      `${environment.BASE_URL}/users/${payload.appUserId}/candidate/jobs/${
+        payload.jobId
+      }/`,
+      {
+        headers: {
+          Authorization: this.getToken()
+        }
+      }
     );
   }
 }
