@@ -43,6 +43,10 @@ button {
 .error2 {
   margin: 20px;
   color: red;
+  padding: 10px;
+  color: #721c24;
+  background-color: #f8d7da;
+  border-color: #f5c6cb;
 }
 
 .ngb-dp-arrow {
@@ -199,3 +203,35 @@ input {
 /* .container {
     height: 60% !important;
 } */
+
+.multiselect-dropdown .dropdown-btn {
+  display: inline-block;
+  border: none !important;
+  width: 90% !important;
+  padding: 12px;
+  background: #fcfcfc;
+  margin-bottom: 0;
+  font-weight: 400;
+  line-height: 1.52857143;
+  text-align: left;
+  vertical-align: middle;
+  cursor: pointer;
+  color: #909090;
+  background-image: none;
+  border-radius: 4px;
+  height: 36px;
+}
+
+.multiselect-dropdown .dropdown-btn .selected-item {
+  border: 1px solid #659f5c !important;
+  background: #659f5c !important;
+}
+
+.multiselect-item-checkbox input[type="checkbox"]:checked + div:before {
+  background: #659f5c !important;
+}
+
+.multiselect-item-checkbox input[type="checkbox"] + div:before {
+  color: #659f5c !important;
+  border: 2px solid #659f5c !important;
+}

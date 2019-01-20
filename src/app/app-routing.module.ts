@@ -24,6 +24,8 @@ import { AuthGuard } from "./guard/auth.guard";
 import { VerifyEmailComponent } from "./components/front-end/verify-email/verify-email.component";
 import { ResetPasswordComponent } from "./components/front-end/reset-password/reset-password.component";
 import { CategoryComponent } from "./components/front-end/category/category.component";
+import { AddRefereesComponent } from "./components/back-end/add-referees/add-referees.component";
+import { EditRefereesComponent } from "./components/back-end/edit-referees/edit-referees.component";
 
 const routes: Routes = [
   {
@@ -121,6 +123,16 @@ const routes: Routes = [
   {
     path: "edit-education/:id",
     component: EditEducationComponent,
+    canActivate: [AuthGuard]
+  },
+  {
+    path: "add-referees",
+    component: AddRefereesComponent,
+    canActivate: [AuthGuard]
+  },
+  {
+    path: "edit-referees/:id",
+    component: EditRefereesComponent,
     canActivate: [AuthGuard]
   },
   {

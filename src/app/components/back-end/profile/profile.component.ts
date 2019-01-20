@@ -16,6 +16,7 @@ export class ProfileComponent implements OnInit {
   skills: any[];
   education: any[];
   workHistory: any[];
+  referees: any[];
   contries: any;
   photo: any;
   constructor(
@@ -40,6 +41,7 @@ export class ProfileComponent implements OnInit {
           this.user = res;
           this.skills = JSON.parse(res["skills"]);
           this.education = JSON.parse(res["education"]);
+          this.referees = JSON.parse(res["referees"]);
           this.workHistory = JSON.parse(res["workHistory"]);
           this.photo = `${environment.BASE_URL}/public/image/?media=${
             this.user.profileImage
@@ -64,7 +66,7 @@ export class ProfileComponent implements OnInit {
       groupOp: "AND",
       rules: [
         {
-          field: "id",
+          field: "code",
           op: "eq",
           data: this.user.country
         }

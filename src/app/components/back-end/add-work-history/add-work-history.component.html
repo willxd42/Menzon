@@ -1,6 +1,6 @@
 <form [formGroup]="cRForm" class="container">
   <div formGroupName="workHistory">
-    <h3 class="margin-bottom-10 margin-top-10">Add Work History</h3>
+    <h3 class="margin-bottom-10 margin-top-10">Add More Work History</h3>
 
     <br /><br />
 
@@ -68,7 +68,7 @@
                 (wH.controls.country.invalid && check$)
             }"
           >
-            <option *ngFor="let c of countries" [value]="c.id">
+            <option *ngFor="let c of countries" [value]="c.code">
               {{ c.name }}
             </option>
           </select>
@@ -196,7 +196,7 @@
 
   <br />
   <a (click)="addWorkHistory()" class="button gray"
-    ><i class="fa fa-plus-circle"></i> Add Work History</a
+    ><i class="fa fa-plus-circle"></i> Add More Work History</a
   >
 
   <app-error *ngIf="error2" (reload)="submit()"></app-error>

@@ -6,14 +6,20 @@ import {
   FormControl,
   Validators
 } from "@angular/forms";
-import {NgbDatepickerConfig, NgbCalendar, NgbDate, NgbDateStruct} from '@ng-bootstrap/ng-bootstrap';
+import {
+  NgbDatepickerConfig,
+  NgbCalendar,
+  NgbDate,
+  NgbDateStruct
+} from "@ng-bootstrap/ng-bootstrap";
 import { Router } from "@angular/router";
 import { StateService } from "src/app/services/state.service";
 import { CountriesService } from "src/app/services/countries.service";
 import { monthOfTheYear } from "src/app/mock/months";
 import { skillLevel } from "src/app/mock/stillLevel";
 import { UsersService } from "src/app/services/users.service";
-import { GloberService } from 'src/app/services/glober.service';
+import { GloberService } from "src/app/services/glober.service";
+import { CategoryService } from "src/app/services/category.service";
 
 @Component({
   selector: "app-complete-registration",
@@ -30,11 +36,15 @@ export class CompleteRegistrationComponent implements OnInit {
   cRForm: FormGroup;
   states: any[];
   countries: any[];
+  categories: any[];
+  selectedItems = [];
+  degree: any[];
   firstCheck$ = false;
   secondCheck$ = false;
   thirdCheck$ = false;
   forthCheck$ = false;
   fifthCheck$ = false;
+  newCheck$ = false;
   loading: boolean;
   months = monthOfTheYear;
   skillLevel = skillLevel;
@@ -49,6 +59,17 @@ export class CompleteRegistrationComponent implements OnInit {
   cvFile$: any;
   photoFile$: any;
   Finish = "Finish";
+
+  dropdownSettings = {
+    singleSelection: false,
+    idField: "id",
+    textField: "name",
+    selectAllText: "Select All",
+    unSelectAllText: "UnSelect All",
+    allowSearchFilter: true,
+    limitSelection: 3
+  };
+
   public options: Object = {
     charCounterCount: true,
     // Set the image upload parameter.
@@ -137,19 +158,22 @@ export class CompleteRegistrationComponent implements OnInit {
     private router: Router,
     private stateService: StateService,
     private countryService: CountriesService,
-    private userService: UsersService,    
+    private userService: UsersService,
     public globalService: GloberService,
-    config: NgbDatepickerConfig, calendar: NgbCalendar) {
-      // customize default values of datepickers used by this component tree
-      config.minDate = {year: 1900, month: 1, day: 1};
-  
-      // days that don't belong to current month are not visible
-      config.outsideDays = 'hidden';
-  
-      // weekends are disabled
-      config.markDisabled = (date: NgbDate) => calendar.getWeekday(date) >= 6;
-      this.globalService.change$.subscribe(res => this.ngOnInit());
-    
+    config: NgbDatepickerConfig,
+    calendar: NgbCalendar,
+    private categoryService: CategoryService
+  ) {
+    // customize default values of datepickers used by this component tree
+    config.minDate = { year: 1900, month: 1, day: 1 };
+
+    // days that don't belong to current month are not visible
+    config.outsideDays = "hidden";
+
+    // weekends are disabled
+    config.markDisabled = (date: NgbDate) => calendar.getWeekday(date) >= 6;
+    this.globalService.change$.subscribe(res => this.ngOnInit());
+
     this.cRForm = new FormGroup({
       firstName: new FormControl("", Validators.compose([Validators.required])),
       lastName: new FormControl("", Validators.compose([Validators.required])),
@@ -169,15 +193,21 @@ export class CompleteRegistrationComponent implements OnInit {
       state: new FormControl("", Validators.compose([Validators.required])),
       country: new FormControl("", Validators.compose([Validators.required])),
       prefaredLocation: new FormControl(""),
-      NYSCDate: new FormControl("", Validators.compose([Validators.required])),
+      maritalStatus: new FormControl(
+        "",
+        Validators.compose([Validators.required])
+      ),
+      preferedPositions: new FormControl(
+        "",
+        Validators.compose([Validators.required])
+      ),
+
       NTSCcompleted: new FormControl(
         "",
         Validators.compose([Validators.required])
       ),
-      NTSCcompletedDate: new FormControl(
-        "",
-        Validators.compose([Validators.required])
-      ),
+      NYSCDate: new FormControl(""),
+      NTSCcompletedDate: new FormControl(""),
       howDidYouHereAboutUs: new FormControl(
         "",
         Validators.compose([Validators.required])
@@ -189,12 +219,14 @@ export class CompleteRegistrationComponent implements OnInit {
       cvTitle: new FormControl("", Validators.compose([Validators.required])),
       cvFile: new FormControl("", Validators.compose([Validators.required])),
       photoFile: new FormControl(""),
-      education: this.fb.array([]),
-      workHistory: this.fb.array([]),
-      skills: this.fb.array([])
+      education: this.fb.array([], Validators.compose([Validators.required])),
+      referees: this.fb.array([], Validators.compose([Validators.required])),
+      workHistory: this.fb.array([], Validators.compose([Validators.required])),
+      skills: this.fb.array([], Validators.compose([Validators.required]))
     });
 
     this.addEducation();
+    this.addReferees();
     this.addWorkHistory();
     this.addSkill();
   }
@@ -234,13 +266,89 @@ export class CompleteRegistrationComponent implements OnInit {
     return this.countryService.getCountries({ rows: 1000 }).subscribe(
       res => {
         this.countries = res["rows"];
-        this.loading = false;
+        this.getDegree();
       },
       err => {
         this.error = true;
         this.loading = false;
       }
     );
+  }
+
+  getDegree() {
+    return this.countryService.getDegree({ rows: 1000 }).subscribe(
+      res => {
+        this.degree = res["rows"];
+        this.getCategories();
+      },
+      err => {
+        this.error = true;
+        this.loading = false;
+      }
+    );
+  }
+
+  getCategories() {
+    return this.categoryService
+      .getCategorries({
+        rows: 2000
+      })
+      .subscribe(
+        res => {
+          this.categories = res["rows"];
+
+          console.log(this.categories);
+
+          this.loading = false;
+        },
+        err => {
+          this.error = true;
+          this.loading = false;
+        }
+      );
+  }
+
+  onItemSelect(item: any) {
+    this.selectedItems.push(item);
+    this.cRForm.value.preferedPositions = JSON.stringify(this.selectedItems);
+  }
+  onSelectAll(items: any[]) {
+    this.selectedItems.concat(items);
+    this.cRForm.value.preferedPositions = JSON.stringify(this.selectedItems);
+  }
+
+  onDeSelect(item: any) {
+    this.selectedItems.filter(i => {
+      return i.idField != item.idField;
+    });
+    this.cRForm.value.preferedPositions = JSON.stringify(this.selectedItems);
+  }
+
+  onDeSelectAll(items: any[]) {
+    this.selectedItems = [];
+    this.cRForm.value.preferedPositions = JSON.stringify(this.selectedItems);
+  }
+
+  get refereesForms() {
+    return this.cRForm.get("referees") as FormArray;
+  }
+
+  addReferees() {
+    const referees = this.fb.group({
+      name: ["", Validators.required],
+      designation: ["", Validators.required],
+      company: ["", Validators.required],
+      country: ["", Validators.required],
+      phone: ["", Validators.required],
+      email: ["", Validators.required],
+      id: ["", Validators.required]
+    });
+
+    this.refereesForms.push(referees);
+  }
+
+  deleteReferees(i) {
+    this.refereesForms.removeAt(i);
   }
 
   get educationForms() {
@@ -252,23 +360,9 @@ export class CompleteRegistrationComponent implements OnInit {
       institution: ["", Validators.required],
       degree: ["", Validators.required],
       country: ["", Validators.required],
-      fromYear: [
-        "",
-        Validators.compose([
-          Validators.required,
-          Validators.minLength(4),
-          Validators.maxLength(4)
-        ])
-      ],
+      fromYear: ["", Validators.required],
       fromMonth: ["", Validators.required],
-      toYear: [
-        "",
-        Validators.compose([
-          Validators.required,
-          Validators.minLength(4),
-          Validators.maxLength(4)
-        ])
-      ],
+      toYear: ["", Validators.required],
       toMonth: ["", Validators.required],
       course: ["", Validators.required]
     });
@@ -289,19 +383,9 @@ export class CompleteRegistrationComponent implements OnInit {
       company: ["", Validators.required],
       jobTitle: ["", Validators.required],
       country: ["", Validators.required],
-      fromYear: [
-        "",
-        Validators.compose([
-          Validators.required
-        ])
-      ],
+      fromYear: ["", Validators.required],
       fromMonth: ["", Validators.required],
-      toYear: [
-        "",
-        Validators.compose([
-          Validators.required
-        ])
-      ],
+      toYear: ["", Validators.required],
       toMonth: ["", Validators.required]
     });
 
@@ -320,12 +404,7 @@ export class CompleteRegistrationComponent implements OnInit {
     const skill = this.fb.group({
       skill: ["", Validators.required],
       skillLevel: ["", Validators.required],
-      lastYearUsed: [
-        "",
-        Validators.required,
-        Validators.min(4),
-        Validators.max(4)
-      ],
+      lastYearUsed: ["", Validators.required],
       lastMonthUsed: ["", Validators.required],
       yearsOfExperience: ["", Validators.required]
     });
@@ -385,6 +464,14 @@ export class CompleteRegistrationComponent implements OnInit {
     return this.cRForm.get("prefaredLocation");
   }
 
+  get maritalStatus() {
+    return this.cRForm.get("maritalStatus");
+  }
+
+  get preferedPositions() {
+    return this.cRForm.get("preferedPositions");
+  }
+
   get NYSCDate() {
     return this.cRForm.get("NYSCDate");
   }
@@ -435,6 +522,10 @@ export class CompleteRegistrationComponent implements OnInit {
 
   fifthCheck() {
     this.fifthCheck$ = true;
+  }
+
+  newCheck() {
+    this.newCheck$ = true;
   }
 
   detectCvFile($event) {
@@ -497,18 +588,31 @@ export class CompleteRegistrationComponent implements OnInit {
   }
 
   submit() {
-    console.log(this.cRForm.value);
+    this.cRForm.value.preferedPositions = JSON.stringify(this.selectedItems);
+    const birthday = `${this.cRForm.value.dateOfBirth.year}-${
+      this.cRForm.value.dateOfBirth.month
+    }-${this.cRForm.value.dateOfBirth.day}`;
+    const dateNyscCompleted = `${this.cRForm.value.NYSCDate.year}-${
+      this.cRForm.value.NYSCDate.month
+    }-${this.cRForm.value.NYSCDate.day}`;
+    const dateNyscStarted = `${this.cRForm.value.NTSCcompletedDate.year}-${
+      this.cRForm.value.NTSCcompletedDate.month
+    }-${this.cRForm.value.NTSCcompletedDate.day}`;
 
     this.Finish = "Loading...";
     this.error2 = false;
     const upload = this.fileUpload();
     const jsonse = JSON.stringify({
       nyscCompleted: this.cRForm.value.NTSCcompleted,
-      dateNyscCompleted: this.cRForm.value.NYSCDate,
-      dateNyscStarted: this.cRForm.value.NTSCcompletedDate,
+      dateNyscCompleted: dateNyscCompleted,
+      dateNyscStarted: dateNyscStarted,
       firstName: this.cRForm.value.firstName,
       lastName: this.cRForm.value.lastName,
-      birthday: this.cRForm.value.dateOfBirth,
+      middleName: this.cRForm.value.middleName,
+      birthday: birthday,
+      preferedPositions: this.cRForm.value.preferedPositions,
+      maritalStatus: this.cRForm.value.maritalStatus,
+      preferedCountries: this.cRForm.value.prefaredLocation,
       gender: this.cRForm.value.gender,
       province: this.cRForm.value.state,
       cvTitle: this.cRForm.value.cvTitle,
@@ -520,7 +624,8 @@ export class CompleteRegistrationComponent implements OnInit {
       mobilePhone: this.cRForm.value.mobileNumber,
       workHistory: JSON.stringify(this.cRForm.value.workHistory),
       education: JSON.stringify(this.cRForm.value.education),
-      skills: JSON.stringify(this.cRForm.value.skills)
+      skills: JSON.stringify(this.cRForm.value.skills),
+      referees: JSON.stringify(this.cRForm.value.referees)
     });
     const data = new Blob([jsonse], { type: "application/json" });
     upload.append("data", data);

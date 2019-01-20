@@ -4,21 +4,21 @@ import { Router, ActivatedRoute } from "@angular/router";
 import { UsersService } from "src/app/services/users.service";
 import { monthOfTheYear } from "src/app/mock/months";
 import { CountriesService } from "src/app/services/countries.service";
-import { GloberService } from 'src/app/services/glober.service';
+import { GloberService } from "src/app/services/glober.service";
 
 @Component({
-  selector: "app-edit-education",
-  templateUrl: "./edit-education.component.html",
-  styleUrls: ["./edit-education.component.css"]
+  selector: "app-edit-referees",
+  templateUrl: "./edit-referees.component.html",
+  styleUrls: ["./edit-referees.component.css"]
 })
-export class EditEducationComponent implements OnInit {
+export class EditRefereesComponent implements OnInit {
   user: any;
   cRForm: FormGroup;
   loading: boolean;
   error: boolean;
   error2: boolean;
-  education: any;
-  allEducation: any[];
+  referees: any;
+  allReferees: any[];
   months = monthOfTheYear;
   countries: any[];
   Submit = "Submit";
@@ -29,18 +29,19 @@ export class EditEducationComponent implements OnInit {
     private router: Router,
     private route: ActivatedRoute,
     private countryService: CountriesService,
-    private userService: UsersService,    
-    public globalService: GloberService ) {
-      this.globalService.change$.subscribe(res => this.ngOnInit());
-    }
+    private userService: UsersService,
+    public globalService: GloberService
+  ) {
+    this.globalService.change$.subscribe(res => this.ngOnInit());
+  }
 
   ngOnInit() {
     this.getCountries();
     this.cRForm = this.fb.group({
-      education: this.fb.array([])
+      referees: this.fb.array([])
     });
 
-    this.addEducation();
+    this.addReferees();
   }
 
   getUser() {
@@ -48,8 +49,8 @@ export class EditEducationComponent implements OnInit {
     this.userService.getSingleUserDetails(user.appUserId).subscribe(
       res => {
         this.user = res;
-        this.allEducation = JSON.parse(res["education"]);
-        this.education = JSON.parse(res["education"])[
+        this.allReferees = JSON.parse(res["referees"]);
+        this.referees = JSON.parse(res["referees"])[
           this.route.snapshot.paramMap.get("id")
         ];
 
@@ -63,7 +64,7 @@ export class EditEducationComponent implements OnInit {
     );
   }
 
-  getCountries() { 
+  getCountries() {
     this.loading = true;
     return this.countryService.getCountries({ rows: 1000 }).subscribe(
       res => {
@@ -77,40 +78,26 @@ export class EditEducationComponent implements OnInit {
     );
   }
 
-  get educationForms() {
-    return this.cRForm.get("education") as FormArray;
+  get refereesForms() {
+    return this.cRForm.get("referees") as FormArray;
   }
-  addEducation() {
-    const education = this.fb.group({
-      institution: ["", Validators.required],
-      degree: ["", Validators.required],
+
+  addReferees() {
+    const referees = this.fb.group({
+      name: ["", Validators.required],
+      designation: ["", Validators.required],
+      company: ["", Validators.required],
       country: ["", Validators.required],
-      fromYear: [
-        "",
-        Validators.compose([
-          Validators.required,
-          Validators.minLength(4),
-          Validators.maxLength(4)
-        ])
-      ],
-      fromMonth: ["", Validators.required],
-      toYear: [
-        "",
-        Validators.compose([
-          Validators.required,
-          Validators.minLength(4),
-          Validators.maxLength(4)
-        ])
-      ],
-      toMonth: ["", Validators.required],
-      course: ["", Validators.required]
+      phone: ["", Validators.required],
+      email: ["", Validators.required],
+      id: ["", Validators.required]
     });
 
-    this.educationForms.push(education);
+    this.refereesForms.push(referees);
   }
 
-  deleteEducation(i) {
-    this.educationForms.removeAt(i);
+  deleteReferees(i) {
+    this.refereesForms.removeAt(i);
   }
 
   check() {
@@ -118,17 +105,17 @@ export class EditEducationComponent implements OnInit {
   }
 
   submit() {
-    if (this.educationForms.invalid) {
+    if (this.refereesForms.invalid) {
       this.check$ = true;
     } else {
       this.Submit = "Loading...";
       this.error2 = false;
       const upload: FormData = new FormData();
-      this.allEducation[
+      this.allReferees[
         this.route.snapshot.paramMap.get("id")
-      ] = this.cRForm.value.education[0];
+      ] = this.cRForm.value.referees[0];
 
-      this.user.education = JSON.stringify(this.allEducation);
+      this.user.referees = JSON.stringify(this.allReferees);
 
       const jsonse = JSON.stringify(this.user);
       console.log(jsonse);

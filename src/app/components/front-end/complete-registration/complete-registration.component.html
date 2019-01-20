@@ -106,8 +106,8 @@
                     (gender.invalid && firstCheck$)
                 }"
               >
-                <option value="male">Male</option>
-                <option value="female">Female</option>
+                <option value="Male">Male</option>
+                <option value="Female">Female</option>
               </select>
               <p
                 class="error2"
@@ -224,7 +224,7 @@
                     (country.invalid && firstCheck$)
                 }"
               >
-                <option *ngFor="let c of countries" [value]="c.id">
+                <option *ngFor="let c of countries" [value]="c.code">
                   {{ c.name }}
                 </option>
               </select>
@@ -275,6 +275,61 @@
               </select>
             </div>
           </div>
+
+          <div class="row">
+            <div class="form-row form-row-wide four columns">
+              <label>Specialiazation: <span class="red">*</span></label>
+              <ng-multiselect-dropdown
+                [placeholder]="'Select your Specialiazation'"
+                [data]="categories"
+                formControlName="preferedPositions"
+                [(ngModel)]="selectedItems"
+                [settings]="dropdownSettings"
+                (onSelect)="onItemSelect($event)"
+                (onSelectAll)="onSelectAll($event)"
+                (onDeSelect)="onDeSelect($event)"
+                (onDeSelectAll)="onDeSelectAll($event)"
+              >
+              </ng-multiselect-dropdown>
+
+              <p
+                class="error2"
+                *ngIf="
+                  (preferedPositions.invalid && preferedPositions.touched) ||
+                  (preferedPositions.invalid && firstCheck$)
+                "
+              >
+                Specialiazation is required
+              </p>
+            </div>
+
+            <div class="form-row form-row-wide four columns">
+              <label>Marital Status: <span class="red">*</span></label>
+              <select
+                formControlName="maritalStatus"
+                [ngClass]="{
+                  'input-error':
+                    (maritalStatus.invalid && maritalStatus.touched) ||
+                    (maritalStatus.invalid && firstCheck$)
+                }"
+              >
+                <option value="Married">Married</option>
+                <option value="Single">Single</option>
+                <option value="Divorced">Divorced </option>
+                <option value="Widowed">Widowed</option>
+              </select>
+
+              <p
+                class="error2"
+                *ngIf="
+                  (maritalStatus.invalid && maritalStatus.touched) ||
+                  (maritalStatus.invalid && firstCheck$)
+                "
+              >
+                Marital Status is required
+              </p>
+            </div>
+          </div>
         </div>
         <br />
         <button
@@ -286,7 +341,9 @@
               dateOfBirth.invalid ||
               gender.invalid ||
               lastName.invalid ||
-              firstName.invalid)
+              firstName.invalid ||
+              maritalStatus.invalid ||
+              preferedPositions.invalid)
           "
           (click)="firstCheck()"
           type="button"
@@ -302,7 +359,9 @@
               dateOfBirth.invalid ||
               gender.invalid ||
               lastName.invalid ||
-              firstName.invalid)
+              firstName.invalid ||
+              maritalStatus.invalid ||
+              preferedPositions.invalid)
           "
           (click)="firstCheck()"
           type="button"
@@ -317,7 +376,9 @@
             !dateOfBirth.invalid &&
             !gender.invalid &&
             !lastName.invalid &&
-            !firstName.invalid
+            !firstName.invalid &&
+            !maritalStatus.invalid &&
+            !preferedPositions.invalid
           "
           type="button"
           awNextStep
@@ -325,6 +386,7 @@
           Next
         </button>
       </aw-wizard-step>
+
       <aw-wizard-step stepTitle="STEEP 2">
         <div class="container">
           <div formGroupName="education">
@@ -365,9 +427,7 @@
 
                 <div class="form-row form-row-wide four columns">
                   <label>Diploma/Degree: <span class="red">*</span></label>
-                  <input
-                    type="text"
-                    class="input-text"
+                  <select
                     formControlName="degree"
                     [ngClass]="{
                       'input-error':
@@ -375,7 +435,11 @@
                           e.controls.degree.touched) ||
                         (e.controls.degree.invalid && secondCheck$)
                     }"
-                  />
+                  >
+                    <option *ngFor="let d of degree" [value]="d.name">{{
+                      d.name
+                    }}</option>
+                  </select>
                   <p
                     class="error2"
                     *ngIf="
@@ -399,7 +463,7 @@
                         (e.controls.country.invalid && secondCheck$)
                     }"
                   >
-                    <option *ngFor="let c of countries" [value]="c.id">
+                    <option *ngFor="let c of countries" [value]="c.code">
                       {{ c.name }}
                     </option>
                   </select>
@@ -439,7 +503,7 @@
                   >
                     From Year is required
                   </p>
-                  <p
+                  <!-- <p
                     class="error2"
                     *ngIf="
                       (e.controls.fromYear.errors?.minLength ||
@@ -448,7 +512,7 @@
                     "
                   >
                     Invalid Year
-                  </p>
+                  </p> -->
                 </div>
               </div>
 
@@ -504,7 +568,7 @@
                     To Year is required
                   </p>
 
-                  <p
+                  <!-- <p
                     class="error2"
                     *ngIf="
                       (e.controls.toYear.errors?.minLength ||
@@ -513,7 +577,7 @@
                     "
                   >
                     Invalid Year
-                  </p>
+                  </p> -->
                 </div>
 
                 <div class="form-row form-row-wide four columns">
@@ -583,7 +647,7 @@
           </div>
 
           <a (click)="addEducation()" class="button gray"
-            ><i class="fa fa-plus-circle"></i> Add Education</a
+            ><i class="fa fa-plus-circle"></i> Add More Education</a
           >
         </div>
 
@@ -593,16 +657,35 @@
           <br /><br />
 
           <div class="form-row form-row-wide five columns">
-            <label>NYSC Completed: (Optional)</label>
-            <select formControlName="NTSCcompleted">
+            <label>NYSC Completed: <span class="red">*</span></label>
+            <select
+              formControlName="NTSCcompleted"
+              [ngClass]="{
+                'input-error':
+                  (NTSCcompleted.invalid && NTSCcompleted.touched) ||
+                  (NTSCcompleted.invalid && secondCheck$)
+              }"
+            >
               <option value="yes">Yes</option>
               <option value="no">No</option>
               <option value="not gone">Not Gone</option>
             </select>
+
+            <p
+              class="error2"
+              *ngIf="
+                (NTSCcompleted.invalid && NTSCcompleted.touched) ||
+                (NTSCcompleted.invalid && secondCheck$)
+              "
+            >
+              NYSC Completed Status is required
+            </p>
           </div>
 
           <div class="form-row form-row-wide five columns">
-            <label>Date(dd/mm/yyyy): (Optional)</label>
+            <label
+              >Nysc Date Started (dd/mm/yyyy):  (Optional)</label
+            >
             <input
               style="
                 padding: 14px 18px;
@@ -657,24 +740,260 @@
         <br /><br />
         <button type="button" awPreviousStep>PREV</button>
         <button
-          *ngIf="!secondCheck$ && educationForms.invalid"
+          *ngIf="
+            !secondCheck$ && educationForms.invalid && NTSCcompleted.invalid
+          "
           (click)="secondCheck()"
           type="button"
         >
           Next
         </button>
         <button
-          *ngIf="secondCheck$ && educationForms.invalid"
+          *ngIf="
+            secondCheck$ && educationForms.invalid && NTSCcompleted.invalid
+          "
           (click)="secondCheck()"
           type="button"
         >
           Next
         </button>
-        <button *ngIf="!educationForms.invalid" type="button" awNextStep>
+        <button
+          *ngIf="!educationForms.invalid && !NTSCcompleted.invalid"
+          type="button"
+          awNextStep
+        >
           Next
         </button>
       </aw-wizard-step>
+
       <aw-wizard-step stepTitle="STEEP 3">
+        <div class="container">
+          <div formGroupName="referees">
+            <h3 class="margin-bottom-10 margin-top-10">Referees</h3>
+
+            <br />
+            <div
+              class="row"
+              *ngFor="let r of refereesForms.controls; let i = index"
+              [formGroupName]="i"
+            >
+              <br /><br />
+              <div class="row">
+                <div class="form-row form-row-wide four columns">
+                  <label>Name: <span class="red">*</span></label>
+                  <input
+                    type="text"
+                    class="input-text"
+                    formControlName="name"
+                    [ngClass]="{
+                      'input-error':
+                        (r.controls.name.invalid && r.controls.name.touched) ||
+                        (r.controls.name.invalid && newCheck$)
+                    }"
+                  />
+                  <p
+                    class="error2"
+                    *ngIf="
+                      (r.controls.name.invalid && r.controls.name.touched) ||
+                      (r.controls.name.invalid && newCheck$)
+                    "
+                  >
+                    Name is required
+                  </p>
+                </div>
+
+                <div class="form-row form-row-wide four columns">
+                  <label>Designation: <span class="red">*</span></label>
+                  <input
+                    type="text"
+                    class="input-text"
+                    formControlName="designation"
+                    [ngClass]="{
+                      'input-error':
+                        (r.controls.designation.invalid &&
+                          r.controls.designation.touched) ||
+                        (r.controls.designation.invalid && newCheck$)
+                    }"
+                  />
+                  <p
+                    class="error2"
+                    *ngIf="
+                      (r.controls.designation.invalid &&
+                        r.controls.designation.touched) ||
+                      (r.controls.designation.invalid && newCheck$)
+                    "
+                  >
+                    Referee Designation is required
+                  </p>
+                </div>
+
+                <div class="form-row form-row-wide four columns">
+                  <label>Company: <span class="red">*</span></label>
+                  <input
+                    type="text"
+                    class="input-text"
+                    formControlName="company"
+                    [ngClass]="{
+                      'input-error':
+                        (r.controls.company.invalid &&
+                          r.controls.company.touched) ||
+                        (r.controls.company.invalid && newCheck$)
+                    }"
+                  />
+                  <p
+                    class="error2"
+                    *ngIf="
+                      (r.controls.company.invalid &&
+                        r.controls.company.touched) ||
+                      (r.controls.company.invalid && newCheck$)
+                    "
+                  >
+                    Referee Company is required
+                  </p>
+                </div>
+
+                <div class="form-row form-row-wide four columns">
+                  <label>Country: <span class="red">*</span></label>
+                  <select
+                    formControlName="country"
+                    [ngClass]="{
+                      'input-error':
+                        (r.controls.country.invalid &&
+                          r.controls.country.touched) ||
+                        (r.controls.country.invalid && newCheck$)
+                    }"
+                  >
+                    <option *ngFor="let c of countries" [value]="c.name">
+                      {{ c.name }}
+                    </option>
+                  </select>
+
+                  <p
+                    class="error2"
+                    *ngIf="
+                      (r.controls.country.invalid &&
+                        r.controls.country.touched) ||
+                      (r.controls.country.invalid && newCheck$)
+                    "
+                  >
+                    Referee Country is required
+                  </p>
+                </div>
+              </div>
+
+              <div class="row">
+                <div class="form-row form-row-wide four columns">
+                  <label>Phone: <span class="red">*</span></label>
+                  <input
+                    type="text"
+                    class="input-text"
+                    formControlName="phone"
+                    [ngClass]="{
+                      'input-error':
+                        (r.controls.phone.invalid &&
+                          r.controls.phone.touched) ||
+                        (r.controls.phone.invalid && newCheck$)
+                    }"
+                  />
+                  <p
+                    class="error2"
+                    *ngIf="
+                      (r.controls.phone.invalid && r.controls.phone.touched) ||
+                      (r.controls.phone.invalid && newCheck$)
+                    "
+                  >
+                    phone is required
+                  </p>
+                </div>
+
+                <div class="form-row form-row-wide four columns">
+                  <label>Email: <span class="red">*</span></label>
+                  <input
+                    type="text"
+                    class="input-text"
+                    formControlName="email"
+                    [ngClass]="{
+                      'input-error':
+                        (r.controls.email.invalid &&
+                          r.controls.email.touched) ||
+                        (r.controls.email.invalid && newCheck$)
+                    }"
+                  />
+                  <p
+                    class="error2"
+                    *ngIf="
+                      (r.controls.email.invalid && r.controls.email.touched) ||
+                      (r.controls.email.invalid && newCheck$)
+                    "
+                  >
+                    Referee Email is required
+                  </p>
+                </div>
+
+                <div style="display: none" class="form-row form-row-wide four columns">
+                  <label>Id: <span class="red">*</span></label>
+                  <input
+                    type="text"
+                    class="input-text"
+                    disabled
+                    [(ngModel)]="'referees_' + i"
+                    formControlName="id"
+                    [ngClass]="{
+                      'input-error':
+                        (r.controls.id.invalid && r.controls.id.touched) ||
+                        (r.controls.id.invalid && newCheck$)
+                    }"
+                  />
+                  <p
+                    class="error2"
+                    *ngIf="
+                      (r.controls.id.invalid && r.controls.id.touched) ||
+                      (r.controls.id.invalid && newCheck$)
+                    "
+                  >
+                    Referee Id is required
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            <br />
+            <a
+              style="color: #fff; background: red"
+              *ngIf="refereesForms.controls?.length > 1"
+              (click)="deleteReferees(i)"
+              class="button gray"
+              ><i class="fa fa-plus-circle"></i>Delete</a
+            >
+          </div>
+        </div>
+
+        <a (click)="addReferees()" class="button gray"
+          ><i class="fa fa-plus-circle"></i> Add More Referees</a
+        >
+
+        <br /><br />
+        <button type="button" awPreviousStep>PREV</button>
+        <button
+          *ngIf="!newCheck$ && refereesForms.invalid"
+          (click)="secondCheck()"
+          type="button"
+        >
+          Next
+        </button>
+        <button
+          *ngIf="newCheck$ && refereesForms.invalid"
+          (click)="newCheck()"
+          type="button"
+        >
+          Next
+        </button>
+        <button *ngIf="!refereesForms.invalid" type="button" awNextStep>
+          Next
+        </button>
+      </aw-wizard-step>
+
+      <aw-wizard-step stepTitle="STEEP 4">
         <div class="container">
           <div formGroupName="workHistory">
             <h3 class="margin-bottom-10 margin-top-10">Work History</h3>
@@ -748,7 +1067,7 @@
                         (wH.controls.country.invalid && thirdCheck$)
                     }"
                   >
-                    <option *ngFor="let c of countries" [value]="c.id">
+                    <option *ngFor="let c of countries" [value]="c.code">
                       {{ c.name }}
                     </option>
                   </select>
@@ -775,7 +1094,7 @@
                     [ngClass]="{
                       'input-error':
                         (wH.controls.fromYear.invalid &&
-                        wH.controls.fromYear.touched) ||
+                          wH.controls.fromYear.touched) ||
                         (wH.controls.fromYear.invalid && thirdCheck$)
                     }"
                   />
@@ -789,6 +1108,17 @@
                   >
                     From Year is required
                   </p>
+
+                  <!-- <p
+                    class="error2"
+                    *ngIf="
+                      (wH.controls.fromYear.errors?.minLength ||
+                        wH.controls.fromYear.errors?.maxLength) &&
+                      wH.controls.fromYear.touched
+                    "
+                  >
+                    Invalid Year
+                  </p> -->
                 </div>
                 <div class="form-row form-row-wide four columns">
                   <label>From Month: <span class="red">*</span></label>
@@ -841,6 +1171,17 @@
                   >
                     To Year is required
                   </p>
+
+                  <!-- <p
+                    class="error2"
+                    *ngIf="
+                      (wH.controls.toYear.errors?.minLength ||
+                        wH.controls.toYear.errors?.maxLength) &&
+                      wH.controls.toYear.touched
+                    "
+                  >
+                    Invalid Year
+                  </p> -->
                 </div>
 
                 <div class="form-row form-row-wide four columns">
@@ -908,7 +1249,8 @@
           Next
         </button>
       </aw-wizard-step>
-      <aw-wizard-step stepTitle="STEEP 4">
+
+      <aw-wizard-step stepTitle="STEEP 5">
         <div class="container">
           <div formGroupName="skills">
             <h3 class="margin-bottom-10 margin-top-10">Skills</h3>
@@ -996,6 +1338,17 @@
                   >
                     Last Year Used is required
                   </p>
+<!-- 
+                  <p
+                  class="error2"
+                  *ngIf="
+                    (s.controls.lastYearUsed.errors?.minLength ||
+                    s.controls.lastYearUsed.errors?.maxLength) &&
+                    s.controls.lastYearUsed.touched
+                  "
+                >
+                  Invalid Year
+                </p> -->
                 </div>
 
                 <div class="form-row form-row-wide three columns">
@@ -1088,7 +1441,8 @@
           Next
         </button>
       </aw-wizard-step>
-      <aw-wizard-step stepTitle="'STEEP 5'">
+
+      <aw-wizard-step stepTitle="'STEEP 6'">
         <div class="container">
           <h3 class="margin-bottom-10 margin-top-10">Additional Information</h3>
 

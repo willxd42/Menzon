@@ -15,6 +15,7 @@ export class JobsSingleComponent implements OnInit {
   benefits: any[];
   user: any;
   submit = "Apply For This Job";
+  canApply: boolean;
   error2: boolean;
   errMessage: any;
 
@@ -56,7 +57,6 @@ export class JobsSingleComponent implements OnInit {
         res => {
           this.job = res["rows"][0];
           this.benefits = JSON.parse(this.job.benefits);
-          this.loading = false;
           this.checkForAppliedJob(this.job.id);
         },
         err => {
@@ -92,7 +92,7 @@ export class JobsSingleComponent implements OnInit {
   }
 
   checkForAppliedJob(id: string) {
-    this.submit = "appling";
+    this.loading = true;
     this.jobService
       .checkForAppliedJob({
         appUserId: this.user.appUserId,
@@ -100,17 +100,11 @@ export class JobsSingleComponent implements OnInit {
       })
       .subscribe(
         res => {
-          console.log(res);
-
-          this.submit = "Apply For This Job";
-          this.success = true;
-          setTimeout(() => {
-            this.success = false;
-          }, 2000);
+          this.canApply = res["status"];
+          this.loading = false;
         },
         err => {
           console.log(err);
-          this.submit = "Apply For This Job";
           this.error2 = true;
           this.errMessage = err["error"];
           setTimeout(() => {

@@ -87,6 +87,20 @@
         </dt>
       </dl>
     </div>
+
+    <div class="eight columns" *ngIf="referees && referees?.length > 0">
+      <h3 class="margin-bottom-20">Referees</h3>
+
+      <!-- Resume Table -->
+      <dl class="resume-table">
+        <dt *ngFor="let r of referees">
+          <small class="date">{{ r.email }}</small> <br />
+          <small class="date">{{ r.phone }}</small>
+          <strong>{{ r.name }}</strong>
+          <p>{{ r.country }}</p>
+        </dt>
+      </dl>
+    </div>
   </div>
 </div>
 

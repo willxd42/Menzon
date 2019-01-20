@@ -1,0 +1,210 @@
+<app-loading-spinner *ngIf="loading"></app-loading-spinner>
+
+<app-error *ngIf="error" (reload)="ngOnInit()"></app-error>
+
+<form [formGroup]="cRForm" *ngIf="!loading && !error">
+  <div class="container">
+    <div formGroupName="referees">
+      <h3 class="margin-bottom-10 margin-top-10">Referees</h3>
+
+      <br />
+      <div
+        class="row"
+        *ngFor="let r of refereesForms.controls; let i = index"
+        [formGroupName]="i"
+      >
+        <br /><br />
+        <div class="row">
+          <div class="form-row form-row-wide four columns">
+            <label>Name: <span class="red">*</span></label>
+            <input
+              type="text"
+              class="input-text"
+              formControlName="name"
+              [ngClass]="{
+                'input-error':
+                  (r.controls.name.invalid && r.controls.name.touched) ||
+                  (r.controls.name.invalid && check$)
+              }"
+            />
+            <p
+              class="error2"
+              *ngIf="
+                (r.controls.name.invalid && r.controls.name.touched) ||
+                (r.controls.name.invalid && check$)
+              "
+            >
+              Name is required
+            </p>
+          </div>
+
+          <div class="form-row form-row-wide four columns">
+            <label>Designation: <span class="red">*</span></label>
+            <input
+              type="text"
+              class="input-text"
+              formControlName="designation"
+              [ngClass]="{
+                'input-error':
+                  (r.controls.designation.invalid &&
+                    r.controls.designation.touched) ||
+                  (r.controls.designation.invalid && check$)
+              }"
+            />
+            <p
+              class="error2"
+              *ngIf="
+                (r.controls.designation.invalid &&
+                  r.controls.designation.touched) ||
+                (r.controls.designation.invalid && check$)
+              "
+            >
+              Referee Designation is required
+            </p>
+          </div>
+
+          <div class="form-row form-row-wide four columns">
+            <label>Company: <span class="red">*</span></label>
+            <input
+              type="text"
+              class="input-text"
+              formControlName="company"
+              [ngClass]="{
+                'input-error':
+                  (r.controls.company.invalid && r.controls.company.touched) ||
+                  (r.controls.company.invalid && check$)
+              }"
+            />
+            <p
+              class="error2"
+              *ngIf="
+                (r.controls.company.invalid && r.controls.company.touched) ||
+                (r.controls.company.invalid && check$)
+              "
+            >
+              Referee Company is required
+            </p>
+          </div>
+
+          <div class="form-row form-row-wide four columns">
+            <label>Country: <span class="red">*</span></label>
+            <select
+              formControlName="country"
+              [ngClass]="{
+                'input-error':
+                  (r.controls.country.invalid && r.controls.country.touched) ||
+                  (r.controls.country.invalid && check$)
+              }"
+            >
+              <option *ngFor="let c of countries" [value]="c.name">
+                {{ c.name }}
+              </option>
+            </select>
+
+            <p
+              class="error2"
+              *ngIf="
+                (r.controls.country.invalid && r.controls.country.touched) ||
+                (r.controls.country.invalid && check$)
+              "
+            >
+              Referee Country is required
+            </p>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="form-row form-row-wide four columns">
+            <label>Phone: <span class="red">*</span></label>
+            <input
+              type="text"
+              class="input-text"
+              formControlName="phone"
+              [ngClass]="{
+                'input-error':
+                  (r.controls.phone.invalid && r.controls.phone.touched) ||
+                  (r.controls.phone.invalid && check$)
+              }"
+            />
+            <p
+              class="error2"
+              *ngIf="
+                (r.controls.phone.invalid && r.controls.phone.touched) ||
+                (r.controls.phone.invalid && check$)
+              "
+            >
+              phone is required
+            </p>
+          </div>
+
+          <div class="form-row form-row-wide four columns">
+            <label>Email: <span class="red">*</span></label>
+            <input
+              type="text"
+              class="input-text"
+              formControlName="email"
+              [ngClass]="{
+                'input-error':
+                  (r.controls.email.invalid && r.controls.email.touched) ||
+                  (r.controls.email.invalid && check$)
+              }"
+            />
+            <p
+              class="error2"
+              *ngIf="
+                (r.controls.email.invalid && r.controls.email.touched) ||
+                (r.controls.email.invalid && check$)
+              "
+            >
+              Referee Email is required
+            </p>
+          </div>
+
+          <div
+            style="display: none"
+            class="form-row form-row-wide four columns"
+          >
+            <label>Id: <span class="red">*</span></label>
+            <input
+              type="text"
+              class="input-text"
+              disabled
+              [(ngModel)]="'referees_' + i"
+              formControlName="id"
+              [ngClass]="{
+                'input-error':
+                  (r.controls.id.invalid && r.controls.id.touched) ||
+                  (r.controls.id.invalid && check$)
+              }"
+            />
+            <p
+              class="error2"
+              *ngIf="
+                (r.controls.id.invalid && r.controls.id.touched) ||
+                (r.controls.id.invalid && check$)
+              "
+            >
+              Referee Id is required
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <br />
+      <a
+        style="color: #fff; background: red"
+        *ngIf="refereesForms.controls?.length > 1"
+        (click)="deleteReferees(i)"
+        class="button gray"
+        ><i class="fa fa-plus-circle"></i>Delete</a
+      >
+    </div>
+  </div>
+
+  <app-error *ngIf="error2" (reload)="submit()"></app-error>
+
+  <div class="container">
+    <button type="button" (click)="submit()">{{ Submit }}</button>
+  </div>
+</form>
+<br /><br /><br />

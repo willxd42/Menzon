@@ -1,5 +1,6 @@
 import { Component, OnInit } from "@angular/core";
 import { CategoryService } from "src/app/services/category.service";
+import { Router } from '@angular/router';
 
 @Component({
   selector: "app-category",
@@ -11,7 +12,7 @@ export class CategoryComponent implements OnInit {
   error: boolean;
   categories: any[];
 
-  constructor(private categoryService: CategoryService) {}
+  constructor(private categoryService: CategoryService, private router: Router) {}
 
   ngOnInit() {
     this.loading = true;
@@ -35,5 +36,20 @@ export class CategoryComponent implements OnInit {
           this.loading = false;
         }
       );
+  }
+
+  searchCategory(val: string) {
+    const searchFilter = {
+      groupOp: "AND",
+      rules: [
+        {
+          field: "jobFunction.id",
+          op: "eq",
+          data: val
+        }
+      ]
+    };
+    localStorage.setItem("searchFilter", JSON.stringify(searchFilter));
+    this.router.navigate(["/jobs"]);
   }
 }

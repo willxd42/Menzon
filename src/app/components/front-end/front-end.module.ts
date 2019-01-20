@@ -17,9 +17,10 @@ import { UiModule } from "../ui/ui.module";
 import { JobsSingleComponent } from "./jobs-single/jobs-single.component";
 import { JobSportliteComponent } from "./job-sportlite/job-sportlite.component";
 import { ClientsComponent } from "./clients/clients.component";
-import { VerifyEmailComponent } from './verify-email/verify-email.component';
-import { ResetPasswordComponent } from './reset-password/reset-password.component';
-import { CategoryComponent } from './category/category.component';
+import { VerifyEmailComponent } from "./verify-email/verify-email.component";
+import { ResetPasswordComponent } from "./reset-password/reset-password.component";
+import { CategoryComponent } from "./category/category.component";
+import { NewsLatterComponent } from "./news-latter/news-latter.component";
 
 @NgModule({
   declarations: [
@@ -39,8 +40,10 @@ import { CategoryComponent } from './category/category.component';
     ClientsComponent,
     VerifyEmailComponent,
     ResetPasswordComponent,
-    CategoryComponent
+    CategoryComponent,
+    NewsLatterComponent
   ],
-  imports: [CommonModule, SharedModule, UiModule]
+  imports: [CommonModule, SharedModule, UiModule],
+  exports: [NewsLatterComponent]
 })
 export class FrontEndModule {}

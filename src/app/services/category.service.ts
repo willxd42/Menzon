@@ -13,4 +13,10 @@ export class CategoryService {
       params: payload
     });
   }
+
+
+  newsLatter(payload) {
+    return this.http.post(`${environment.BASE_URL}/public/newsletter/`, payload)
+  }
+  
 }

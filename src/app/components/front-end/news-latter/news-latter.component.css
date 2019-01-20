@@ -1,0 +1,23 @@
+.centered-headline {
+    padding: 30px;
+    background: #00a65a;
+    text-align: center;
+}
+
+.multiselect-dropdown .dropdown-btn {
+    display: inline-block;
+    border: none !important;
+    width: 90% !important;
+    padding: 12px !important;
+    background: #fcfcfc !important;
+    margin-bottom: 0 !important;
+    font-weight: 400 !important;
+    line-height: 1.52857143 !important;
+    text-align: left !important;
+    vertical-align: middle !important;
+    cursor: pointer !important;
+    color: #909090 !important;
+    background-image: none !important;
+    border-radius: 0px !important;
+    height: 25px !important;
+}

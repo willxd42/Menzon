@@ -108,11 +108,15 @@
           <p *ngIf="success" class="success">Applied for job Successfully!</p>
 
           <a
-            *ngIf="user"
+            *ngIf="user && canApply"
             (click)="apply(j.id)"
             class="popup-with-zoom-anim button"
           >
             {{ submit }}
+          </a>
+
+          <a *ngIf="user && !canApply" class="popup-with-zoom-anim button apply">
+            Already Applied For This Job
           </a>
 
           <a

@@ -70,7 +70,7 @@
                 (wH.controls.country.invalid && check$)
             }"
           >
-            <option *ngFor="let c of countries" [value]="c.id">
+            <option *ngFor="let c of countries" [value]="c.code">
               {{ c.name }}
             </option>
           </select>
@@ -201,7 +201,7 @@
 
   <!-- <br />
   <a (click)="addWorkHistory()" class="button gray"
-    ><i class="fa fa-plus-circle"></i> Add Work History</a
+    ><i class="fa fa-plus-circle"></i> Add More Work History</a
   > -->
 
   <app-error *ngIf="error2" (reload)="submit()"></app-error>

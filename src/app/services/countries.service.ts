@@ -13,4 +13,10 @@ export class CountriesService {
       params: payload
     });
   }
+
+  getDegree(payload) {
+    return this.http.get(`${environment.BASE_URL}/public/degrees/`, {
+      params: payload
+    });
+  }
 }

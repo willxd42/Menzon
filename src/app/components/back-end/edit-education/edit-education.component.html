@@ -76,7 +76,7 @@
                   (e.controls.country.invalid && check$)
               }"
             >
-              <option *ngFor="let c of countries" [value]="c.id">
+              <option *ngFor="let c of countries" [value]="c.code">
                 {{ c.name }}
               </option>
             </select>
@@ -253,7 +253,7 @@
     </div>
 
     <!-- <a (click)="addEducation()" class="button gray"
-      ><i class="fa fa-plus-circle"></i> Add Education</a
+      ><i class="fa fa-plus-circle"></i> Add More Education</a
     > -->
   </div>
 

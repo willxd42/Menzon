@@ -1,11 +1,20 @@
 .error2 {
-  padding: 10px;
-  background: rgb(197, 36, 36);
-  color: #fff;
+    padding: 10px;
+    background: rgb(197, 36, 36);
+    color: #fff;
 }
 
 .success {
-  padding: 10px;
-  background: #00a66b;
-  color: #fff;
+    padding: 10px;
+    background: #00a66b;
+    color: #fff;
+}
+
+.apply {
+    background: #a3a600 !important;
+    border: none;
+}
+
+.apply:hover {
+    background: #878a04 !important
 }

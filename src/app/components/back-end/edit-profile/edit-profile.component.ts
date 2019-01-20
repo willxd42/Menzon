@@ -6,6 +6,7 @@ import { StateService } from "src/app/services/state.service";
 import { CountriesService } from "src/app/services/countries.service";
 import { UsersService } from "src/app/services/users.service";
 import { GloberService } from "src/app/services/glober.service";
+import { CategoryService } from "src/app/services/category.service";
 
 @Component({
   selector: "app-edit-profile",
@@ -17,9 +18,13 @@ export class EditProfileComponent implements OnInit {
   cRForm: FormGroup;
   states: any[];
   countries: any[];
+  categories: any[];
+  degree: any[];
+  selectedItems = [];
   loading: boolean;
   education: any[];
   workHistory: any[];
+  referees: any[];
   skills: any[];
   selectedCvFile: any;
   selectedPhotoFile: any;
@@ -31,11 +36,22 @@ export class EditProfileComponent implements OnInit {
   error2: boolean;
   error3: boolean;
   success: boolean;
-  check$: boolean;
+  check$ = false;
   cvFile$: any;
   photoFile$: any;
   Finish = "Save";
   u: any;
+
+  dropdownSettings = {
+    singleSelection: false,
+    idField: "id",
+    textField: "name",
+    selectAllText: "Select All",
+    unSelectAllText: "UnSelect All",
+    allowSearchFilter: true,
+    limitSelection: 3
+  };
+
   public options: Object = {
     charCounterCount: true,
     // Set the image upload parameter.
@@ -123,13 +139,14 @@ export class EditProfileComponent implements OnInit {
   dateNyscStarted: string;
   dateNyscCompleted: string;
   errMessage: string;
-
+  MiddleName = "";
   constructor(
     private router: Router,
     private stateService: StateService,
     private countryService: CountriesService,
     private userService: UsersService,
-    public globalService: GloberService
+    public globalService: GloberService,
+    private categoryService: CategoryService
   ) {
     this.globalService.change$.subscribe(res => this.ngOnInit());
 
@@ -159,12 +176,21 @@ export class EditProfileComponent implements OnInit {
       cvFile: new FormControl(""),
       cvTitle: new FormControl("", Validators.compose([Validators.required])),
       photoFile: new FormControl(""),
-      NYSCDate: new FormControl("", Validators.compose([Validators.required])),
+      maritalStatus: new FormControl(
+        "",
+        Validators.compose([Validators.required])
+      ),
+      preferedPositions: new FormControl(
+        "",
+        Validators.compose([Validators.required])
+      ),
       NTSCcompleted: new FormControl(
         "",
         Validators.compose([Validators.required])
       ),
-      NTSCcompletedDate: new FormControl(
+      NYSCDate: new FormControl(""),
+      NTSCcompletedDate: new FormControl(""),
+      howDidYouHereAboutUs: new FormControl(
         "",
         Validators.compose([Validators.required])
       )
@@ -186,8 +212,12 @@ export class EditProfileComponent implements OnInit {
         this.skills = JSON.parse(res["skills"]);
         this.education = JSON.parse(res["education"]);
         this.workHistory = JSON.parse(res["workHistory"]);
+        this.referees = JSON.parse(res["referees"]);
+        this.selectedItems = JSON.parse(res["preferedPositions"]);
 
-        this.loading = false;
+        this.cRForm.value.preferedPositions = JSON.stringify(
+          this.selectedItems
+        );
       },
       err => {
         console.log(err);
@@ -197,6 +227,27 @@ export class EditProfileComponent implements OnInit {
     );
 
     this.getAll();
+  }
+
+  onItemSelect(item: any) {
+    this.selectedItems.push(item);
+    this.cRForm.value.preferedPositions = JSON.stringify(this.selectedItems);
+  }
+  onSelectAll(items: any[]) {
+    this.selectedItems.concat(items);
+    this.cRForm.value.preferedPositions = JSON.stringify(this.selectedItems);
+  }
+
+  onDeSelect(item: any) {
+    this.selectedItems.filter(i => {
+      return i.idField != item.idField;
+    });
+    this.cRForm.value.preferedPositions = JSON.stringify(this.selectedItems);
+  }
+
+  onDeSelectAll(items: any[]) {
+    this.selectedItems = [];
+    this.cRForm.value.preferedPositions = JSON.stringify(this.selectedItems);
   }
 
   formatDate(date) {
@@ -232,13 +283,33 @@ export class EditProfileComponent implements OnInit {
     return this.countryService.getCountries({ rows: 1000 }).subscribe(
       res => {
         this.countries = res["rows"];
-        this.loading = false;
+        this.getCategories();
       },
       err => {
         this.error = true;
         this.loading = false;
       }
     );
+  }
+
+  getCategories() {
+    return this.categoryService
+      .getCategorries({
+        rows: 2000
+      })
+      .subscribe(
+        res => {
+          this.categories = res["rows"];
+
+          console.log(this.categories);
+
+          this.loading = false;
+        },
+        err => {
+          this.error = true;
+          this.loading = false;
+        }
+      );
   }
 
   get firstName() {
@@ -289,6 +360,14 @@ export class EditProfileComponent implements OnInit {
     return this.cRForm.get("prefaredLocation");
   }
 
+  get maritalStatus() {
+    return this.cRForm.get("maritalStatus");
+  }
+
+  get preferedPositions() {
+    return this.cRForm.get("preferedPositions");
+  }
+
   get tellUsAboutYourSelf() {
     return this.cRForm.get("tellUsAboutYourSelf");
   }
@@ -337,6 +416,14 @@ export class EditProfileComponent implements OnInit {
     for (let i = 0; i < this.workHistory.length; i++) {
       if (i === index) {
         this.workHistory.splice(i, 1);
+      }
+    }
+  }
+
+  deleteReferees(index) {
+    for (let i = 0; i < this.referees.length; i++) {
+      if (i === index) {
+        this.referees.splice(i, 1);
       }
     }
   }
@@ -422,6 +509,9 @@ export class EditProfileComponent implements OnInit {
         firstName: this.cRForm.value.firstName,
         lastName: this.cRForm.value.lastName,
         birthday: this.cRForm.value.dateOfBirth,
+        preferedPositions: this.cRForm.value.preferedPositions,
+        maritalStatus: this.cRForm.value.maritalStatus,
+        preferedCountries: this.cRForm.value.prefaredLocation,
         gender: this.cRForm.value.gender,
         province: this.cRForm.value.state,
         cvtext: this.cRForm.value.tellUsAboutYourSelf,
@@ -432,7 +522,8 @@ export class EditProfileComponent implements OnInit {
         mobilePhone: this.cRForm.value.mobileNumber,
         workHistory: JSON.stringify(this.workHistory),
         education: JSON.stringify(this.education),
-        skills: JSON.stringify(this.skills)
+        skills: JSON.stringify(this.skills),
+        referees: JSON.stringify(this.referees)
       });
       const data = new Blob([jsonse], { type: "application/json" });
       upload.append("data", data);
@@ -467,6 +558,9 @@ export class EditProfileComponent implements OnInit {
         firstName: this.cRForm.value.firstName,
         lastName: this.cRForm.value.lastName,
         birthday: this.cRForm.value.dateOfBirth,
+        preferedPositions: this.cRForm.value.preferedPositions,
+        maritalStatus: this.cRForm.value.maritalStatus,
+        preferedCountries: this.cRForm.value.prefaredLocation,
         gender: this.cRForm.value.gender,
         province: this.cRForm.value.state,
         cvtext: this.cRForm.value.tellUsAboutYourSelf,
@@ -477,7 +571,8 @@ export class EditProfileComponent implements OnInit {
         mobilePhone: this.cRForm.value.mobileNumber,
         workHistory: JSON.stringify(this.workHistory),
         education: JSON.stringify(this.education),
-        skills: JSON.stringify(this.skills)
+        skills: JSON.stringify(this.skills),
+        referees: JSON.stringify(this.referees)
       });
       const data = new Blob([jsonse], { type: "application/json" });
       upload.append("data", data);
@@ -513,6 +608,9 @@ export class EditProfileComponent implements OnInit {
         firstName: this.cRForm.value.firstName,
         lastName: this.cRForm.value.lastName,
         birthday: this.cRForm.value.dateOfBirth,
+        preferedPositions: this.cRForm.value.preferedPositions,
+        maritalStatus: this.cRForm.value.maritalStatus,
+        preferedCountries: this.cRForm.value.prefaredLocation,
         gender: this.cRForm.value.gender,
         province: this.cRForm.value.state,
         cvtext: this.cRForm.value.tellUsAboutYourSelf,
@@ -523,7 +621,8 @@ export class EditProfileComponent implements OnInit {
         mobilePhone: this.cRForm.value.mobileNumber,
         workHistory: JSON.stringify(this.workHistory),
         education: JSON.stringify(this.education),
-        skills: JSON.stringify(this.skills)
+        skills: JSON.stringify(this.skills),
+        referees: JSON.stringify(this.referees)
       });
       const data = new Blob([jsonse], { type: "application/json" });
       upload.append("data", data);
@@ -558,6 +657,9 @@ export class EditProfileComponent implements OnInit {
         firstName: this.cRForm.value.firstName,
         lastName: this.cRForm.value.lastName,
         birthday: this.cRForm.value.dateOfBirth,
+        preferedPositions: this.cRForm.value.preferedPositions,
+        maritalStatus: this.cRForm.value.maritalStatus,
+        preferedCountries: this.cRForm.value.prefaredLocation,
         gender: this.cRForm.value.gender,
         province: this.cRForm.value.state,
         cvTitle: this.cRForm.value.cvTitle,
@@ -569,7 +671,8 @@ export class EditProfileComponent implements OnInit {
         mobilePhone: this.cRForm.value.mobileNumber,
         workHistory: JSON.stringify(this.workHistory),
         education: JSON.stringify(this.education),
-        skills: JSON.stringify(this.skills)
+        skills: JSON.stringify(this.skills),
+        referees: JSON.stringify(this.referees)
       });
       const data = new Blob([jsonse], { type: "application/json" });
       upload.append("data", data);
@@ -608,6 +711,12 @@ export class EditProfileComponent implements OnInit {
     console.log(i);
 
     this.router.navigate([`/edit-work-history/${i}`]);
+  }
+
+  editReferees(i) {
+    console.log(i);
+
+    this.router.navigate([`/edit-referees/${i}`]);
   }
 
   resendEmailVerification() {

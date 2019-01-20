@@ -1,0 +1,121 @@
+<!-- spinner -->
+<app-loading-spinner *ngIf="loading"></app-loading-spinner>
+<!-- spinner end -->
+
+<app-error *ngIf="error" (reload)="ngOnInit()"></app-error>
+
+<div class="container">
+  <div class="sixteen columns">
+    <div class="submit-page">
+      <!-- Notice -->
+      <div
+        class="notification notice closeable margin-bottom-40"
+        *ngIf="success"
+      >
+        <p>
+          <span>Subscription Successfull! </span> You'll now recieve updates on
+          new listing.
+        </p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="centered-headline" *ngIf="!loading && !error">
+  <div class="container">
+    <div class="sixteen columns">
+      <div [formGroup]="Form">
+        <!-- Form -->
+        <h2 style="color: #fff">Subscribe for new listing</h2>
+        <br />
+        <div class="form-row form-row-wide six columns">
+          <input
+            type="email"
+            class="input-text"
+            placeholder="Email"
+            formControlName="appUserEmail"
+            style="border-radius: 4px;"
+            [ngClass]="{
+              'input-error':
+                (appUserEmail.invalid && appUserEmail.touched) ||
+                (appUserEmail.invalid && check$)
+            }"
+          />
+
+          <p
+            class="error2"
+            *ngIf="
+              (appUserEmail.invalid && appUserEmail.touched) ||
+              (appUserEmail.invalid && check$)
+            "
+          >
+            Email is required and should be valid
+          </p>
+        </div>
+
+        <div class="form-row form-row-wide five columns">
+          <ng-multiselect-dropdown
+            [placeholder]="'Select Categories'"
+            [data]="Categories"
+            formControlName="categories"
+            [(ngModel)]="selectedItems"
+            [settings]="dropdownSettings"
+            (onSelect)="onItemSelect($event)"
+            (onSelectAll)="onSelectAll($event)"
+            (onDeSelect)="onDeSelect($event)"
+            (onDeSelectAll)="onDeSelectAll($event)"
+          >
+          </ng-multiselect-dropdown>
+
+          <p
+            class="error2"
+            *ngIf="
+              (categories.invalid && categories.touched) ||
+              (categories.invalid && check$)
+            "
+          >
+            Categories is required
+          </p>
+        </div>
+
+        <button
+          *ngIf="Form.invalid"
+          (click)="check()"
+          class="two columns"
+          style="color: #fff;
+          font-weight: 600;
+          font-size: 15px;
+          border: 1px solid #fff;
+          background-color: transparent;
+          text-transform: uppercase;
+          padding: 13px 20px;
+          margin: 0 0 0 20px;
+          position: relative;
+          top: -9px;
+          transition: all 0.2s ease-in-out;"
+        >
+          {{ Submit }}
+        </button>
+
+        <button
+          *ngIf="!Form.invalid"
+          (click)="submit()"
+          class="two columns"
+          style="color: #fff;
+        font-weight: 600;
+        font-size: 15px;
+        border: 1px solid #fff;
+        background-color: transparent;
+        text-transform: uppercase;
+        padding: 13px 20px;
+        margin: 0 0 0 20px;
+        position: relative;
+        top: -9px;
+        transition: all 0.2s ease-in-out;"
+        >
+          {{ Submit }}
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

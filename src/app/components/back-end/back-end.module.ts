@@ -13,6 +13,8 @@ import { UiModule } from "../ui/ui.module";
 import { AddSkillComponent } from './add-skill/add-skill.component';
 import { AddEducationComponent } from './add-education/add-education.component';
 import { AddWorkHistoryComponent } from './add-work-history/add-work-history.component';
+import { AddRefereesComponent } from './add-referees/add-referees.component';
+import { EditRefereesComponent } from './edit-referees/edit-referees.component';
 
 @NgModule({
   declarations: [
@@ -26,7 +28,9 @@ import { AddWorkHistoryComponent } from './add-work-history/add-work-history.com
     EditWorkHistoryComponent,
     AddSkillComponent,
     AddEducationComponent,
-    AddWorkHistoryComponent
+    AddWorkHistoryComponent,
+    AddRefereesComponent,
+    EditRefereesComponent
   ],
   imports: [CommonModule, SharedModule, UiModule]
 })

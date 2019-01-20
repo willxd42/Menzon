@@ -77,14 +77,14 @@
                 [ngClass]="{
                   'input-error':
                     (firstName.invalid && firstName.touched) ||
-                    (checked && firstName.touched)
+                    (check$ && firstName.touched)
                 }"
               />
               <p
                 class="error2"
                 *ngIf="
                   (firstName.invalid && firstName.touched) ||
-                  (checked && firstName.touched)
+                  (check$ && firstName.touched)
                 "
               >
                 First Name is required
@@ -101,14 +101,14 @@
                 [ngClass]="{
                   'input-error':
                     (lastName.invalid && lastName.touched) ||
-                    (checked && lastName.touched)
+                    (check$ && lastName.touched)
                 }"
               />
               <p
                 class="error2"
                 *ngIf="
                   (lastName.invalid && lastName.touched) ||
-                  (checked && lastName.touched)
+                  (check$ && lastName.touched)
                 "
               >
                 Last Name is required
@@ -120,7 +120,7 @@
               <input
                 type="text"
                 class="input-text"
-                [(ngModel)]="user.middleName"
+                [(ngModel)]="user.middleName || MiddleName"
                 formControlName="middleName"
               />
             </div>
@@ -133,7 +133,7 @@
                 [ngClass]="{
                   'input-error':
                     (gender.invalid && gender.touched) ||
-                    (checked && gender.touched)
+                    (check$ && gender.touched)
                 }"
               >
                 <option value="Male">Male</option>
@@ -143,7 +143,7 @@
                 class="error2"
                 *ngIf="
                   (gender.invalid && gender.touched) ||
-                  (checked && gender.touched)
+                  (check$ && gender.touched)
                 "
               >
                 Gender is required
@@ -180,7 +180,7 @@
                 [ngClass]="{
                   'input-error':
                     (dateOfBirth.invalid && dateOfBirth.touched) ||
-                    (checked && dateOfBirth.touched)
+                    (check$ && dateOfBirth.touched)
                 }"
               /> -->
               <input
@@ -191,14 +191,14 @@
                 [ngClass]="{
                   'input-error':
                     (dateOfBirth.invalid && dateOfBirth.touched) ||
-                    (checked && dateOfBirth.touched)
+                    (check$ && dateOfBirth.touched)
                 }"
               />
               <p
                 class="error2"
                 *ngIf="
                   (dateOfBirth.invalid && dateOfBirth.touched) ||
-                  (checked && dateOfBirth.touched)
+                  (check$ && dateOfBirth.touched)
                 "
               >
                 Date Of Birth is required
@@ -215,13 +215,13 @@
                 [ngClass]="{
                   'input-error':
                     (email.invalid && email.touched) ||
-                    (checked && email.touched)
+                    (check$ && email.touched)
                 }"
               />
               <p
                 class="error2"
                 *ngIf="
-                  (email.invalid && email.touched) || (checked && email.touched)
+                  (email.invalid && email.touched) || (check$ && email.touched)
                 "
               >
                 Email is required
@@ -268,10 +268,10 @@
                 [ngClass]="{
                   'input-error':
                     (country.invalid && country.touched) ||
-                    (checked && country.touched)
+                    (check$ && country.touched)
                 }"
               >
-                <option *ngFor="let c of countries" [value]="c.id">
+                <option *ngFor="let c of countries" [value]="c.code">
                   {{ c.name }}
                 </option>
               </select>
@@ -280,7 +280,7 @@
                 class="error2"
                 *ngIf="
                   (country.invalid && country.touched) ||
-                  (checked && country.touched)
+                  (check$ && country.touched)
                 "
               >
                 Country is required
@@ -295,7 +295,7 @@
                 [ngClass]="{
                   'input-error':
                     (state.invalid && state.touched) ||
-                    (checked && state.touched)
+                    (check$ && state.touched)
                 }"
               >
                 <option *ngFor="let s of states" [value]="s.stateId">
@@ -306,7 +306,7 @@
               <p
                 class="error2"
                 *ngIf="
-                  (state.invalid && state.touched) || (checked && state.touched)
+                  (state.invalid && state.touched) || (check$ && state.touched)
                 "
               >
                 State is required
@@ -315,11 +315,67 @@
 
             <div class="form-row form-row-wide four columns">
               <label>Prefared Location: (Optional)</label>
-              <select formControlName="prefaredLocation">
+              <select formControlName="prefaredLocation" [(ngModel)]="user.preferedCountries">
                 <option *ngFor="let st of states" [value]="st.stateName">
                   {{ st.stateName }}
                 </option>
               </select>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="form-row form-row-wide four columns">
+              <label>Specialiazation: <span class="red">*</span></label>
+              <ng-multiselect-dropdown
+                [placeholder]="'Select your Specialiazation'"
+                [data]="categories"
+                formControlName="preferedPositions"
+                [(ngModel)]="selectedItems"
+                [settings]="dropdownSettings"
+                (onSelect)="onItemSelect($event)"
+                (onSelectAll)="onSelectAll($event)"
+                (onDeSelect)="onDeSelect($event)"
+                (onDeSelectAll)="onDeSelectAll($event)"
+              >
+              </ng-multiselect-dropdown>
+
+              <p
+                class="error2"
+                *ngIf="
+                  (preferedPositions.invalid && preferedPositions.touched) ||
+                  (preferedPositions.invalid && check$)
+                "
+              >
+                Specialiazation is required
+              </p>
+            </div>
+
+            <div class="form-row form-row-wide four columns">
+              <label>Marital Status: <span class="red">*</span></label>
+              <select
+                formControlName="maritalStatus"
+                [(ngModel)]="user.maritalStatus"
+                [ngClass]="{
+                  'input-error':
+                    (maritalStatus.invalid && maritalStatus.touched) ||
+                    (maritalStatus.invalid && check$)
+                }"
+              >
+                <option value="Married">Married</option>
+                <option value="Single">Single</option>
+                <option value="Divorced">Divorced </option>
+                <option value="Widowed">Widowed</option>
+              </select>
+
+              <p
+                class="error2"
+                *ngIf="
+                  (maritalStatus.invalid && maritalStatus.touched) ||
+                  (maritalStatus.invalid && check$)
+                "
+              >
+                Marital Status is required
+              </p>
             </div>
           </div>
         </div>
@@ -332,8 +388,13 @@
           <br /><br />
 
           <div class="form-row form-row-wide five columns">
-            <label>NYSC Completed: (Optional)</label>
+            <label>NYSC Completed: <span class="red">*</span></label>
             <select
+              [ngClass]="{
+                'input-error':
+                  (NTSCcompleted.invalid && NTSCcompleted.touched) ||
+                  (NTSCcompleted.invalid && check$)
+              }"
               [(ngModel)]="user.nyscCompleted"
               formControlName="NTSCcompleted"
             >
@@ -341,6 +402,16 @@
               <option value="no">No</option>
               <option value="not gone">Not Gone</option>
             </select>
+
+            <p
+              class="error2"
+              *ngIf="
+                (NTSCcompleted.invalid && NTSCcompleted.touched) ||
+                (NTSCcompleted.invalid && check$)
+              "
+            >
+              NYSC Completed Status is required
+            </p>
           </div>
 
           <div class="form-row form-row-wide five columns">
@@ -432,14 +503,14 @@
               [ngClass]="{
                 'input-error':
                   (cvTitle.invalid && cvTitle.touched) ||
-                  (cvTitle.invalid && checked)
+                  (cvTitle.invalid && check$)
               }"
             />
             <p
               class="error2"
               *ngIf="
                 (cvTitle.invalid && cvTitle.touched) ||
-                (cvTitle.invalid && checked)
+                (cvTitle.invalid && check$)
               "
             >
               Your Resume Headline is required
@@ -474,7 +545,7 @@
                 'input-error':
                   (tellUsAboutYourSelf.invalid &&
                     tellUsAboutYourSelf.touched) ||
-                  (checked && tellUsAboutYourSelf.touched)
+                  (check$ && tellUsAboutYourSelf.touched)
               }"
             >
             </textarea>
@@ -482,7 +553,7 @@
               class="error2"
               *ngIf="
                 (tellUsAboutYourSelf.invalid && tellUsAboutYourSelf.touched) ||
-                (checked && tellUsAboutYourSelf.touched)
+                (check$ && tellUsAboutYourSelf.touched)
               "
             >
               Telling Us About Yourself is required
@@ -531,7 +602,7 @@
 
       <br />
       <a [routerLink]="['/add-education']" class="button gray"
-        ><i class="fa fa-plus-circle"></i> Add Education</a
+        ><i class="fa fa-plus-circle"></i> Add More Education</a
       >
     </div>
   </div>
@@ -569,7 +640,7 @@
 
       <br />
       <a [routerLink]="['/add-skill']" class="button gray"
-        ><i class="fa fa-plus-circle"></i> Add Skill</a
+        ><i class="fa fa-plus-circle"></i> Add More Skill</a
       >
     </div>
   </div>
@@ -607,17 +678,55 @@
 
       <br />
       <a [routerLink]="['/add-work-history']" class="button gray"
-        ><i class="fa fa-plus-circle"></i> Add Work History</a
+        ><i class="fa fa-plus-circle"></i> Add More Work History</a
       >
     </div>
   </div>
 
+
+  <div class="single">
+      <div class="container">
+        <div class="sixteen columns"><h2>Manage Referees</h2></div>
+      </div>
+    </div>
+  
+    <div class="container" *ngIf="workHistory && workHistory?.length > 0">
+      <!-- Table -->
+      <div class="sixteen columns">
+        <p class="margin-bottom-25">You can manage your referees here.</p>
+  
+        <table class="manage-table resumes responsive-table">
+          <tr>
+            <th>Name</th>
+            <th>Email</th>
+            <th></th>
+          </tr>
+          <tr *ngFor="let r of referees; let i = index">
+            <td class="title">{{ r.name }}</td>
+            <td>{{ r.email }}</td>
+            <td class="action">
+              <button (click)="editReferees(i)">
+                <i class="fa fa-pencil"></i> Edit
+              </button>
+              <button (click)="deleteReferees(i)" class="delete">
+                <i class="fa fa-remove"></i> Delete
+              </button>
+            </td>
+          </tr>
+        </table>
+  
+        <br />
+        <a [routerLink]="['/add-referees']" class="button gray"
+          ><i class="fa fa-plus-circle"></i> Add More Referees</a
+        >
+      </div>
+    </div>
   <p *ngIf="error2" class="error2">{{ errMessage }}</p>
   <br />
-  <button *ngIf="cRForm.invalid" type="button" (click)="check()">
+  <!-- <button *ngIf="cRForm.invalid" type="button" (click)="check()">
     {{ Finish }}
-  </button>
-  <button *ngIf="!cRForm.invalid" type="button" (click)="submit()">
+  </button> -->
+  <button type="button" (click)="submit()">
     {{ Finish }}
   </button>
 </div>
