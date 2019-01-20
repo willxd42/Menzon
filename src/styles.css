@@ -1,56 +1,56 @@
 html,
 body {
-  margin: 0;
-  padding: 0;
-  height: 100%;
+    margin: 0;
+    padding: 0;
+    height: 100%;
 }
 
 #footer {
-  clear: both;
-  bottom: 0;
+    clear: both;
+    bottom: 0;
 }
 
 select {
-  height: 50px !important;
-  width: 100% !important;
+    height: 50px !important;
+    width: 100% !important;
 }
 
 button {
-  margin: 10px 10px 10px 0px !important;
+    margin: 10px 10px 10px 0px !important;
 }
 
 .fit {
-  height: 50px !important;
-  border-radius: 5px !important;
+    height: 50px !important;
+    border-radius: 5px !important;
 }
 
 .input-error {
-  border: 2px solid red !important;
-  color: red !important;
+    border: 2px solid red !important;
+    color: red !important;
 }
 
 .error {
-  margin: 80px 10px;
-  border-radius: 5px;
-  padding: 10px;
-  color: #721c24;
-  background-color: #f8d7da;
-  border-color: #f5c6cb;
-  position: absolute;
-  width: 50%;
+    margin: 80px 10px;
+    border-radius: 5px;
+    padding: 10px;
+    color: #721c24;
+    background-color: #f8d7da;
+    border-color: #f5c6cb;
+    position: absolute;
+    width: 50%;
 }
 
 .error2 {
-  margin: 20px;
-  color: red;
-  padding: 10px;
-  color: #721c24;
-  background-color: #f8d7da;
-  border-color: #f5c6cb;
+    /* margin: 20px; */
+    color: red;
+    padding: 10px;
+    color: #721c24;
+    background-color: #f8d7da;
+    border-color: #f5c6cb;
 }
 
 .ngb-dp-arrow {
-  background: #00a65a !important;
+    background: #00a65a !important;
 }
 
 /* ------------------------------------------------------------------- */
@@ -96,8 +96,8 @@ a.button.dark:hover,
 .chosen-container .chosen-results li.highlighted,
 .chosen-container-multi .chosen-choices li.search-choice,
 .list-search button,
-.checkboxes input[type="checkbox"]:checked + label:before {
-  background-color: #00a65a;
+.checkboxes input[type="checkbox"]:checked+label:before {
+    background-color: #00a65a;
 }
 
 a,
@@ -119,85 +119,85 @@ table.manage-table td.action a:hover,
 .widget-text h5 a:hover,
 .app-content .info span,
 .app-content .info ul li a:hover {
-  color: #00a65a;
+    color: #00a65a;
 }
 
 .resumes-list li a:before,
 .job-list li a:before,
 table.manage-table tr:before {
-  -webkit-box-shadow: 0px 1px 0px 0px #85d361;
-  -moz-box-shadow: 0px 1px 0px 0px #85d361;
-  box-shadow: 0px 1px 0px 0px #85d361;
+    -webkit-box-shadow: 0px 1px 0px 0px #85d361;
+    -moz-box-shadow: 0px 1px 0px 0px #85d361;
+    box-shadow: 0px 1px 0px 0px #85d361;
 }
 
 #popular-categories li a:before {
-  -webkit-box-shadow: 0px 0px 0px 1px #85d361;
-  -moz-box-shadow: 0px 0px 0px 1px #85d361;
-  box-shadow: 0px 0px 0px 1px #85d361;
+    -webkit-box-shadow: 0px 0px 0px 1px #85d361;
+    -moz-box-shadow: 0px 0px 0px 1px #85d361;
+    box-shadow: 0px 0px 0px 1px #85d361;
 }
 
 table.manage-table tr:hover td,
 .resumes-list li:hover,
 .job-list li:hover {
-  border-color: #85d361;
+    border-color: #85d361;
 }
 
 table.manage-table tr:hover td,
 .resumes-list li:hover,
 .job-list li:hover,
 #popular-categories li a:hover {
-  background-color: #f9fff6;
+    background-color: #f9fff6;
 }
 
 .leftRs {
-  position: absolute;
-  margin: auto;
-  top: 0;
-  bottom: 0;
-  width: 50px;
-  height: 50px;
-  left: 0;
+    position: absolute;
+    margin: auto;
+    top: 0;
+    bottom: 0;
+    width: 50px;
+    height: 50px;
+    left: 0;
 }
 
 .rightRs {
-  position: absolute;
-  margin: auto;
-  top: 0;
-  bottom: 0;
-  width: 50px;
-  height: 50px;
-  right: 0;
+    position: absolute;
+    margin: auto;
+    top: 0;
+    bottom: 0;
+    width: 50px;
+    height: 50px;
+    right: 0;
 }
 
 a {
-  cursor: pointer !important;
+    cursor: pointer !important;
 }
 
 .ngx-pagination li {
-  display: inline-block;
-  margin: 0;
-  padding: 0;
+    display: inline-block;
+    margin: 0;
+    padding: 0;
 }
 
 .ngx-pagination li span,
 .ngx-pagination li a,
 .ngx-pagination button {
-  border-bottom: none;
-  display: inline-block;
-  color: #888;
-  margin: 0;
-  transition: all 200ms ease-in-out;
-  font-size: 14px;
+    border-bottom: none;
+    display: inline-block;
+    color: #888;
+    margin: 0;
+    transition: all 200ms ease-in-out;
+    font-size: 14px;
 }
 
 .ngx-pagination .current span,
 .ngx-pagination .current {
-  background: #00a65a !important;
-  color: #fff !important;
+    background: #00a65a !important;
+    color: #fff !important;
 }
 
 input {
-  border: 1px solid #e0e0e0 !important;
+    border: 1px solid #e0e0e0 !important;
 }
 
 /* .container {
@@ -205,33 +205,33 @@ input {
 } */
 
 .multiselect-dropdown .dropdown-btn {
-  display: inline-block;
-  border: none !important;
-  width: 90% !important;
-  padding: 12px;
-  background: #fcfcfc;
-  margin-bottom: 0;
-  font-weight: 400;
-  line-height: 1.52857143;
-  text-align: left;
-  vertical-align: middle;
-  cursor: pointer;
-  color: #909090;
-  background-image: none;
-  border-radius: 4px;
-  height: 36px;
+    display: inline-block;
+    border: none !important;
+    width: 90% !important;
+    padding: 12px;
+    background: #fcfcfc;
+    margin-bottom: 0;
+    font-weight: 400;
+    line-height: 1.52857143;
+    text-align: left;
+    vertical-align: middle;
+    cursor: pointer;
+    color: #909090;
+    background-image: none;
+    border-radius: 4px;
+    height: 36px;
 }
 
 .multiselect-dropdown .dropdown-btn .selected-item {
-  border: 1px solid #659f5c !important;
-  background: #659f5c !important;
+    border: 1px solid #659f5c !important;
+    background: #659f5c !important;
 }
 
-.multiselect-item-checkbox input[type="checkbox"]:checked + div:before {
-  background: #659f5c !important;
+.multiselect-item-checkbox input[type="checkbox"]:checked+div:before {
+    background: #659f5c !important;
 }
 
-.multiselect-item-checkbox input[type="checkbox"] + div:before {
-  color: #659f5c !important;
-  border: 2px solid #659f5c !important;
+.multiselect-item-checkbox input[type="checkbox"]+div:before {
+    color: #659f5c !important;
+    border: 2px solid #659f5c !important;
 }

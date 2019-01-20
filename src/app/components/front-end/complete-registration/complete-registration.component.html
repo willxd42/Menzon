@@ -267,12 +267,29 @@
             </div>
 
             <div class="form-row form-row-wide four columns">
-              <label>Prefared Location: (Optional)</label>
-              <select formControlName="prefaredLocation">
+              <label>Prefared Location: <span class="red">*</span></label>
+              <select
+                formControlName="prefaredLocation"
+                [ngClass]="{
+                  'input-error':
+                    (prefaredLocation.invalid && state.touched) ||
+                    (prefaredLocation.invalid && firstCheck$)
+                }"
+              >
                 <option *ngFor="let st of states" [value]="st.stateName">
                   {{ st.stateName }}
                 </option>
               </select>
+
+              <p
+                class="error2"
+                *ngIf="
+                  (prefaredLocation.invalid && prefaredLocation.touched) ||
+                  (prefaredLocation.invalid && firstCheck$)
+                "
+              >
+                Prefared Location is required
+              </p>
             </div>
           </div>
 
@@ -329,6 +346,29 @@
                 Marital Status is required
               </p>
             </div>
+
+            <div class="form-row form-row-wide four columns">
+              <label>Expected Salary: <span class="red">*</span></label>
+              <input
+                type="text"
+                class="input-text"
+                formControlName="expectedSalary"
+                [ngClass]="{
+                  'input-error':
+                    (expectedSalary.invalid && expectedSalary.touched) ||
+                    (expectedSalary.invalid && firstCheck$)
+                }"
+              />
+              <p
+                class="error2"
+                *ngIf="
+                  (expectedSalary.invalid && expectedSalary.touched) ||
+                  (expectedSalary.invalid && firstCheck$)
+                "
+              >
+                Expected Salary is required
+              </p>
+            </div>
           </div>
         </div>
         <br />
@@ -343,7 +383,9 @@
               lastName.invalid ||
               firstName.invalid ||
               maritalStatus.invalid ||
-              preferedPositions.invalid)
+              preferedPositions.invalid ||
+              expectedSalary.invalid ||
+              prefaredLocation.invalid)
           "
           (click)="firstCheck()"
           type="button"
@@ -361,7 +403,9 @@
               lastName.invalid ||
               firstName.invalid ||
               maritalStatus.invalid ||
-              preferedPositions.invalid)
+              preferedPositions.invalid ||
+              expectedSalary.invalid ||
+              prefaredLocation.invalid)
           "
           (click)="firstCheck()"
           type="button"
@@ -378,7 +422,9 @@
             !lastName.invalid &&
             !firstName.invalid &&
             !maritalStatus.invalid &&
-            !preferedPositions.invalid
+            !preferedPositions.invalid &&
+            !expectedSalary.invalid &&
+            !prefaredLocation.invalid
           "
           type="button"
           awNextStep
@@ -683,9 +729,7 @@
           </div>
 
           <div class="form-row form-row-wide five columns">
-            <label
-              >Nysc Date Started (dd/mm/yyyy):  (Optional)</label
-            >
+            <label>Nysc Date Started (dd/mm/yyyy): (Optional)</label>
             <input
               style="
                 padding: 14px 18px;
@@ -930,7 +974,10 @@
                   </p>
                 </div>
 
-                <div style="display: none" class="form-row form-row-wide four columns">
+                <div
+                  style="display: none"
+                  class="form-row form-row-wide four columns"
+                >
                   <label>Id: <span class="red">*</span></label>
                   <input
                     type="text"
@@ -1338,7 +1385,7 @@
                   >
                     Last Year Used is required
                   </p>
-<!-- 
+                  <!-- 
                   <p
                   class="error2"
                   *ngIf="

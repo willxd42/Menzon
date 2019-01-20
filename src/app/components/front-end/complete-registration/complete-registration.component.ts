@@ -192,7 +192,7 @@ export class CompleteRegistrationComponent implements OnInit {
       city: new FormControl(""),
       state: new FormControl("", Validators.compose([Validators.required])),
       country: new FormControl("", Validators.compose([Validators.required])),
-      prefaredLocation: new FormControl(""),
+      prefaredLocation: new FormControl("", Validators.compose([Validators.required])),
       maritalStatus: new FormControl(
         "",
         Validators.compose([Validators.required])
@@ -201,7 +201,8 @@ export class CompleteRegistrationComponent implements OnInit {
         "",
         Validators.compose([Validators.required])
       ),
-
+      expectedSalary: new FormControl("",
+      Validators.compose([Validators.required])),
       NTSCcompleted: new FormControl(
         "",
         Validators.compose([Validators.required])
@@ -472,6 +473,10 @@ export class CompleteRegistrationComponent implements OnInit {
     return this.cRForm.get("preferedPositions");
   }
 
+  get expectedSalary() {
+    return this.cRForm.get("expectedSalary");
+  }
+
   get NYSCDate() {
     return this.cRForm.get("NYSCDate");
   }
@@ -611,6 +616,7 @@ export class CompleteRegistrationComponent implements OnInit {
       middleName: this.cRForm.value.middleName,
       birthday: birthday,
       preferedPositions: this.cRForm.value.preferedPositions,
+      expectedSalary: this.cRForm.value.expectedSalary,
       maritalStatus: this.cRForm.value.maritalStatus,
       preferedCountries: this.cRForm.value.prefaredLocation,
       gender: this.cRForm.value.gender,

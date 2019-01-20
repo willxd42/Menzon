@@ -168,7 +168,9 @@ export class EditProfileComponent implements OnInit {
       city: new FormControl(""),
       state: new FormControl("", Validators.compose([Validators.required])),
       country: new FormControl("", Validators.compose([Validators.required])),
-      prefaredLocation: new FormControl(""),
+      prefaredLocation: new FormControl("", Validators.compose([Validators.required])),
+      expectedSalary: new FormControl("",
+      Validators.compose([Validators.required])),
       tellUsAboutYourSelf: new FormControl(
         "",
         Validators.compose([Validators.required])
@@ -368,6 +370,10 @@ export class EditProfileComponent implements OnInit {
     return this.cRForm.get("preferedPositions");
   }
 
+  get expectedSalary() {
+    return this.cRForm.get("expectedSalary");
+  }
+
   get tellUsAboutYourSelf() {
     return this.cRForm.get("tellUsAboutYourSelf");
   }
@@ -512,6 +518,7 @@ export class EditProfileComponent implements OnInit {
         preferedPositions: this.cRForm.value.preferedPositions,
         maritalStatus: this.cRForm.value.maritalStatus,
         preferedCountries: this.cRForm.value.prefaredLocation,
+        expectedSalary: this.cRForm.value.expectedSalary,
         gender: this.cRForm.value.gender,
         province: this.cRForm.value.state,
         cvtext: this.cRForm.value.tellUsAboutYourSelf,
@@ -561,6 +568,7 @@ export class EditProfileComponent implements OnInit {
         preferedPositions: this.cRForm.value.preferedPositions,
         maritalStatus: this.cRForm.value.maritalStatus,
         preferedCountries: this.cRForm.value.prefaredLocation,
+        expectedSalary: this.cRForm.value.expectedSalary,
         gender: this.cRForm.value.gender,
         province: this.cRForm.value.state,
         cvtext: this.cRForm.value.tellUsAboutYourSelf,
@@ -611,6 +619,7 @@ export class EditProfileComponent implements OnInit {
         preferedPositions: this.cRForm.value.preferedPositions,
         maritalStatus: this.cRForm.value.maritalStatus,
         preferedCountries: this.cRForm.value.prefaredLocation,
+        expectedSalary: this.cRForm.value.expectedSalary,
         gender: this.cRForm.value.gender,
         province: this.cRForm.value.state,
         cvtext: this.cRForm.value.tellUsAboutYourSelf,
@@ -660,6 +669,7 @@ export class EditProfileComponent implements OnInit {
         preferedPositions: this.cRForm.value.preferedPositions,
         maritalStatus: this.cRForm.value.maritalStatus,
         preferedCountries: this.cRForm.value.prefaredLocation,
+        expectedSalary: this.cRForm.value.expectedSalary,
         gender: this.cRForm.value.gender,
         province: this.cRForm.value.state,
         cvTitle: this.cRForm.value.cvTitle,

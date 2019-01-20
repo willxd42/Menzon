@@ -115,7 +115,10 @@
             {{ submit }}
           </a>
 
-          <a *ngIf="user && !canApply" class="popup-with-zoom-anim button apply">
+          <a
+            *ngIf="user && !canApply"
+            class="popup-with-zoom-anim button apply"
+          >
             Already Applied For This Job
           </a>
 

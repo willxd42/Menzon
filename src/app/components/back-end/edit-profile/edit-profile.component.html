@@ -16,13 +16,10 @@
 <div class="sixteen columns">
   <div class="submit-page">
     <!-- Notice -->
-    <div
-      class="notification notice closeable margin-bottom-40"
-      *ngIf="error3"
-    >
+    <div class="notification notice closeable margin-bottom-40" *ngIf="error3">
       <p>
-        <span>Somthing went worong</span> Please click <button (click)="resendEmailVerification()">here</button> to
-        verify
+        <span>Somthing went worong</span> Please click
+        <button (click)="resendEmailVerification()">here</button> to verify
       </p>
     </div>
   </div>
@@ -31,13 +28,8 @@
 <div class="sixteen columns">
   <div class="submit-page">
     <!-- Notice -->
-    <div
-      class="notification notice closeable margin-bottom-40"
-      *ngIf="success"
-    >
-      <p>
-        <span>Verification Sent! </span> Please check your Email
-      </p>
+    <div class="notification notice closeable margin-bottom-40" *ngIf="success">
+      <p><span>Verification Sent! </span> Please check your Email</p>
     </div>
   </div>
 </div>
@@ -53,8 +45,8 @@
           *ngIf="!u.emailVerified"
         >
           <p>
-            <span>Your Email is not verified</span> Please click <button (click)="resendEmailVerification()">here</button> to
-            verify
+            <span>Your Email is not verified</span> Please click
+            <button (click)="resendEmailVerification()">here</button> to verify
           </p>
         </div>
       </div>
@@ -314,12 +306,30 @@
             </div>
 
             <div class="form-row form-row-wide four columns">
-              <label>Prefared Location: (Optional)</label>
-              <select formControlName="prefaredLocation" [(ngModel)]="user.preferedCountries">
+              <label>Prefared Location: <span class="red">*</span></label>
+              <select
+                formControlName="prefaredLocation"
+                [(ngModel)]="user.preferedCountries"
+                [ngClass]="{
+                  'input-error':
+                    (prefaredLocation.invalid && state.touched) ||
+                    (prefaredLocation.invalid && check$)
+                }"
+              >
                 <option *ngFor="let st of states" [value]="st.stateName">
                   {{ st.stateName }}
                 </option>
               </select>
+
+              <p
+                class="error2"
+                *ngIf="
+                  (prefaredLocation.invalid && prefaredLocation.touched) ||
+                  (prefaredLocation.invalid && check$)
+                "
+              >
+                Prefared Location is required
+              </p>
             </div>
           </div>
 
@@ -375,6 +385,30 @@
                 "
               >
                 Marital Status is required
+              </p>
+            </div>
+
+            <div class="form-row form-row-wide four columns">
+              <label>Expected Salary: <span class="red">*</span></label>
+              <input
+                type="text"
+                class="input-text"
+                [(ngModel)]="user.expectedSalary"
+                formControlName="expectedSalary"
+                [ngClass]="{
+                  'input-error':
+                    (expectedSalary.invalid && expectedSalary.touched) ||
+                    (expectedSalary.invalid && firstCheck$)
+                }"
+              />
+              <p
+                class="error2"
+                *ngIf="
+                  (expectedSalary.invalid && expectedSalary.touched) ||
+                  (expectedSalary.invalid && firstCheck$)
+                "
+              >
+                Expected Salary is required
               </p>
             </div>
           </div>
@@ -683,55 +717,51 @@
     </div>
   </div>
 
-
   <div class="single">
-      <div class="container">
-        <div class="sixteen columns"><h2>Manage Referees</h2></div>
-      </div>
+    <div class="container">
+      <div class="sixteen columns"><h2>Manage Referees</h2></div>
     </div>
-  
-    <div class="container" *ngIf="workHistory && workHistory?.length > 0">
-      <!-- Table -->
-      <div class="sixteen columns">
-        <p class="margin-bottom-25">You can manage your referees here.</p>
-  
-        <table class="manage-table resumes responsive-table">
-          <tr>
-            <th>Name</th>
-            <th>Email</th>
-            <th></th>
-          </tr>
-          <tr *ngFor="let r of referees; let i = index">
-            <td class="title">{{ r.name }}</td>
-            <td>{{ r.email }}</td>
-            <td class="action">
-              <button (click)="editReferees(i)">
-                <i class="fa fa-pencil"></i> Edit
-              </button>
-              <button (click)="deleteReferees(i)" class="delete">
-                <i class="fa fa-remove"></i> Delete
-              </button>
-            </td>
-          </tr>
-        </table>
-  
-        <br />
-        <a [routerLink]="['/add-referees']" class="button gray"
-          ><i class="fa fa-plus-circle"></i> Add More Referees</a
-        >
-      </div>
+  </div>
+
+  <div class="container" *ngIf="workHistory && workHistory?.length > 0">
+    <!-- Table -->
+    <div class="sixteen columns">
+      <p class="margin-bottom-25">You can manage your referees here.</p>
+
+      <table class="manage-table resumes responsive-table">
+        <tr>
+          <th>Name</th>
+          <th>Email</th>
+          <th></th>
+        </tr>
+        <tr *ngFor="let r of referees; let i = index">
+          <td class="title">{{ r.name }}</td>
+          <td>{{ r.email }}</td>
+          <td class="action">
+            <button (click)="editReferees(i)">
+              <i class="fa fa-pencil"></i> Edit
+            </button>
+            <button (click)="deleteReferees(i)" class="delete">
+              <i class="fa fa-remove"></i> Delete
+            </button>
+          </td>
+        </tr>
+      </table>
+
+      <br />
+      <a [routerLink]="['/add-referees']" class="button gray"
+        ><i class="fa fa-plus-circle"></i> Add More Referees</a
+      >
     </div>
+  </div>
   <p *ngIf="error2" class="error2">{{ errMessage }}</p>
   <br />
   <!-- <button *ngIf="cRForm.invalid" type="button" (click)="check()">
     {{ Finish }}
   </button> -->
-  <button type="button" (click)="submit()">
-    {{ Finish }}
-  </button>
+  <button type="button" (click)="submit()">{{ Finish }}</button>
 </div>
 
 <div class="divider margin-top-0 padding-reset"></div>
 
 <br /><br /><br />
-

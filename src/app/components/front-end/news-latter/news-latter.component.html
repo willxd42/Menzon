@@ -4,7 +4,7 @@
 
 <app-error *ngIf="error" (reload)="ngOnInit()"></app-error>
 
-<div class="container">
+<div class="row">
   <div class="sixteen columns">
     <div class="submit-page">
       <!-- Notice -->
@@ -22,38 +22,40 @@
 </div>
 
 <div class="centered-headline" *ngIf="!loading && !error">
-  <div class="container">
-    <div class="sixteen columns">
+  <div class="row">
+    <div class="row">
       <div [formGroup]="Form">
         <!-- Form -->
-        <h2 style="color: #fff">Subscribe for new listing</h2>
+        <h3 style="color: #fff">Subscribe for new listing</h3>
         <br />
-        <div class="form-row form-row-wide six columns">
-          <input
-            type="email"
-            class="input-text"
-            placeholder="Email"
-            formControlName="appUserEmail"
-            style="border-radius: 4px;"
-            [ngClass]="{
-              'input-error':
+        <div class="row">
+          <div class="form-row form-row-wide four columns">
+            <input
+              type="email"
+              class="input-text"
+              placeholder="Email"
+              formControlName="appUserEmail"
+              style="border-radius: 4px;"
+              [ngClass]="{
+                'input-error':
+                  (appUserEmail.invalid && appUserEmail.touched) ||
+                  (appUserEmail.invalid && check$)
+              }"
+            />
+
+            <p
+              class="error2"
+              *ngIf="
                 (appUserEmail.invalid && appUserEmail.touched) ||
                 (appUserEmail.invalid && check$)
-            }"
-          />
-
-          <p
-            class="error2"
-            *ngIf="
-              (appUserEmail.invalid && appUserEmail.touched) ||
-              (appUserEmail.invalid && check$)
-            "
-          >
-            Email is required and should be valid
-          </p>
+              "
+            >
+              Email is required and should be valid
+            </p>
+          </div>
         </div>
 
-        <div class="form-row form-row-wide five columns">
+        <div class="form-row form-row-wide four columns">
           <ng-multiselect-dropdown
             [placeholder]="'Select Categories'"
             [data]="Categories"
@@ -89,9 +91,9 @@
           background-color: transparent;
           text-transform: uppercase;
           padding: 13px 20px;
-          margin: 0 0 0 20px;
+          margin: 14px !important;
           position: relative;
-          top: -9px;
+          top: 19px;
           transition: all 0.2s ease-in-out;"
         >
           {{ Submit }}
@@ -108,9 +110,9 @@
         background-color: transparent;
         text-transform: uppercase;
         padding: 13px 20px;
-        margin: 0 0 0 20px;
+        margin: 14px !important;
         position: relative;
-        top: -9px;
+        top: 19px;
         transition: all 0.2s ease-in-out;"
         >
           {{ Submit }}
