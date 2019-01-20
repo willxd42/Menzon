@@ -94,8 +94,10 @@
                 (password.invalid && check$)
               "
             >
-              Password is required
+              Password is required must be longer than 5 charaters
             </p>
+
+            <p class="error2" *ngIf="message"> {{ message }}</p>
           </div>
 
           <button

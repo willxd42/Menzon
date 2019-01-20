@@ -57,13 +57,18 @@ export class JobsSingleComponent implements OnInit {
         res => {
           this.job = res["rows"][0];
           this.benefits = JSON.parse(this.job.benefits);
-          this.checkForAppliedJob(this.job.id);
+          if (this.user) {
+            this.checkForAppliedJob(this.job.id);
+          } else {
+            this.loading = false;
+          }
         },
         err => {
           console.log(err), (this.loading = false), (this.error = true);
         }
       );
   }
+
   apply(id: string) {
     this.submit = "appling";
     this.jobService

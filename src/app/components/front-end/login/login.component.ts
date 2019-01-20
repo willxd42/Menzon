@@ -16,6 +16,8 @@ export class LoginComponent implements OnInit {
   error: boolean;
   check$: boolean;
   notify: string;
+  message: string;
+
   constructor(
     private userService: UsersService,
     private router: Router,
@@ -53,6 +55,7 @@ export class LoginComponent implements OnInit {
   submit() {
     this.loading = true;
     this.error = false;
+    this.message = null;
     this.userService
       .loginUser({
         email: this.loginForm.value.email,
@@ -66,6 +69,14 @@ export class LoginComponent implements OnInit {
         },
         err => {
           console.log(err);
+          if (
+            err.error.developerMessage ===
+            { password: ["size must be between 5 and 2147483647"] }
+          ) {
+            this.message = "Password Too short must be at least 5 charaters ";
+          } else if (err.error.developerMessage === "Login Failed") {
+            this.message = "Please Check Your Email long";
+          }
           this.error = true;
           this.loading = false;
         }
