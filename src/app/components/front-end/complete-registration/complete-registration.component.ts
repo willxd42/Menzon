@@ -59,6 +59,7 @@ export class CompleteRegistrationComponent implements OnInit {
   cvFile$: any;
   photoFile$: any;
   Finish = "Finish";
+  space = "";
 
   dropdownSettings = {
     singleSelection: false,
@@ -192,7 +193,10 @@ export class CompleteRegistrationComponent implements OnInit {
       city: new FormControl(""),
       state: new FormControl("", Validators.compose([Validators.required])),
       country: new FormControl("", Validators.compose([Validators.required])),
-      prefaredLocation: new FormControl("", Validators.compose([Validators.required])),
+      prefaredLocation: new FormControl(
+        "",
+        Validators.compose([Validators.required])
+      ),
       maritalStatus: new FormControl(
         "",
         Validators.compose([Validators.required])
@@ -201,8 +205,10 @@ export class CompleteRegistrationComponent implements OnInit {
         "",
         Validators.compose([Validators.required])
       ),
-      expectedSalary: new FormControl("",
-      Validators.compose([Validators.required])),
+      expectedSalary: new FormControl(
+        "",
+        Validators.compose([Validators.required])
+      ),
       NTSCcompleted: new FormControl(
         "",
         Validators.compose([Validators.required])
@@ -604,18 +610,24 @@ export class CompleteRegistrationComponent implements OnInit {
       this.cRForm.value.NTSCcompletedDate.month
     }-${this.cRForm.value.NTSCcompletedDate.day}`;
 
+    let categories = JSON.stringify(
+      this.selectedItems.map(data => {
+        return data["name"];
+      })
+    );
+
     this.Finish = "Loading...";
     this.error2 = false;
     const upload = this.fileUpload();
     const jsonse = JSON.stringify({
       nyscCompleted: this.cRForm.value.NTSCcompleted,
-      dateNyscCompleted: dateNyscCompleted,
-      dateNyscStarted: dateNyscStarted,
+      dateNyscCompleted: dateNyscCompleted || "",
+      dateNyscStarted: dateNyscStarted || "",
       firstName: this.cRForm.value.firstName,
       lastName: this.cRForm.value.lastName,
       middleName: this.cRForm.value.middleName,
       birthday: birthday,
-      preferedPositions: this.cRForm.value.preferedPositions,
+      preferedPositions: categories,
       expectedSalary: this.cRForm.value.expectedSalary,
       maritalStatus: this.cRForm.value.maritalStatus,
       preferedCountries: this.cRForm.value.prefaredLocation,

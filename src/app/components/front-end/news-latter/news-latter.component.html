@@ -1,29 +1,20 @@
-<!-- spinner -->
-<app-loading-spinner *ngIf="loading"></app-loading-spinner>
-<!-- spinner end -->
-
-<app-error *ngIf="error" (reload)="ngOnInit()"></app-error>
-
-<div class="row">
-  <div class="sixteen columns">
-    <div class="submit-page">
-      <!-- Notice -->
-      <div
-        class="notification notice closeable margin-bottom-40"
-        *ngIf="success"
-      >
-        <p>
-          <span>Subscription Successfull! </span> You'll now recieve updates on
-          new listing.
-        </p>
-      </div>
-    </div>
-  </div>
-</div>
-
 <div class="centered-headline" *ngIf="!loading && !error">
   <div class="row">
     <div class="row">
+      <!-- spinner -->
+      <app-loading-spinner *ngIf="loading"></app-loading-spinner>
+      <!-- spinner end -->
+
+      <app-error *ngIf="error" (reload)="ngOnInit()"></app-error>
+
+      <div class="row">
+        <div class="success2" *ngIf="success">
+          <p>
+            <span>Subscription Successfull! </span> You'll now recieve updates
+            on new listing.
+          </p>
+        </div>
+      </div>
       <div [formGroup]="Form">
         <!-- Form -->
         <h3 style="color: #fff">Subscribe for new jobs</h3>

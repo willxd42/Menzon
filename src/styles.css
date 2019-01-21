@@ -40,6 +40,13 @@ button {
     width: 50%;
 }
 
+.success2 {
+    padding: 10px;
+    color: #4587a9;
+    background-color: #e9f7fe;
+    border-color: #f5c6cb;
+}
+
 .error2 {
     /* margin: 20px; */
     color: red;
