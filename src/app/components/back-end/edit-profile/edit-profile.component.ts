@@ -492,7 +492,9 @@ export class EditProfileComponent implements OnInit {
       );
     }
 
-    formData.append("cv", this.cvFile$.file, this.cvFile$.file.name);
+    if (this.cvFile$) {
+      formData.append("cv", this.cvFile$.file, this.cvFile$.file.name);
+    }
 
     // this.documents.forEach(doc => {
     //   formData.append(doc.documentName, doc.file, doc.file.name);
