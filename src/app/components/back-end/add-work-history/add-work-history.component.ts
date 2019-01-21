@@ -4,12 +4,12 @@ import { Router, ActivatedRoute } from "@angular/router";
 import { monthOfTheYear } from "src/app/mock/months";
 import { UsersService } from "src/app/services/users.service";
 import { CountriesService } from "src/app/services/countries.service";
-import { GloberService } from 'src/app/services/glober.service';
+import { GloberService } from "src/app/services/glober.service";
 
 @Component({
-  selector: 'app-add-work-history',
-  templateUrl: './add-work-history.component.html',
-  styleUrls: ['./add-work-history.component.css']
+  selector: "app-add-work-history",
+  templateUrl: "./add-work-history.component.html",
+  styleUrls: ["./add-work-history.component.css"]
 })
 export class AddWorkHistoryComponent implements OnInit {
   user: any;
@@ -28,10 +28,11 @@ export class AddWorkHistoryComponent implements OnInit {
     private router: Router,
     private userService: UsersService,
     private route: ActivatedRoute,
-    private countryService: CountriesService,    
-    public globalService: GloberService ) {
-      this.globalService.change$.subscribe(res => this.ngOnInit());
-    }
+    private countryService: CountriesService,
+    public globalService: GloberService
+  ) {
+    this.globalService.change$.subscribe(res => this.ngOnInit());
+  }
 
   ngOnInit() {
     this.getCountries();
@@ -104,9 +105,12 @@ export class AddWorkHistoryComponent implements OnInit {
       this.Submit = "Loading...";
       this.error2 = false;
       const upload: FormData = new FormData();
-      const finalWorkHistory = [...this.allWorkHistory, ...this.cRForm.value.workHistory]
+      const finalWorkHistory = [
+        ...this.allWorkHistory,
+        ...this.cRForm.value.workHistory
+      ];
 
-      this.user.education = JSON.stringify(finalWorkHistory);
+      this.user.workHistory = JSON.stringify(finalWorkHistory);
 
       const jsonse = JSON.stringify(this.user);
       console.log(jsonse);

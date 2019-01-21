@@ -168,9 +168,14 @@ export class EditProfileComponent implements OnInit {
       city: new FormControl(""),
       state: new FormControl("", Validators.compose([Validators.required])),
       country: new FormControl("", Validators.compose([Validators.required])),
-      prefaredLocation: new FormControl("", Validators.compose([Validators.required])),
-      expectedSalary: new FormControl("",
-      Validators.compose([Validators.required])),
+      prefaredLocation: new FormControl(
+        "",
+        Validators.compose([Validators.required])
+      ),
+      expectedSalary: new FormControl(
+        "",
+        Validators.compose([Validators.required])
+      ),
       tellUsAboutYourSelf: new FormControl(
         "",
         Validators.compose([Validators.required])
@@ -501,6 +506,12 @@ export class EditProfileComponent implements OnInit {
     this.Finish = "Loading...";
     this.error2 = false;
 
+    let categories = JSON.stringify(
+      this.selectedItems.map(data => {
+        return data["name"];
+      })
+    );
+
     if (!this.cvFile$ && !this.photoFile$) {
       console.log(1);
 
@@ -510,12 +521,12 @@ export class EditProfileComponent implements OnInit {
         cvTitle: this.cRForm.value.cvTitle,
         profileImage: this.user.profileImage,
         nyscCompleted: this.cRForm.value.NTSCcompleted,
-        dateNyscCompleted: this.cRForm.value.NYSCDate,
-        dateNyscStarted: this.cRForm.value.NTSCcompletedDate,
+        dateNyscCompleted: this.cRForm.value.NYSCDate || "",
+        dateNyscStarted: this.cRForm.value.NTSCcompletedDate || "",
         firstName: this.cRForm.value.firstName,
         lastName: this.cRForm.value.lastName,
         birthday: this.cRForm.value.dateOfBirth,
-        preferedPositions: this.cRForm.value.preferedPositions,
+        preferedPositions: categories,
         maritalStatus: this.cRForm.value.maritalStatus,
         preferedCountries: this.cRForm.value.prefaredLocation,
         expectedSalary: this.cRForm.value.expectedSalary,
@@ -560,12 +571,12 @@ export class EditProfileComponent implements OnInit {
       const jsonse = JSON.stringify({
         cvTitle: this.cRForm.value.cvTitle,
         nyscCompleted: this.cRForm.value.NTSCcompleted,
-        dateNyscCompleted: this.cRForm.value.NYSCDate,
-        dateNyscStarted: this.cRForm.value.NTSCcompletedDate,
+        dateNyscCompleted: this.cRForm.value.NYSCDate || "",
+        dateNyscStarted: this.cRForm.value.NTSCcompletedDate || "",
         firstName: this.cRForm.value.firstName,
         lastName: this.cRForm.value.lastName,
         birthday: this.cRForm.value.dateOfBirth,
-        preferedPositions: this.cRForm.value.preferedPositions,
+        preferedPositions: categories,
         maritalStatus: this.cRForm.value.maritalStatus,
         preferedCountries: this.cRForm.value.prefaredLocation,
         expectedSalary: this.cRForm.value.expectedSalary,
@@ -611,12 +622,12 @@ export class EditProfileComponent implements OnInit {
         cv: this.user.cv,
         cvTitle: this.cRForm.value.cvTitle,
         nyscCompleted: this.cRForm.value.NTSCcompleted,
-        dateNyscCompleted: this.cRForm.value.NYSCDate,
-        dateNyscStarted: this.cRForm.value.NTSCcompletedDate,
+        dateNyscCompleted: this.cRForm.value.NYSCDate || "",
+        dateNyscStarted: this.cRForm.value.NTSCcompletedDate || "",
         firstName: this.cRForm.value.firstName,
         lastName: this.cRForm.value.lastName,
         birthday: this.cRForm.value.dateOfBirth,
-        preferedPositions: this.cRForm.value.preferedPositions,
+        preferedPositions: categories,
         maritalStatus: this.cRForm.value.maritalStatus,
         preferedCountries: this.cRForm.value.prefaredLocation,
         expectedSalary: this.cRForm.value.expectedSalary,
@@ -661,12 +672,12 @@ export class EditProfileComponent implements OnInit {
       const jsonse = JSON.stringify({
         profileImage: this.user.profileImage,
         nyscCompleted: this.cRForm.value.NTSCcompleted,
-        dateNyscCompleted: this.cRForm.value.NYSCDate,
-        dateNyscStarted: this.cRForm.value.NTSCcompletedDate,
+        dateNyscCompleted: this.cRForm.value.NYSCDate || "",
+        dateNyscStarted: this.cRForm.value.NTSCcompletedDate || "",
         firstName: this.cRForm.value.firstName,
         lastName: this.cRForm.value.lastName,
         birthday: this.cRForm.value.dateOfBirth,
-        preferedPositions: this.cRForm.value.preferedPositions,
+        preferedPositions: this.cRForm.value.categories,
         maritalStatus: this.cRForm.value.maritalStatus,
         preferedCountries: this.cRForm.value.prefaredLocation,
         expectedSalary: this.cRForm.value.expectedSalary,

@@ -93,15 +93,23 @@ export class NewsLatterComponent implements OnInit {
   submit() {
     this.Submit = "Loading...";
     this.error = false;
+
+    let categories = JSON.stringify(
+      this.selectedItems.map(data => {
+        return data["name"];
+      })
+    );
+
     this.categoryService
       .newsLatter({
-        categories: JSON.stringify(this.Form.value.categories),
+        categories: JSON.stringify(categories),
         appUserEmail: this.Form.value.appUserEmail
       })
       .subscribe(
         res => {
           this.success = true;
-
+          this.Submit = "Submit";
+          this.Form.reset();
           setTimeout(() => {
             this.success = false;
           }, 3000);
