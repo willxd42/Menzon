@@ -14,3 +14,7 @@ input,
 select {
     height: 61px !important;
 }
+
+div a {
+    display: none !important;
+}

@@ -1,20 +1,20 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { ManageEducationComponent } from './manage-education.component';
+import { EditLanguageComponent } from './edit-language.component';
 
-describe('ManageEducationComponent', () => {
-  let component: ManageEducationComponent;
-  let fixture: ComponentFixture<ManageEducationComponent>;
+describe('EditLanguageComponent', () => {
+  let component: EditLanguageComponent;
+  let fixture: ComponentFixture<EditLanguageComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ ManageEducationComponent ]
+      declarations: [ EditLanguageComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(ManageEducationComponent);
+    fixture = TestBed.createComponent(EditLanguageComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

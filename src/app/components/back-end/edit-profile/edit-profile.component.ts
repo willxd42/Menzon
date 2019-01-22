@@ -25,6 +25,7 @@ export class EditProfileComponent implements OnInit {
   education: any[];
   workHistory: any[];
   referees: any[];
+  language: any[];
   skills: any[];
   selectedCvFile: any;
   selectedPhotoFile: any;
@@ -181,7 +182,7 @@ export class EditProfileComponent implements OnInit {
         Validators.compose([Validators.required])
       ),
       cvFile: new FormControl(""),
-      cvTitle: new FormControl("", Validators.compose([Validators.required])),
+      // cvTitle: new FormControl("", Validators.compose([Validators.required])),
       photoFile: new FormControl(""),
       maritalStatus: new FormControl(
         "",
@@ -196,11 +197,11 @@ export class EditProfileComponent implements OnInit {
         Validators.compose([Validators.required])
       ),
       NYSCDate: new FormControl(""),
-      NTSCcompletedDate: new FormControl(""),
-      howDidYouHereAboutUs: new FormControl(
-        "",
-        Validators.compose([Validators.required])
-      )
+      NTSCcompletedDate: new FormControl("")
+      // howDidYouHereAboutUs: new FormControl(
+      //   "",
+      //   Validators.compose([Validators.required])
+      // )
     });
   }
 
@@ -220,6 +221,7 @@ export class EditProfileComponent implements OnInit {
         this.education = JSON.parse(res["education"]);
         this.workHistory = JSON.parse(res["workHistory"]);
         this.referees = JSON.parse(res["referees"]);
+        this.language = JSON.parse(res["languages"]);
         this.selectedItems = JSON.parse(res["preferedPositions"]);
 
         this.cRForm.value.preferedPositions = JSON.stringify(
@@ -387,9 +389,9 @@ export class EditProfileComponent implements OnInit {
     return this.cRForm.get("cvFile");
   }
 
-  get cvTitle() {
-    return this.cRForm.get("cvTitle");
-  }
+  // get cvTitle() {
+  //   return this.cRForm.get("cvTitle");
+  // }
 
   get photoFile() {
     return this.cRForm.get("photoFile");
@@ -435,6 +437,14 @@ export class EditProfileComponent implements OnInit {
     for (let i = 0; i < this.referees.length; i++) {
       if (i === index) {
         this.referees.splice(i, 1);
+      }
+    }
+  }
+
+  deleteLanguage(index) {
+    for (let i = 0; i < this.language.length; i++) {
+      if (i === index) {
+        this.language.splice(i, 1);
       }
     }
   }
@@ -508,19 +518,11 @@ export class EditProfileComponent implements OnInit {
     this.Finish = "Loading...";
     this.error2 = false;
 
-    let categories = JSON.stringify(
-      this.selectedItems.map(data => {
-        return data["name"];
-      })
-    );
-
     if (!this.cvFile$ && !this.photoFile$) {
-      console.log(1);
-
       const upload: FormData = new FormData();
       const jsonse = JSON.stringify({
         cv: this.user.cv,
-        cvTitle: this.cRForm.value.cvTitle,
+        cvTitle: this.user.cvTitle,
         profileImage: this.user.profileImage,
         nyscCompleted: this.cRForm.value.NTSCcompleted,
         dateNyscCompleted: this.cRForm.value.NYSCDate || "",
@@ -528,7 +530,7 @@ export class EditProfileComponent implements OnInit {
         firstName: this.cRForm.value.firstName,
         lastName: this.cRForm.value.lastName,
         birthday: this.cRForm.value.dateOfBirth,
-        preferedPositions: categories,
+        preferedPositions: this.cRForm.value.preferedPositions,
         maritalStatus: this.cRForm.value.maritalStatus,
         preferedCountries: this.cRForm.value.prefaredLocation,
         expectedSalary: this.cRForm.value.expectedSalary,
@@ -543,7 +545,8 @@ export class EditProfileComponent implements OnInit {
         workHistory: JSON.stringify(this.workHistory),
         education: JSON.stringify(this.education),
         skills: JSON.stringify(this.skills),
-        referees: JSON.stringify(this.referees)
+        referees: JSON.stringify(this.referees),
+        languages: JSON.stringify(this.language)
       });
       const data = new Blob([jsonse], { type: "application/json" });
       upload.append("data", data);
@@ -567,18 +570,16 @@ export class EditProfileComponent implements OnInit {
           }
         );
     } else if (this.cvFile$ && this.photoFile$) {
-      console.log(2);
-
       const upload = this.fileUpload();
       const jsonse = JSON.stringify({
-        cvTitle: this.cRForm.value.cvTitle,
+        cvTitle: this.user.cvTitle,
         nyscCompleted: this.cRForm.value.NTSCcompleted,
         dateNyscCompleted: this.cRForm.value.NYSCDate || "",
         dateNyscStarted: this.cRForm.value.NTSCcompletedDate || "",
         firstName: this.cRForm.value.firstName,
         lastName: this.cRForm.value.lastName,
         birthday: this.cRForm.value.dateOfBirth,
-        preferedPositions: categories,
+        preferedPositions: this.cRForm.value.preferedPositions,
         maritalStatus: this.cRForm.value.maritalStatus,
         preferedCountries: this.cRForm.value.prefaredLocation,
         expectedSalary: this.cRForm.value.expectedSalary,
@@ -593,7 +594,8 @@ export class EditProfileComponent implements OnInit {
         workHistory: JSON.stringify(this.workHistory),
         education: JSON.stringify(this.education),
         skills: JSON.stringify(this.skills),
-        referees: JSON.stringify(this.referees)
+        referees: JSON.stringify(this.referees),
+        languages: JSON.stringify(this.language)
       });
       const data = new Blob([jsonse], { type: "application/json" });
       upload.append("data", data);
@@ -617,19 +619,17 @@ export class EditProfileComponent implements OnInit {
           }
         );
     } else if (this.photoFile$) {
-      console.log(3);
-
       const upload = this.fileUpload();
       const jsonse = JSON.stringify({
         cv: this.user.cv,
-        cvTitle: this.cRForm.value.cvTitle,
+        cvTitle: this.user.cvTitle,
         nyscCompleted: this.cRForm.value.NTSCcompleted,
         dateNyscCompleted: this.cRForm.value.NYSCDate || "",
         dateNyscStarted: this.cRForm.value.NTSCcompletedDate || "",
         firstName: this.cRForm.value.firstName,
         lastName: this.cRForm.value.lastName,
         birthday: this.cRForm.value.dateOfBirth,
-        preferedPositions: categories,
+        preferedPositions: this.cRForm.value.preferedPositions,
         maritalStatus: this.cRForm.value.maritalStatus,
         preferedCountries: this.cRForm.value.prefaredLocation,
         expectedSalary: this.cRForm.value.expectedSalary,
@@ -644,7 +644,8 @@ export class EditProfileComponent implements OnInit {
         workHistory: JSON.stringify(this.workHistory),
         education: JSON.stringify(this.education),
         skills: JSON.stringify(this.skills),
-        referees: JSON.stringify(this.referees)
+        referees: JSON.stringify(this.referees),
+        languages: JSON.stringify(this.language)
       });
       const data = new Blob([jsonse], { type: "application/json" });
       upload.append("data", data);
@@ -668,8 +669,6 @@ export class EditProfileComponent implements OnInit {
           }
         );
     } else {
-      console.log(4);
-
       const upload = this.fileUpload();
       const jsonse = JSON.stringify({
         profileImage: this.user.profileImage,
@@ -679,13 +678,13 @@ export class EditProfileComponent implements OnInit {
         firstName: this.cRForm.value.firstName,
         lastName: this.cRForm.value.lastName,
         birthday: this.cRForm.value.dateOfBirth,
-        preferedPositions: this.cRForm.value.categories,
+        preferedPositions: this.cRForm.value.preferedPositions,
         maritalStatus: this.cRForm.value.maritalStatus,
         preferedCountries: this.cRForm.value.prefaredLocation,
         expectedSalary: this.cRForm.value.expectedSalary,
         gender: this.cRForm.value.gender,
         province: this.cRForm.value.state,
-        cvTitle: this.cRForm.value.cvTitle,
+        cvTitle: this.user.cvTitle,
         cvtext: this.cRForm.value.tellUsAboutYourSelf,
         address1: this.cRForm.value.street_address || "",
         city: this.cRForm.value.city || "",
@@ -695,7 +694,8 @@ export class EditProfileComponent implements OnInit {
         workHistory: JSON.stringify(this.workHistory),
         education: JSON.stringify(this.education),
         skills: JSON.stringify(this.skills),
-        referees: JSON.stringify(this.referees)
+        referees: JSON.stringify(this.referees),
+        languages: JSON.stringify(this.language)
       });
       const data = new Blob([jsonse], { type: "application/json" });
       upload.append("data", data);
@@ -731,15 +731,15 @@ export class EditProfileComponent implements OnInit {
   }
 
   editWorkHistory(i) {
-    console.log(i);
-
     this.router.navigate([`/edit-work-history/${i}`]);
   }
 
   editReferees(i) {
-    console.log(i);
-
     this.router.navigate([`/edit-referees/${i}`]);
+  }
+
+  editLanguage(i) {
+    this.router.navigate([`/edit-language/${i}`]);
   }
 
   resendEmailVerification() {

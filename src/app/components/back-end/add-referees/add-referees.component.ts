@@ -107,35 +107,67 @@ export class AddRefereesComponent implements OnInit {
       this.error2 = false;
       const upload: FormData = new FormData();
 
-      const finalReferees = [
-        ...this.allReferees,
-        ...this.cRForm.value.referees
-      ];
-
-      this.user.referees = JSON.stringify(finalReferees);
-
-      const jsonse = JSON.stringify(this.user);
-      console.log(jsonse);
-
-      const data = new Blob([jsonse], { type: "application/json" });
-      upload.append("data", data);
-
-      this.userService
-        .completeRegistration({
-          appUserId: JSON.parse(localStorage.getItem("appUser")).appUserId,
-          body: upload
-        })
-        .subscribe(
-          res => {
-            console.log(res);
-            this.router.navigate(["/profile"]);
-          },
-          err => {
-            console.log(err);
-            this.Submit = "Submit";
-            this.error2 = true;
-          }
-        );
+      if (this.allReferees && this.allReferees.length > 0) {
+        const finalReferees = [
+          ...this.allReferees,
+          ...this.cRForm.value.referees
+        ];
+  
+        this.user.referees = JSON.stringify(finalReferees);
+  
+        const jsonse = JSON.stringify(this.user);
+        console.log(jsonse);
+  
+        const data = new Blob([jsonse], { type: "application/json" });
+        upload.append("data", data);
+  
+        this.userService
+          .completeRegistration({
+            appUserId: JSON.parse(localStorage.getItem("appUser")).appUserId,
+            body: upload
+          })
+          .subscribe(
+            res => {
+              console.log(res);
+              this.router.navigate(["/profile"]);
+            },
+            err => {
+              console.log(err);
+              this.Submit = "Submit";
+              this.error2 = true;
+            }
+          );
+      } else {
+        const finalReferees = [
+        
+          ...this.cRForm.value.referees
+        ];
+  
+        this.user.referees = JSON.stringify(finalReferees);
+  
+        const jsonse = JSON.stringify(this.user);
+        console.log(jsonse);
+  
+        const data = new Blob([jsonse], { type: "application/json" });
+        upload.append("data", data);
+  
+        this.userService
+          .completeRegistration({
+            appUserId: JSON.parse(localStorage.getItem("appUser")).appUserId,
+            body: upload
+          })
+          .subscribe(
+            res => {
+              console.log(res);
+              this.router.navigate(["/profile"]);
+            },
+            err => {
+              console.log(err);
+              this.Submit = "Submit";
+              this.error2 = true;
+            }
+          );
+      }
     }
   }
 }

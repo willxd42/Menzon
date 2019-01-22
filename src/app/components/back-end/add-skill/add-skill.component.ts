@@ -4,12 +4,12 @@ import { Router, ActivatedRoute } from "@angular/router";
 import { UsersService } from "src/app/services/users.service";
 import { monthOfTheYear } from "src/app/mock/months";
 import { skillLevel } from "src/app/mock/stillLevel";
-import { GloberService } from 'src/app/services/glober.service';
+import { GloberService } from "src/app/services/glober.service";
 
 @Component({
-  selector: 'app-add-skill',
-  templateUrl: './add-skill.component.html',
-  styleUrls: ['./add-skill.component.css']
+  selector: "app-add-skill",
+  templateUrl: "./add-skill.component.html",
+  styleUrls: ["./add-skill.component.css"]
 })
 export class AddSkillComponent implements OnInit {
   user: any;
@@ -27,10 +27,11 @@ export class AddSkillComponent implements OnInit {
     private fb: FormBuilder,
     private router: Router,
     private userService: UsersService,
-    private route: ActivatedRoute,    
-    public globalService: GloberService) {
-      this.globalService.change$.subscribe(res => this.ngOnInit());
-    }
+    private route: ActivatedRoute,
+    public globalService: GloberService
+  ) {
+    this.globalService.change$.subscribe(res => this.ngOnInit());
+  }
 
   ngOnInit() {
     this.loading = true;
@@ -93,32 +94,62 @@ export class AddSkillComponent implements OnInit {
       this.Submit = "Loading...";
       this.error2 = false;
       const upload: FormData = new FormData();
-      const finalSkills = [...this.allSkills, ...this.cRForm.value.skills]
 
-      this.user.skills = JSON.stringify(finalSkills);
+      if (this.allSkills && this.allSkills.length > 0) {
+        const finalSkills = [...this.allSkills, ...this.cRForm.value.skills];
 
-      const jsonse = JSON.stringify(this.user);
-      console.log(jsonse);
+        this.user.skills = JSON.stringify(finalSkills);
 
-      const data = new Blob([jsonse], { type: "application/json" });
-      upload.append("data", data);
+        const jsonse = JSON.stringify(this.user);
+        console.log(jsonse);
 
-      this.userService
-        .completeRegistration({
-          appUserId: JSON.parse(localStorage.getItem("appUser")).appUserId,
-          body: upload
-        })
-        .subscribe(
-          res => {
-            console.log(res);
-            this.router.navigate(["/profile"]);
-          },
-          err => {
-            console.log(err);
-            this.Submit = "Submit";
-            this.error2 = true;
-          }
-        );
+        const data = new Blob([jsonse], { type: "application/json" });
+        upload.append("data", data);
+
+        this.userService
+          .completeRegistration({
+            appUserId: JSON.parse(localStorage.getItem("appUser")).appUserId,
+            body: upload
+          })
+          .subscribe(
+            res => {
+              console.log(res);
+              this.router.navigate(["/profile"]);
+            },
+            err => {
+              console.log(err);
+              this.Submit = "Submit";
+              this.error2 = true;
+            }
+          );
+      } else {
+        const finalSkills = [...this.cRForm.value.skills];
+
+        this.user.skills = JSON.stringify(finalSkills);
+
+        const jsonse = JSON.stringify(this.user);
+        console.log(jsonse);
+
+        const data = new Blob([jsonse], { type: "application/json" });
+        upload.append("data", data);
+
+        this.userService
+          .completeRegistration({
+            appUserId: JSON.parse(localStorage.getItem("appUser")).appUserId,
+            body: upload
+          })
+          .subscribe(
+            res => {
+              console.log(res);
+              this.router.navigate(["/profile"]);
+            },
+            err => {
+              console.log(err);
+              this.Submit = "Submit";
+              this.error2 = true;
+            }
+          );
+      }
     }
   }
 }

@@ -1,46 +1,44 @@
 import { Component, OnInit } from "@angular/core";
-import { FormGroup, FormBuilder, FormArray, Validators } from "@angular/forms";
+import { FormBuilder, FormGroup, FormArray, Validators } from "@angular/forms";
 import { Router, ActivatedRoute } from "@angular/router";
-import { monthOfTheYear } from "src/app/mock/months";
 import { UsersService } from "src/app/services/users.service";
+import { monthOfTheYear } from "src/app/mock/months";
 import { CountriesService } from "src/app/services/countries.service";
 import { GloberService } from "src/app/services/glober.service";
 
 @Component({
-  selector: "app-add-work-history",
-  templateUrl: "./add-work-history.component.html",
-  styleUrls: ["./add-work-history.component.css"]
+  selector: "app-add-language",
+  templateUrl: "./add-language.component.html",
+  styleUrls: ["./add-language.component.css"]
 })
-export class AddWorkHistoryComponent implements OnInit {
+export class AddLanguageComponent implements OnInit {
   user: any;
   cRForm: FormGroup;
   loading: boolean;
   error: boolean;
   error2: boolean;
-  allWorkHistory: any[];
-  months = monthOfTheYear;
-  countries: any[];
+  allLanguage: any[];
   Submit = "Submit";
   check$: boolean;
 
   constructor(
     private fb: FormBuilder,
     private router: Router,
-    private userService: UsersService,
     private route: ActivatedRoute,
     private countryService: CountriesService,
+    private userService: UsersService,
     public globalService: GloberService
   ) {
     this.globalService.change$.subscribe(res => this.ngOnInit());
   }
 
   ngOnInit() {
-    this.getCountries();
+    this.getUser();
     this.cRForm = this.fb.group({
-      workHistory: this.fb.array([])
+      language: this.fb.array([])
     });
 
-    this.addWorkHistory();
+    this.addLanguage();
   }
 
   getUser() {
@@ -48,7 +46,8 @@ export class AddWorkHistoryComponent implements OnInit {
     this.userService.getSingleUserDetails(user.appUserId).subscribe(
       res => {
         this.user = res;
-        this.allWorkHistory = JSON.parse(res["workHistory"]);
+        this.allLanguage = JSON.parse(res["languages"]);
+        this.loading = false;
       },
       err => {
         console.log(err);
@@ -58,40 +57,21 @@ export class AddWorkHistoryComponent implements OnInit {
     );
   }
 
-  getCountries() {
-    this.loading = true;
-    return this.countryService.getCountries({ rows: 1000 }).subscribe(
-      res => {
-        this.countries = res["rows"];
-        this.getUser();
-      },
-      err => {
-        this.error = true;
-        this.loading = false;
-      }
-    );
+  get languageForms() {
+    return this.cRForm.get("language") as FormArray;
   }
 
-  get workHistoryForms() {
-    return this.cRForm.get("workHistory") as FormArray;
-  }
-
-  addWorkHistory() {
-    const workHistory = this.fb.group({
-      company: ["", Validators.required],
-      jobTitle: ["", Validators.required],
-      country: ["", Validators.required],
-      fromYear: ["", Validators.required],
-      fromMonth: ["", Validators.required],
-      toYear: ["", Validators.required],
-      toMonth: ["", Validators.required]
+  addLanguage() {
+    const language = this.fb.group({
+      language: ["", Validators.required],
+      proficiencyLevel: ["", Validators.required]
     });
 
-    this.workHistoryForms.push(workHistory);
+    this.languageForms.push(language);
   }
 
-  deleteWorkHistory(i) {
-    this.workHistoryForms.removeAt(i);
+  deleteLanguage(i) {
+    this.languageForms.removeAt(i);
   }
 
   check() {
@@ -99,20 +79,20 @@ export class AddWorkHistoryComponent implements OnInit {
   }
 
   submit() {
-    if (this.workHistoryForms.invalid) {
+    if (this.languageForms.invalid) {
       this.check$ = true;
     } else {
       this.Submit = "Loading...";
       this.error2 = false;
       const upload: FormData = new FormData();
 
-      if (this.allWorkHistory && this.allWorkHistory.length > 0) {
-        const finalWorkHistory = [
-          ...this.allWorkHistory,
-          ...this.cRForm.value.workHistory
+      if (this.allLanguage && this.allLanguage.length > 0) {
+        const finalLanguage = [
+          ...this.allLanguage,
+          ...this.cRForm.value.language
         ];
 
-        this.user.workHistory = JSON.stringify(finalWorkHistory);
+        this.user.languages = JSON.stringify(finalLanguage);
 
         const jsonse = JSON.stringify(this.user);
         console.log(jsonse);
@@ -137,9 +117,9 @@ export class AddWorkHistoryComponent implements OnInit {
             }
           );
       } else {
-        const finalWorkHistory = [...this.cRForm.value.workHistory];
+        const finalLanguage = [...this.cRForm.value.language];
 
-        this.user.workHistory = JSON.stringify(finalWorkHistory);
+        this.user.languages = JSON.stringify(finalLanguage);
 
         const jsonse = JSON.stringify(this.user);
         console.log(jsonse);

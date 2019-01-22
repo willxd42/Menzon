@@ -4,15 +4,14 @@ import { Router, ActivatedRoute } from "@angular/router";
 import { UsersService } from "src/app/services/users.service";
 import { monthOfTheYear } from "src/app/mock/months";
 import { CountriesService } from "src/app/services/countries.service";
-import { GloberService } from 'src/app/services/glober.service';
+import { GloberService } from "src/app/services/glober.service";
 
 @Component({
-  selector: 'app-add-education',
-  templateUrl: './add-education.component.html',
-  styleUrls: ['./add-education.component.css']
+  selector: "app-add-education",
+  templateUrl: "./add-education.component.html",
+  styleUrls: ["./add-education.component.css"]
 })
 export class AddEducationComponent implements OnInit {
-
   user: any;
   cRForm: FormGroup;
   loading: boolean;
@@ -29,10 +28,11 @@ export class AddEducationComponent implements OnInit {
     private router: Router,
     private route: ActivatedRoute,
     private countryService: CountriesService,
-    private userService: UsersService,    
-    public globalService: GloberService) {
-      this.globalService.change$.subscribe(res => this.ngOnInit());
-    }
+    private userService: UsersService,
+    public globalService: GloberService
+  ) {
+    this.globalService.change$.subscribe(res => this.ngOnInit());
+  }
 
   ngOnInit() {
     this.getCountries();
@@ -121,32 +121,64 @@ export class AddEducationComponent implements OnInit {
       this.error2 = false;
       const upload: FormData = new FormData();
 
-      const finalEducation = [...this.allEducation, ...this.cRForm.value.education]
+      if (this.allEducation && this.allEducation.length > 0) {
+        const finalEducation = [
+          ...this.allEducation,
+          ...this.cRForm.value.education
+        ];
 
-      this.user.education = JSON.stringify(finalEducation);
+        this.user.education = JSON.stringify(finalEducation);
 
-      const jsonse = JSON.stringify(this.user);
-      console.log(jsonse);
+        const jsonse = JSON.stringify(this.user);
+        console.log(jsonse);
 
-      const data = new Blob([jsonse], { type: "application/json" });
-      upload.append("data", data);
+        const data = new Blob([jsonse], { type: "application/json" });
+        upload.append("data", data);
 
-      this.userService
-        .completeRegistration({
-          appUserId: JSON.parse(localStorage.getItem("appUser")).appUserId,
-          body: upload
-        })
-        .subscribe(
-          res => {
-            console.log(res);
-            this.router.navigate(["/profile"]);
-          },
-          err => {
-            console.log(err);
-            this.Submit = "Submit";
-            this.error2 = true;
-          }
-        );
+        this.userService
+          .completeRegistration({
+            appUserId: JSON.parse(localStorage.getItem("appUser")).appUserId,
+            body: upload
+          })
+          .subscribe(
+            res => {
+              console.log(res);
+              this.router.navigate(["/profile"]);
+            },
+            err => {
+              console.log(err);
+              this.Submit = "Submit";
+              this.error2 = true;
+            }
+          );
+      } else {
+        const finalEducation = [...this.cRForm.value.education];
+
+        this.user.education = JSON.stringify(finalEducation);
+
+        const jsonse = JSON.stringify(this.user);
+        console.log(jsonse);
+
+        const data = new Blob([jsonse], { type: "application/json" });
+        upload.append("data", data);
+
+        this.userService
+          .completeRegistration({
+            appUserId: JSON.parse(localStorage.getItem("appUser")).appUserId,
+            body: upload
+          })
+          .subscribe(
+            res => {
+              console.log(res);
+              this.router.navigate(["/profile"]);
+            },
+            err => {
+              console.log(err);
+              this.Submit = "Submit";
+              this.error2 = true;
+            }
+          );
+      }
     }
   }
 }

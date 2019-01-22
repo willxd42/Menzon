@@ -26,6 +26,8 @@ import { ResetPasswordComponent } from "./components/front-end/reset-password/re
 import { CategoryComponent } from "./components/front-end/category/category.component";
 import { AddRefereesComponent } from "./components/back-end/add-referees/add-referees.component";
 import { EditRefereesComponent } from "./components/back-end/edit-referees/edit-referees.component";
+import { AddLanguageComponent } from "./components/back-end/add-language/add-language.component";
+import { EditLanguageComponent } from "./components/back-end/edit-language/edit-language.component";
 
 const routes: Routes = [
   {
@@ -113,6 +115,16 @@ const routes: Routes = [
   {
     path: "edit-skill/:id",
     component: EditSkillsComponent,
+    canActivate: [AuthGuard]
+  },
+  {
+    path: "add-language",
+    component: AddLanguageComponent,
+    canActivate: [AuthGuard]
+  },
+  {
+    path: "edit-language/:id",
+    component: EditLanguageComponent,
     canActivate: [AuthGuard]
   },
   {

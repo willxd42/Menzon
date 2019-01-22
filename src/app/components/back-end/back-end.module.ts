@@ -3,9 +3,6 @@ import { CommonModule } from "@angular/common";
 import { ProfileComponent } from "./profile/profile.component";
 import { EditProfileComponent } from "./edit-profile/edit-profile.component";
 import { SharedModule } from "src/app/shared/shared.module";
-import { ManageWorkHistoryComponent } from "./manage-work-history/manage-work-history.component";
-import { ManageSkillsComponent } from "./manage-skills/manage-skills.component";
-import { ManageEducationComponent } from "./manage-education/manage-education.component";
 import { EditEducationComponent } from "./edit-education/edit-education.component";
 import { EditSkillsComponent } from "./edit-skills/edit-skills.component";
 import { EditWorkHistoryComponent } from "./edit-work-history/edit-work-history.component";
@@ -15,14 +12,13 @@ import { AddEducationComponent } from './add-education/add-education.component';
 import { AddWorkHistoryComponent } from './add-work-history/add-work-history.component';
 import { AddRefereesComponent } from './add-referees/add-referees.component';
 import { EditRefereesComponent } from './edit-referees/edit-referees.component';
+import { AddLanguageComponent } from './add-language/add-language.component';
+import { EditLanguageComponent } from './edit-language/edit-language.component';
 
 @NgModule({
   declarations: [
     ProfileComponent,
     EditProfileComponent,
-    ManageWorkHistoryComponent,
-    ManageSkillsComponent,
-    ManageEducationComponent,
     EditEducationComponent,
     EditSkillsComponent,
     EditWorkHistoryComponent,
@@ -30,7 +26,9 @@ import { EditRefereesComponent } from './edit-referees/edit-referees.component';
     AddEducationComponent,
     AddWorkHistoryComponent,
     AddRefereesComponent,
-    EditRefereesComponent
+    EditRefereesComponent,
+    AddLanguageComponent,
+    EditLanguageComponent
   ],
   imports: [CommonModule, SharedModule, UiModule]
 })

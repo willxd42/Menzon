@@ -223,19 +223,21 @@ export class CompleteRegistrationComponent implements OnInit {
         "",
         Validators.compose([Validators.required])
       ),
-      cvTitle: new FormControl("", Validators.compose([Validators.required])),
+      // cvTitle: new FormControl("", Validators.compose([Validators.required])),
       cvFile: new FormControl("", Validators.compose([Validators.required])),
       photoFile: new FormControl(""),
       education: this.fb.array([], Validators.compose([Validators.required])),
       referees: this.fb.array([], Validators.compose([Validators.required])),
       workHistory: this.fb.array([], Validators.compose([Validators.required])),
-      skills: this.fb.array([], Validators.compose([Validators.required]))
+      skills: this.fb.array([], Validators.compose([Validators.required])),
+      language: this.fb.array([], Validators.compose([Validators.required]))
     });
 
     this.addEducation();
     this.addReferees();
     this.addWorkHistory();
     this.addSkill();
+    this.addLanguage();
   }
 
   ngOnInit() {
@@ -423,6 +425,23 @@ export class CompleteRegistrationComponent implements OnInit {
     this.skillsForms.removeAt(i);
   }
 
+  get languageForms() {
+    return this.cRForm.get("language") as FormArray;
+  }
+
+  addLanguage() {
+    const language = this.fb.group({
+      language: ["", Validators.required],
+      proficiencyLevel: ["", Validators.required],
+    });
+
+    this.languageForms.push(language);
+  }
+
+  deleteLanguage(i) {
+    this.languageForms.removeAt(i);
+  }
+
   get firstName() {
     return this.cRForm.get("firstName");
   }
@@ -507,9 +526,9 @@ export class CompleteRegistrationComponent implements OnInit {
     return this.cRForm.get("cvFile");
   }
 
-  get cvTitle() {
-    return this.cRForm.get("cvTitle");
-  }
+  // get cvTitle() {
+  //   return this.cRForm.get("cvTitle");
+  // }
 
   get photoFile() {
     return this.cRForm.get("photoFile");
@@ -633,7 +652,7 @@ export class CompleteRegistrationComponent implements OnInit {
       preferedCountries: this.cRForm.value.prefaredLocation,
       gender: this.cRForm.value.gender,
       province: this.cRForm.value.state,
-      cvTitle: this.cRForm.value.cvTitle,
+      cvTitle: "My Cv",
       cvtext: this.cRForm.value.tellUsAboutYourSelf,
       address1: this.cRForm.value.street_address || "",
       city: this.cRForm.value.city || "",
@@ -643,7 +662,8 @@ export class CompleteRegistrationComponent implements OnInit {
       workHistory: JSON.stringify(this.cRForm.value.workHistory),
       education: JSON.stringify(this.cRForm.value.education),
       skills: JSON.stringify(this.cRForm.value.skills),
-      referees: JSON.stringify(this.cRForm.value.referees)
+      referees: JSON.stringify(this.cRForm.value.referees),
+      languages: JSON.stringify(this.cRForm.value.language)
     });
     const data = new Blob([jsonse], { type: "application/json" });
     upload.append("data", data);

@@ -482,9 +482,19 @@
                         (e.controls.degree.invalid && secondCheck$)
                     }"
                   >
-                    <option *ngFor="let d of degree" [value]="d.name">{{
+                    <!-- <option *ngFor="let d of degree" [value]="d.name">{{
                       d.name
-                    }}</option>
+                    }}</option> -->
+
+                    <option value="PhD">PhD</option>
+                    <option value="PGD">PGD</option>
+                    <option value="MSC">MSC</option>
+                    <option value="B.Sc">B.Sc</option>
+                    <option value="HND">HND</option>
+                    <option value="ND">ND</option>
+                    <option value="OND">OND</option>
+                    <option value="NCE">NCE</option>
+                    <option value="SSCE">SSCE</option>
                   </select>
                   <p
                     class="error2"
@@ -682,18 +692,18 @@
               </div>
 
               <br />
-              <a
+              <button
                 style="color: #fff; background: red"
                 *ngIf="educationForms.controls?.length > 1"
                 (click)="deleteEducation(i)"
                 class="button gray"
-                ><i class="fa fa-plus-circle"></i>Delete</a
+                ><i class="fa fa-plus-circle"></i>Delete</button
               >
             </div>
           </div>
 
-          <a (click)="addEducation()" class="button gray"
-            ><i class="fa fa-plus-circle"></i> Add More Education</a
+          <button (click)="addEducation()" class="button gray"
+            ><i class="fa fa-plus-circle"></i> Add More Education</button
           >
         </div>
 
@@ -1005,18 +1015,18 @@
             </div>
 
             <br />
-            <a
+            <button
               style="color: #fff; background: red"
               *ngIf="refereesForms.controls?.length > 1"
               (click)="deleteReferees(i)"
               class="button gray"
-              ><i class="fa fa-plus-circle"></i>Delete</a
+              ><i class="fa fa-plus-circle"></i>Delete</button
             >
           </div>
         </div>
 
-        <a (click)="addReferees()" class="button gray"
-          ><i class="fa fa-plus-circle"></i> Add More Referees</a
+        <button (click)="addReferees()" class="button gray"
+          ><i class="fa fa-plus-circle"></i> Add More Referees</button
         >
 
         <br /><br />
@@ -1261,19 +1271,19 @@
               </div>
 
               <br />
-              <a
+              <button
                 *ngIf="workHistoryForms.controls?.length > 1"
                 (click)="deleteWorkHistory(i)"
                 class="button gray"
                 style="color: #fff; background: red"
-                ><i class="fa fa-plus-circle"></i>Delete</a
+                ><i class="fa fa-plus-circle"></i>Delete</button
               >
             </div>
           </div>
 
           <br />
-          <a (click)="addWorkHistory()" class="button gray"
-            ><i class="fa fa-plus-circle"></i> Add Work History</a
+          <button (click)="addWorkHistory()" class="button gray"
+            ><i class="fa fa-plus-circle"></i> Add Work History</button
           >
         </div>
         <br /><br />
@@ -1429,7 +1439,7 @@
                 <div class="form-row form-row-wide three columns">
                   <label>Years of Experience: <span class="red">*</span></label>
                   <input
-                    type="text"
+                    type="number"
                     class="input-text"
                     formControlName="yearsOfExperience"
                     [ngClass]="{
@@ -1453,38 +1463,128 @@
               </div>
 
               <br />
-              <a
+              <button
                 style="color: #fff; background: red"
                 *ngIf="skillsForms.controls?.length > 1"
                 (click)="deleteSkill(i)"
                 class="button gray"
-                ><i class="fa fa-plus-circle"></i>Delete</a
+                ><i class="fa fa-plus-circle"></i>Delete</button
               >
             </div>
           </div>
 
           <br />
-          <a (click)="addSkill()" class="button gray"
-            ><i class="fa fa-plus-circle"></i> Add Skill</a
+          <button (click)="addSkill()" class="button gray"
+            ><i class="fa fa-plus-circle"></i> Add More Skills</button
+          >
+        </div>
+
+        <div class="container">
+          <div formGroupName="language">
+            <h3 class="margin-bottom-10 margin-top-10">Language</h3>
+
+            <br /><br />
+
+            <div
+              class="row"
+              *ngFor="let l of languageForms.controls; let i = index"
+              [formGroupName]="i"
+            >
+              <div class="row">
+                <div class="form-row form-row-wide six columns">
+                  <label>Language: <span class="red">*</span></label>
+                  <input
+                    type="text"
+                    class="input-text"
+                    formControlName="language"
+                    [ngClass]="{
+                      'input-error':
+                        (l.controls.language.invalid &&
+                          l.controls.language.touched) ||
+                        (l.controls.language.invalid && forthCheck$)
+                    }"
+                  />
+                  <p
+                    class="error2"
+                    *ngIf="
+                      (l.controls.language.invalid &&
+                        l.controls.language.touched) ||
+                      (l.controls.language.invalid && forthCheck$)
+                    "
+                  >
+                    Language is required
+                  </p>
+                </div>
+
+                <div class="form-row form-row-wide six columns">
+                  <label>Proficiency Level: <span class="red">*</span></label>
+                  <select
+                    formControlName="proficiencyLevel"
+                    [ngClass]="{
+                      'input-error':
+                        (l.controls.proficiencyLevel.invalid &&
+                          l.controls.proficiencyLevel.touched) ||
+                        (l.controls.proficiencyLevel.invalid && forthCheck$)
+                    }"
+                  >
+                    <option value="Novice">Novice</option>
+                    <option value="Beginner">Beginner</option>
+                    <option value="Advanced">Advanced</option>
+                    <option value="Competent">Competent</option>
+                    <option value="Proficient">Proficient</option>
+                    <option value="Expert">Expert</option>
+                  </select>
+
+                  <p
+                    class="error2"
+                    *ngIf="
+                      (l.controls.proficiencyLevel.invalid &&
+                        l.controls.proficiencyLevel.touched) ||
+                      (l.controls.proficiencyLevel.invalid && forthCheck$)
+                    "
+                  >
+                    Proficiency Level is required
+                  </p>
+                </div>
+              </div>
+
+              <br />
+              <button
+                style="color: #fff; background: red"
+                *ngIf="languageForms.controls?.length > 1"
+                (click)="deleteLanguage(i)"
+                class="button gray"
+                ><i class="fa fa-plus-circle"></i>Delete</button
+              >
+            </div>
+          </div>
+
+          <br />
+          <button (click)="addLanguage()" class="button gray"
+            ><i class="fa fa-plus-circle"></i> Add More Languages</button
           >
         </div>
         <br /><br />
         <button type="button" awPreviousStep>PREV</button>
         <button
-          *ngIf="!forthCheck$ && skillsForms.invalid"
+          *ngIf="!forthCheck$ && skillsForms.invalid && languageForms.invalid"
           (click)="forthCheck()"
           type="button"
         >
           Next
         </button>
         <button
-          *ngIf="forthCheck$ && skillsForms.invalid"
+          *ngIf="forthCheck$ && skillsForms.invalid && languageForms.invalid"
           (click)="forthCheck()"
           type="button"
         >
           Next
         </button>
-        <button *ngIf="!skillsForms.invalid" type="button" awNextStep>
+        <button
+          *ngIf="!skillsForms.invalid && !languageForms.invalid"
+          type="button"
+          awNextStep
+        >
           Next
         </button>
       </aw-wizard-step>
@@ -1514,7 +1614,7 @@
             }}</span>
           </div>
 
-          <div style="margin-top: 35px;" class="form-row form-row-wide">
+          <!-- <div style="margin-top: 35px;" class="form-row form-row-wide">
             <label>Resume Headline: <span class="red">*</span></label>
             <input
               type="text"
@@ -1537,7 +1637,7 @@
             >
               Your Resume Headline is required
             </p>
-          </div>
+          </div> -->
 
           <div style="margin-top: 50px;" class="form">
             <h5>CV <span class="red">*</span></h5>

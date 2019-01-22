@@ -1,20 +1,20 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { ManageWorkHistoryComponent } from './manage-work-history.component';
+import { AddLanguageComponent } from './add-language.component';
 
-describe('ManageWorkHistoryComponent', () => {
-  let component: ManageWorkHistoryComponent;
-  let fixture: ComponentFixture<ManageWorkHistoryComponent>;
+describe('AddLanguageComponent', () => {
+  let component: AddLanguageComponent;
+  let fixture: ComponentFixture<AddLanguageComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ ManageWorkHistoryComponent ]
+      declarations: [ AddLanguageComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(ManageWorkHistoryComponent);
+    fixture = TestBed.createComponent(AddLanguageComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
