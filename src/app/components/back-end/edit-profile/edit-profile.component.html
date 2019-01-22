@@ -570,8 +570,8 @@
 
           <div style="margin-top: 35px;" class="form-row form-row-wide">
             <label>Tell Us About Your self: <span class="red">*</span></label>
-            <textarea
-              [froalaEditor]="options"
+            <angular-editor 
+              [config]="editorConfig"
               [(ngModel)]="user.cvtext"
               placeholder="Start Typing..."
               formControlName="tellUsAboutYourSelf"
@@ -579,10 +579,10 @@
                 'input-error':
                   (tellUsAboutYourSelf.invalid &&
                     tellUsAboutYourSelf.touched) ||
-                  (check$ && tellUsAboutYourSelf.touched)
+                  (tellUsAboutYourSelf.invalid && fifthCheck$)
               }"
             >
-            </textarea>
+            </angular-editor>
             <p
               class="error2"
               *ngIf="

@@ -7,6 +7,7 @@ import { CountriesService } from "src/app/services/countries.service";
 import { UsersService } from "src/app/services/users.service";
 import { GloberService } from "src/app/services/glober.service";
 import { CategoryService } from "src/app/services/category.service";
+import { AngularEditorConfig } from '@kolkov/angular-editor';
 
 @Component({
   selector: "app-edit-profile",
@@ -42,6 +43,14 @@ export class EditProfileComponent implements OnInit {
   photoFile$: any;
   Finish = "Save";
   u: any;
+
+  editorConfig: AngularEditorConfig = {
+    editable: true,
+    spellcheck: true,
+    placeholder: 'Enter text here...',
+    translate: 'no',
+    uploadUrl: 'assets/upload', // if needed
+  };
 
   dropdownSettings = {
     singleSelection: false,
@@ -530,7 +539,7 @@ export class EditProfileComponent implements OnInit {
         firstName: this.cRForm.value.firstName,
         lastName: this.cRForm.value.lastName,
         birthday: this.cRForm.value.dateOfBirth,
-        preferedPositions: this.cRForm.value.preferedPositions,
+        preferedPositions: JSON.stringify(this.cRForm.value.preferedPositions),
         maritalStatus: this.cRForm.value.maritalStatus,
         preferedCountries: this.cRForm.value.prefaredLocation,
         expectedSalary: this.cRForm.value.expectedSalary,
@@ -579,7 +588,7 @@ export class EditProfileComponent implements OnInit {
         firstName: this.cRForm.value.firstName,
         lastName: this.cRForm.value.lastName,
         birthday: this.cRForm.value.dateOfBirth,
-        preferedPositions: this.cRForm.value.preferedPositions,
+        preferedPositions: JSON.stringify(this.cRForm.value.preferedPositions),
         maritalStatus: this.cRForm.value.maritalStatus,
         preferedCountries: this.cRForm.value.prefaredLocation,
         expectedSalary: this.cRForm.value.expectedSalary,
@@ -629,7 +638,7 @@ export class EditProfileComponent implements OnInit {
         firstName: this.cRForm.value.firstName,
         lastName: this.cRForm.value.lastName,
         birthday: this.cRForm.value.dateOfBirth,
-        preferedPositions: this.cRForm.value.preferedPositions,
+        preferedPositions: JSON.stringify(this.cRForm.value.preferedPositions),
         maritalStatus: this.cRForm.value.maritalStatus,
         preferedCountries: this.cRForm.value.prefaredLocation,
         expectedSalary: this.cRForm.value.expectedSalary,
@@ -678,7 +687,7 @@ export class EditProfileComponent implements OnInit {
         firstName: this.cRForm.value.firstName,
         lastName: this.cRForm.value.lastName,
         birthday: this.cRForm.value.dateOfBirth,
-        preferedPositions: this.cRForm.value.preferedPositions,
+        preferedPositions: JSON.stringify(this.cRForm.value.preferedPositions),
         maritalStatus: this.cRForm.value.maritalStatus,
         preferedCountries: this.cRForm.value.prefaredLocation,
         expectedSalary: this.cRForm.value.expectedSalary,

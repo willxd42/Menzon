@@ -1699,8 +1699,8 @@
 
           <div style="margin-top: 35px;" class="form-row form-row-wide">
             <label>Tell Us About Your self: <span class="red">*</span></label>
-            <textarea
-              [froalaEditor]="options"
+            <angular-editor 
+              [config]="editorConfig"
               placeholder="Start Typing..."
               formControlName="tellUsAboutYourSelf"
               [ngClass]="{
@@ -1710,7 +1710,7 @@
                   (tellUsAboutYourSelf.invalid && fifthCheck$)
               }"
             >
-            </textarea>
+            </angular-editor>
             <p
               class="error2"
               *ngIf="

@@ -3,18 +3,18 @@
 } */
 
 .fa {
-    color: rgb(34, 33, 33) !important;
+  color: rgb(34, 33, 33) !important;
 }
 
 button {
-    margin: 10px !important;
+  margin: 10px !important;
 }
 
 input,
 select {
-    height: 61px !important;
+  height: 61px !important;
 }
 
 div a {
-    display: none !important;
+  display: none !important;
 }

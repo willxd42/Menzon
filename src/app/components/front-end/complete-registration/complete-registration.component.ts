@@ -20,6 +20,7 @@ import { skillLevel } from "src/app/mock/stillLevel";
 import { UsersService } from "src/app/services/users.service";
 import { GloberService } from "src/app/services/glober.service";
 import { CategoryService } from "src/app/services/category.service";
+import { AngularEditorConfig } from '@kolkov/angular-editor';
 
 @Component({
   selector: "app-complete-registration",
@@ -60,6 +61,14 @@ export class CompleteRegistrationComponent implements OnInit {
   photoFile$: any;
   Finish = "Finish";
   space = "";
+
+  editorConfig: AngularEditorConfig = {
+    editable: true,
+    spellcheck: true,
+    placeholder: 'Enter text here...',
+    translate: 'no',
+    uploadUrl: 'assets/upload', // if needed
+  };
 
   dropdownSettings = {
     singleSelection: false,

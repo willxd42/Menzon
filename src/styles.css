@@ -242,3 +242,11 @@ input {
     color: #659f5c !important;
     border: 2px solid #659f5c !important;
 }
+
+i {
+    color: #000000 !important;
+}
+
+.angular-editor-toolbar .angular-editor-toolbar-set .background {
+    background: #ffffff !important;
+}

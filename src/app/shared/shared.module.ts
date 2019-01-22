@@ -15,6 +15,7 @@ import { NguCarouselModule } from "@ngu/carousel";
 import { NgxPaginationModule } from "ngx-pagination";
 import { DisqusModule } from "ngx-disqus";
 import { NgMultiSelectDropDownModule } from 'ng-multiselect-dropdown';
+import { AngularEditorModule } from '@kolkov/angular-editor';
 
 @NgModule({
   declarations: [],
@@ -34,7 +35,8 @@ import { NgMultiSelectDropDownModule } from 'ng-multiselect-dropdown';
     NgbPaginationModule,
     NgbAlertModule,
     DisqusModule.forRoot("menzon"),
-    NgMultiSelectDropDownModule.forRoot()
+    NgMultiSelectDropDownModule.forRoot(),
+    AngularEditorModule
   ],
   exports: [
     NgbModule,
@@ -51,7 +53,8 @@ import { NgMultiSelectDropDownModule } from 'ng-multiselect-dropdown';
     NgbPaginationModule,
     NgbAlertModule,
     DisqusModule,
-    NgMultiSelectDropDownModule
+    NgMultiSelectDropDownModule,
+    AngularEditorModule
   ]
 })
 export class SharedModule {}
