@@ -69,14 +69,14 @@
                 [ngClass]="{
                   'input-error':
                     (firstName.invalid && firstName.touched) ||
-                    (check$ && firstName.touched)
+                    (check$ && firstName.invalid)
                 }"
               />
               <p
                 class="error2"
                 *ngIf="
                   (firstName.invalid && firstName.touched) ||
-                  (check$ && firstName.touched)
+                  (check$ && firstName.invalid)
                 "
               >
                 First Name is required
@@ -93,14 +93,14 @@
                 [ngClass]="{
                   'input-error':
                     (lastName.invalid && lastName.touched) ||
-                    (check$ && lastName.touched)
+                    (check$ && lastName.invalid)
                 }"
               />
               <p
                 class="error2"
                 *ngIf="
                   (lastName.invalid && lastName.touched) ||
-                  (check$ && lastName.touched)
+                  (check$ && lastName.invalid)
                 "
               >
                 Last Name is required
@@ -125,7 +125,7 @@
                 [ngClass]="{
                   'input-error':
                     (gender.invalid && gender.touched) ||
-                    (check$ && gender.touched)
+                    (check$ && gender.invalid)
                 }"
               >
                 <option value="Male">Male</option>
@@ -135,7 +135,7 @@
                 class="error2"
                 *ngIf="
                   (gender.invalid && gender.touched) ||
-                  (check$ && gender.touched)
+                  (check$ && gender.invalid)
                 "
               >
                 Gender is required
@@ -183,14 +183,14 @@
                 [ngClass]="{
                   'input-error':
                     (dateOfBirth.invalid && dateOfBirth.touched) ||
-                    (check$ && dateOfBirth.touched)
+                    (check$ && dateOfBirth.invalid)
                 }"
               />
               <p
                 class="error2"
                 *ngIf="
                   (dateOfBirth.invalid && dateOfBirth.touched) ||
-                  (check$ && dateOfBirth.touched)
+                  (check$ && dateOfBirth.invalid)
                 "
               >
                 Date Of Birth is required
@@ -207,13 +207,13 @@
                 [ngClass]="{
                   'input-error':
                     (email.invalid && email.touched) ||
-                    (check$ && email.touched)
+                    (check$ && email.invalid)
                 }"
               />
               <p
                 class="error2"
                 *ngIf="
-                  (email.invalid && email.touched) || (check$ && email.touched)
+                  (email.invalid && email.touched) || (check$ && email.invalid)
                 "
               >
                 Email is required
@@ -260,7 +260,7 @@
                 [ngClass]="{
                   'input-error':
                     (country.invalid && country.touched) ||
-                    (check$ && country.touched)
+                    (check$ && country.invalid)
                 }"
               >
                 <option *ngFor="let c of countries" [value]="c.code">
@@ -272,7 +272,7 @@
                 class="error2"
                 *ngIf="
                   (country.invalid && country.touched) ||
-                  (check$ && country.touched)
+                  (check$ && country.invalid)
                 "
               >
                 Country is required
@@ -287,7 +287,7 @@
                 [ngClass]="{
                   'input-error':
                     (state.invalid && state.touched) ||
-                    (check$ && state.touched)
+                    (check$ && state.invalid)
                 }"
               >
                 <option *ngFor="let s of states" [value]="s.stateId">
@@ -298,7 +298,7 @@
               <p
                 class="error2"
                 *ngIf="
-                  (state.invalid && state.touched) || (check$ && state.touched)
+                  (state.invalid && state.touched) || (check$ && state.invalid)
                 "
               >
                 State is required
@@ -398,14 +398,14 @@
                 [ngClass]="{
                   'input-error':
                     (expectedSalary.invalid && expectedSalary.touched) ||
-                    (expectedSalary.invalid && firstCheck$)
+                    (expectedSalary.invalid && check$)
                 }"
               />
               <p
                 class="error2"
                 *ngIf="
                   (expectedSalary.invalid && expectedSalary.touched) ||
-                  (expectedSalary.invalid && firstCheck$)
+                  (expectedSalary.invalid && check$)
                 "
               >
                 Expected Salary is required
@@ -570,7 +570,7 @@
 
           <div style="margin-top: 35px;" class="form-row form-row-wide">
             <label>Tell Us About Your self: <span class="red">*</span></label>
-            <angular-editor 
+            <angular-editor
               [config]="editorConfig"
               [(ngModel)]="user.cvtext"
               placeholder="Start Typing..."
@@ -579,7 +579,7 @@
                 'input-error':
                   (tellUsAboutYourSelf.invalid &&
                     tellUsAboutYourSelf.touched) ||
-                  (tellUsAboutYourSelf.invalid && fifthCheck$)
+                  (tellUsAboutYourSelf.invalid && check$)
               }"
             >
             </angular-editor>
@@ -587,7 +587,7 @@
               class="error2"
               *ngIf="
                 (tellUsAboutYourSelf.invalid && tellUsAboutYourSelf.touched) ||
-                (check$ && tellUsAboutYourSelf.touched)
+                (check$ && tellUsAboutYourSelf.invalid)
               "
             >
               Telling Us About Yourself is required
@@ -635,9 +635,9 @@
       </table>
 
       <br />
-      <button [routerLink]="['/add-education']" class="button gray"
-        ><i class="fa fa-plus-circle"></i> Add More Education</button
-      >
+      <button [routerLink]="['/add-education']" class="button gray">
+        <i class="fa fa-plus-circle"></i> Add More Education
+      </button>
     </div>
   </div>
 
@@ -673,9 +673,9 @@
       </table>
 
       <br />
-      <button [routerLink]="['/add-skill']" class="button gray"
-        ><i class="fa fa-plus-circle"></i> Add More Skill</button
-      >
+      <button [routerLink]="['/add-skill']" class="button gray">
+        <i class="fa fa-plus-circle"></i> Add More Skill
+      </button>
     </div>
   </div>
 
@@ -711,9 +711,9 @@
       </table>
 
       <br />
-      <button [routerLink]="['/add-work-history']" class="button gray"
-        ><i class="fa fa-plus-circle"></i> Add More Work History</button
-      >
+      <button [routerLink]="['/add-work-history']" class="button gray">
+        <i class="fa fa-plus-circle"></i> Add More Work History
+      </button>
     </div>
   </div>
 
@@ -749,9 +749,9 @@
       </table>
 
       <br />
-      <button [routerLink]="['/add-referees']" class="button gray"
-        ><i class="fa fa-plus-circle"></i> Add More Referees</button
-      >
+      <button [routerLink]="['/add-referees']" class="button gray">
+        <i class="fa fa-plus-circle"></i> Add More Referees
+      </button>
     </div>
   </div>
 
@@ -787,19 +787,26 @@
       </table>
 
       <br />
-      <button [routerLink]="['/add-language']" class="button gray"
-        ><i class="fa fa-plus-circle"></i> Add More Languages</button
-      >
+      <button [routerLink]="['/add-language']" class="button gray">
+        <i class="fa fa-plus-circle"></i> Add More Languages
+      </button>
     </div>
   </div>
 
-
   <p *ngIf="error2" class="error2">{{ errMessage }}</p>
   <br />
+  <p
+    class="error2"
+    *ngIf="cRForm.invalid && check$"
+  >
+    Form invalid please make sure you fill all fields with *
+  </p>
   <button *ngIf="cRForm.invalid" type="button" (click)="check()">
     {{ Finish }}
   </button>
-  <button *ngIf="cRForm.valid" type="button" (click)="submit()">{{ Finish }}</button>
+  <button *ngIf="cRForm.valid" type="button" (click)="submit()">
+    {{ Finish }}
+  </button>
 </div>
 
 <div class="divider margin-top-0 padding-reset"></div>

@@ -390,7 +390,7 @@
           (click)="firstCheck()"
           type="button"
         >
-          Next
+          Next Steep
         </button>
         <button
           *ngIf="
@@ -410,7 +410,7 @@
           (click)="firstCheck()"
           type="button"
         >
-          Next
+          Next Steep
         </button>
         <button
           *ngIf="
@@ -429,7 +429,27 @@
           type="button"
           awNextStep
         >
-          Next
+          Next Steep
+        </button>
+
+        <button
+          *ngIf="
+            !state.invalid &&
+            !country.invalid &&
+            !email.invalid &&
+            !dateOfBirth.invalid &&
+            !gender.invalid &&
+            !lastName.invalid &&
+            !firstName.invalid &&
+            !maritalStatus.invalid &&
+            !preferedPositions.invalid &&
+            !expectedSalary.invalid &&
+            !prefaredLocation.invalid
+          "
+          type="button"
+          (click)="submit()"
+        >
+          {{ Finish2 }}
         </button>
       </aw-wizard-step>
 
@@ -697,14 +717,15 @@
                 *ngIf="educationForms.controls?.length > 1"
                 (click)="deleteEducation(i)"
                 class="button gray"
-                ><i class="fa fa-plus-circle"></i>Delete</button
               >
+                <i class="fa fa-plus-circle"></i>Delete
+              </button>
             </div>
           </div>
 
-          <button (click)="addEducation()" class="button gray"
-            ><i class="fa fa-plus-circle"></i> Add More Education</button
-          >
+          <button (click)="addEducation()" class="button gray">
+            <i class="fa fa-plus-circle"></i> Add More Education
+          </button>
         </div>
 
         <div class="container">
@@ -800,7 +821,7 @@
           (click)="secondCheck()"
           type="button"
         >
-          Next
+          Next Steep
         </button>
         <button
           *ngIf="
@@ -809,15 +830,17 @@
           (click)="secondCheck()"
           type="button"
         >
-          Next
+          Next Steep
         </button>
         <button
           *ngIf="!educationForms.invalid && !NTSCcompleted.invalid"
           type="button"
           awNextStep
         >
-          Next
+          Next Steep
         </button>
+
+        <button type="button" (click)="submit()">{{ Finish2 }}</button>
       </aw-wizard-step>
 
       <aw-wizard-step stepTitle="STEEP 3">
@@ -1020,14 +1043,15 @@
               *ngIf="refereesForms.controls?.length > 1"
               (click)="deleteReferees(i)"
               class="button gray"
-              ><i class="fa fa-plus-circle"></i>Delete</button
             >
+              <i class="fa fa-plus-circle"></i>Delete
+            </button>
           </div>
         </div>
 
-        <button (click)="addReferees()" class="button gray"
-          ><i class="fa fa-plus-circle"></i> Add More Referees</button
-        >
+        <button (click)="addReferees()" class="button gray">
+          <i class="fa fa-plus-circle"></i> Add More Referees
+        </button>
 
         <br /><br />
         <button type="button" awPreviousStep>PREV</button>
@@ -1036,18 +1060,20 @@
           (click)="secondCheck()"
           type="button"
         >
-          Next
+          Next Steep
         </button>
         <button
           *ngIf="newCheck$ && refereesForms.invalid"
           (click)="newCheck()"
           type="button"
         >
-          Next
+          Next Steep
         </button>
         <button *ngIf="!refereesForms.invalid" type="button" awNextStep>
-          Next
+          Next Steep
         </button>
+
+        <button type="button" (click)="submit()">{{ Finish2 }}</button>
       </aw-wizard-step>
 
       <aw-wizard-step stepTitle="STEEP 4">
@@ -1276,15 +1302,16 @@
                 (click)="deleteWorkHistory(i)"
                 class="button gray"
                 style="color: #fff; background: red"
-                ><i class="fa fa-plus-circle"></i>Delete</button
               >
+                <i class="fa fa-plus-circle"></i>Delete
+              </button>
             </div>
           </div>
 
           <br />
-          <button (click)="addWorkHistory()" class="button gray"
-            ><i class="fa fa-plus-circle"></i> Add Work History</button
-          >
+          <button (click)="addWorkHistory()" class="button gray">
+            <i class="fa fa-plus-circle"></i> Add Work History
+          </button>
         </div>
         <br /><br />
         <button type="button" awPreviousStep>PREV</button>
@@ -1293,18 +1320,19 @@
           (click)="thirdCheck()"
           type="button"
         >
-          Next
+          Next Steep
         </button>
         <button
           *ngIf="thirdCheck$ && workHistoryForms.invalid"
           (click)="thirdCheck()"
           type="button"
         >
-          Next
+          Next Steep
         </button>
         <button *ngIf="!workHistoryForms.invalid" type="button" awNextStep>
-          Next
+          Next Steep
         </button>
+        <button type="button" (click)="submit()">{{ Finish2 }}</button>
       </aw-wizard-step>
 
       <aw-wizard-step stepTitle="STEEP 5">
@@ -1468,15 +1496,16 @@
                 *ngIf="skillsForms.controls?.length > 1"
                 (click)="deleteSkill(i)"
                 class="button gray"
-                ><i class="fa fa-plus-circle"></i>Delete</button
               >
+                <i class="fa fa-plus-circle"></i>Delete
+              </button>
             </div>
           </div>
 
           <br />
-          <button (click)="addSkill()" class="button gray"
-            ><i class="fa fa-plus-circle"></i> Add More Skills</button
-          >
+          <button (click)="addSkill()" class="button gray">
+            <i class="fa fa-plus-circle"></i> Add More Skills
+          </button>
         </div>
 
         <div class="container">
@@ -1554,15 +1583,16 @@
                 *ngIf="languageForms.controls?.length > 1"
                 (click)="deleteLanguage(i)"
                 class="button gray"
-                ><i class="fa fa-plus-circle"></i>Delete</button
               >
+                <i class="fa fa-plus-circle"></i>Delete
+              </button>
             </div>
           </div>
 
           <br />
-          <button (click)="addLanguage()" class="button gray"
-            ><i class="fa fa-plus-circle"></i> Add More Languages</button
-          >
+          <button (click)="addLanguage()" class="button gray">
+            <i class="fa fa-plus-circle"></i> Add More Languages
+          </button>
         </div>
         <br /><br />
         <button type="button" awPreviousStep>PREV</button>
@@ -1571,22 +1601,23 @@
           (click)="forthCheck()"
           type="button"
         >
-          Next
+          Next Steep
         </button>
         <button
           *ngIf="forthCheck$ && skillsForms.invalid && languageForms.invalid"
           (click)="forthCheck()"
           type="button"
         >
-          Next
+          Next Steep
         </button>
         <button
           *ngIf="!skillsForms.invalid && !languageForms.invalid"
           type="button"
           awNextStep
         >
-          Next
+          Next Steep
         </button>
+        <button type="button" (click)="submit()">{{ Finish2 }}</button>
       </aw-wizard-step>
 
       <aw-wizard-step stepTitle="'STEEP 6'">
@@ -1699,7 +1730,7 @@
 
           <div style="margin-top: 35px;" class="form-row form-row-wide">
             <label>Tell Us About Your self: <span class="red">*</span></label>
-            <angular-editor 
+            <angular-editor
               [config]="editorConfig"
               placeholder="Start Typing..."
               formControlName="tellUsAboutYourSelf"
@@ -1738,7 +1769,7 @@
           (click)="fifthCheck()"
           type="button"
         >
-          Next
+          Next Steep
         </button>
         <button
           *ngIf="
@@ -1750,7 +1781,7 @@
           (click)="fifthCheck()"
           type="button"
         >
-          Next
+          Next Steep
         </button>
         <button
           *ngIf="

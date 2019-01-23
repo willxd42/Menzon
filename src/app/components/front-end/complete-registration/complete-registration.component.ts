@@ -20,7 +20,7 @@ import { skillLevel } from "src/app/mock/stillLevel";
 import { UsersService } from "src/app/services/users.service";
 import { GloberService } from "src/app/services/glober.service";
 import { CategoryService } from "src/app/services/category.service";
-import { AngularEditorConfig } from '@kolkov/angular-editor';
+import { AngularEditorConfig } from "@kolkov/angular-editor";
 
 @Component({
   selector: "app-complete-registration",
@@ -60,14 +60,15 @@ export class CompleteRegistrationComponent implements OnInit {
   cvFile$: any;
   photoFile$: any;
   Finish = "Finish";
+  Finish2 = "Or Save Current Stage.";
   space = "";
 
   editorConfig: AngularEditorConfig = {
     editable: true,
     spellcheck: true,
-    placeholder: 'Enter text here...',
-    translate: 'no',
-    uploadUrl: 'assets/upload', // if needed
+    placeholder: "Enter text here...",
+    translate: "no",
+    uploadUrl: "assets/upload" // if needed
   };
 
   dropdownSettings = {
@@ -441,7 +442,7 @@ export class CompleteRegistrationComponent implements OnInit {
   addLanguage() {
     const language = this.fb.group({
       language: ["", Validators.required],
-      proficiencyLevel: ["", Validators.required],
+      proficiencyLevel: ["", Validators.required]
     });
 
     this.languageForms.push(language);
@@ -616,7 +617,9 @@ export class CompleteRegistrationComponent implements OnInit {
       );
     }
 
-    formData.append("cv", this.cvFile$.file, this.cvFile$.file.name);
+    if (this.cvFile) {
+      formData.append("cv", this.cvFile$.file, this.cvFile$.file.name);
+    }
 
     // this.documents.forEach(doc => {
     //   formData.append(doc.documentName, doc.file, doc.file.name);
@@ -627,16 +630,9 @@ export class CompleteRegistrationComponent implements OnInit {
   }
 
   submit() {
-    this.cRForm.value.preferedPositions = JSON.stringify(this.selectedItems);
-    const birthday = `${this.cRForm.value.dateOfBirth.year}-${
-      this.cRForm.value.dateOfBirth.month
-    }-${this.cRForm.value.dateOfBirth.day}`;
-    const dateNyscCompleted = `${this.cRForm.value.NYSCDate.year}-${
-      this.cRForm.value.NYSCDate.month
-    }-${this.cRForm.value.NYSCDate.day}`;
-    const dateNyscStarted = `${this.cRForm.value.NTSCcompletedDate.year}-${
-      this.cRForm.value.NTSCcompletedDate.month
-    }-${this.cRForm.value.NTSCcompletedDate.day}`;
+    let birthday;
+    let dateNyscCompleted;
+    let dateNyscStarted;
 
     let categories = JSON.stringify(
       this.selectedItems.map(data => {
@@ -644,53 +640,134 @@ export class CompleteRegistrationComponent implements OnInit {
       })
     );
 
-    this.Finish = "Loading...";
-    this.error2 = false;
-    const upload = this.fileUpload();
-    const jsonse = JSON.stringify({
-      nyscCompleted: this.cRForm.value.NTSCcompleted,
-      dateNyscCompleted: dateNyscCompleted || "",
-      dateNyscStarted: dateNyscStarted || "",
-      firstName: this.cRForm.value.firstName,
-      lastName: this.cRForm.value.lastName,
-      middleName: this.cRForm.value.middleName,
-      birthday: birthday,
-      preferedPositions: categories,
-      expectedSalary: this.cRForm.value.expectedSalary,
-      maritalStatus: this.cRForm.value.maritalStatus,
-      preferedCountries: this.cRForm.value.prefaredLocation,
-      gender: this.cRForm.value.gender,
-      province: this.cRForm.value.state,
-      cvTitle: "My Cv",
-      cvtext: this.cRForm.value.tellUsAboutYourSelf,
-      address1: this.cRForm.value.street_address || "",
-      city: this.cRForm.value.city || "",
-      country: this.cRForm.value.country,
-      email: this.cRForm.value.email,
-      mobilePhone: this.cRForm.value.mobileNumber,
-      workHistory: JSON.stringify(this.cRForm.value.workHistory),
-      education: JSON.stringify(this.cRForm.value.education),
-      skills: JSON.stringify(this.cRForm.value.skills),
-      referees: JSON.stringify(this.cRForm.value.referees),
-      languages: JSON.stringify(this.cRForm.value.language)
-    });
-    const data = new Blob([jsonse], { type: "application/json" });
-    upload.append("data", data);
-    this.userService
-      .completeRegistration({
-        appUserId: this.user.appUserId,
-        body: upload
-      })
-      .subscribe(
-        res => {
-          console.log(res);
-          this.router.navigate(["/profile"]);
-        },
-        err => {
-          console.log(err);
-          this.Finish = "Finish";
-          this.error2 = true;
-        }
-      );
+    // this.cRForm.value.preferedPositions = JSON.stringify(this.selectedItems);
+
+    if (this.cRForm.value.dateOfBirth) {
+      birthday = `${this.cRForm.value.dateOfBirth.year}-${
+        this.cRForm.value.dateOfBirth.month
+      }-${this.cRForm.value.dateOfBirth.day}`;
+    } else {
+      birthday = "";
+    }
+
+    if (this.cRForm.value.NYSCDate) {
+      dateNyscCompleted = `${this.cRForm.value.NYSCDate.year}-${
+        this.cRForm.value.NYSCDate.month
+      }-${this.cRForm.value.NYSCDate.day}`;
+    } else {
+      birthday = "";
+    }
+
+    if (this.cRForm.value.NTSCcompletedDate) {
+      dateNyscStarted = `${this.cRForm.value.NTSCcompletedDate.year}-${
+        this.cRForm.value.NTSCcompletedDate.month
+      }-${this.cRForm.value.NTSCcompletedDate.day}`;
+    } else {
+      dateNyscStarted = "";
+    }
+
+    if (!this.cvFile$) {
+      this.Finish = "Loading...";
+      this.Finish2 = "Loading...";
+      this.error2 = false;
+      const upload: FormData = new FormData();
+      const jsonse = JSON.stringify({
+        nyscCompleted: this.cRForm.value.NTSCcompleted || "",
+        dateNyscCompleted: dateNyscCompleted || "",
+        dateNyscStarted: dateNyscStarted || "",
+        firstName: this.cRForm.value.firstName,
+        lastName: this.cRForm.value.lastName,
+        middleName: this.cRForm.value.middleName,
+        birthday: birthday,
+        preferedPositions: categories,
+        expectedSalary: this.cRForm.value.expectedSalary,
+        maritalStatus: this.cRForm.value.maritalStatus,
+        preferedCountries: this.cRForm.value.prefaredLocation,
+        gender: this.cRForm.value.gender,
+        province: this.cRForm.value.state,
+        cvTitle: "My Cv",
+        cvtext: this.cRForm.value.tellUsAboutYourSelf || "",
+        address1: this.cRForm.value.street_address || "",
+        city: this.cRForm.value.city || "",
+        country: this.cRForm.value.country,
+        email: this.cRForm.value.email,
+        mobilePhone: this.cRForm.value.mobileNumber,
+        workHistory: JSON.stringify(this.cRForm.value.workHistory) || "",
+        education: JSON.stringify(this.cRForm.value.education) || "",
+        skills: JSON.stringify(this.cRForm.value.skills) || "",
+        referees: JSON.stringify(this.cRForm.value.referees) || "",
+        languages: JSON.stringify(this.cRForm.value.language) || ""
+      });
+      const data = new Blob([jsonse], { type: "application/json" });
+      upload.append("data", data);
+      this.userService
+        .completeRegistration({
+          appUserId: this.user.appUserId,
+          body: upload
+        })
+        .subscribe(
+          res => {
+            console.log(res);
+            this.router.navigate(["/profile"]);
+          },
+          err => {
+            console.log(err);
+            this.Finish = "Finish";
+            this.Finish2 = "Or Save Current Stage.";
+            this.error2 = true;
+          }
+        );
+    } else {
+      this.Finish = "Loading...";
+      this.Finish2 = "Loading...";
+      this.error2 = false;
+      const upload = this.fileUpload();
+      const jsonse = JSON.stringify({
+        nyscCompleted: this.cRForm.value.NTSCcompleted || "",
+        dateNyscCompleted: dateNyscCompleted || "",
+        dateNyscStarted: dateNyscStarted || "",
+        firstName: this.cRForm.value.firstName,
+        lastName: this.cRForm.value.lastName,
+        middleName: this.cRForm.value.middleName,
+        birthday: birthday,
+        preferedPositions: categories,
+        expectedSalary: this.cRForm.value.expectedSalary,
+        maritalStatus: this.cRForm.value.maritalStatus,
+        preferedCountries: this.cRForm.value.prefaredLocation,
+        gender: this.cRForm.value.gender,
+        province: this.cRForm.value.state,
+        cvTitle: "My Cv",
+        cvtext: this.cRForm.value.tellUsAboutYourSelf || "",
+        address1: this.cRForm.value.street_address || "",
+        city: this.cRForm.value.city || "",
+        country: this.cRForm.value.country,
+        email: this.cRForm.value.email,
+        mobilePhone: this.cRForm.value.mobileNumber,
+        workHistory: JSON.stringify(this.cRForm.value.workHistory) || "",
+        education: JSON.stringify(this.cRForm.value.education) || "",
+        skills: JSON.stringify(this.cRForm.value.skills) || "",
+        referees: JSON.stringify(this.cRForm.value.referees) || "",
+        languages: JSON.stringify(this.cRForm.value.language) || ""
+      });
+      const data = new Blob([jsonse], { type: "application/json" });
+      upload.append("data", data);
+      this.userService
+        .completeRegistration({
+          appUserId: this.user.appUserId,
+          body: upload
+        })
+        .subscribe(
+          res => {
+            console.log(res);
+            this.router.navigate(["/profile"]);
+          },
+          err => {
+            console.log(err);
+            this.Finish = "Finish";
+            this.Finish2 = "Or Save Current Stage.";
+            this.error2 = true;
+          }
+        );
+    }
   }
 }
