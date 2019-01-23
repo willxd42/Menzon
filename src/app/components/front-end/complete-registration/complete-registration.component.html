@@ -374,6 +374,26 @@
         <br />
         <button
           *ngIf="
+            !state.invalid &&
+            !country.invalid &&
+            !email.invalid &&
+            !dateOfBirth.invalid &&
+            !gender.invalid &&
+            !lastName.invalid &&
+            !firstName.invalid &&
+            !maritalStatus.invalid &&
+            !preferedPositions.invalid &&
+            !expectedSalary.invalid &&
+            !prefaredLocation.invalid
+          "
+          class="button gray"
+          type="button"
+          (click)="submit()"
+        >
+          {{ Finish2 }}
+        </button>
+        <button
+          *ngIf="
             !firstCheck$ &&
             (state.invalid ||
               country.invalid ||
@@ -430,27 +450,6 @@
           awNextStep
         >
           Next Steep
-        </button>
-
-        <button
-          *ngIf="
-            !state.invalid &&
-            !country.invalid &&
-            !email.invalid &&
-            !dateOfBirth.invalid &&
-            !gender.invalid &&
-            !lastName.invalid &&
-            !firstName.invalid &&
-            !maritalStatus.invalid &&
-            !preferedPositions.invalid &&
-            !expectedSalary.invalid &&
-            !prefaredLocation.invalid
-          "
-          class="button gray"
-          type="button"
-          (click)="submit()"
-        >
-          {{ Finish2 }}
         </button>
       </aw-wizard-step>
 
@@ -815,6 +814,9 @@
 
         <br /><br />
         <button type="button" awPreviousStep>PREV</button>
+        <button type="button" class="button gray" (click)="submit()">
+          {{ Finish2 }}
+        </button>
         <button
           *ngIf="
             !secondCheck$ && educationForms.invalid && NTSCcompleted.invalid
@@ -840,8 +842,6 @@
         >
           Next Steep
         </button>
-
-        <button type="button" class="button gray" (click)="submit()">{{ Finish2 }}</button>
       </aw-wizard-step>
 
       <aw-wizard-step stepTitle="STEEP 3">
@@ -1074,7 +1074,9 @@
           Next Steep
         </button>
 
-        <button type="button" class="button gray" (click)="submit()">{{ Finish2 }}</button>
+        <button type="button" class="button gray" (click)="submit()">
+          {{ Finish2 }}
+        </button>
       </aw-wizard-step>
 
       <aw-wizard-step stepTitle="STEEP 4">
@@ -1316,6 +1318,9 @@
         </div>
         <br /><br />
         <button type="button" awPreviousStep>PREV</button>
+        <button type="button" class="button gray" (click)="submit()">
+          {{ Finish2 }}
+        </button>
         <button
           *ngIf="!thirdCheck$ && workHistoryForms.invalid"
           (click)="thirdCheck()"
@@ -1333,7 +1338,6 @@
         <button *ngIf="!workHistoryForms.invalid" type="button" awNextStep>
           Next Steep
         </button>
-        <button type="button" class="button gray" (click)="submit()">{{ Finish2 }}</button>
       </aw-wizard-step>
 
       <aw-wizard-step stepTitle="STEEP 5">
@@ -1597,6 +1601,9 @@
         </div>
         <br /><br />
         <button type="button" awPreviousStep>PREV</button>
+        <button type="button" class="button gray" (click)="submit()">
+          {{ Finish2 }}
+        </button>
         <button
           *ngIf="!forthCheck$ && skillsForms.invalid && languageForms.invalid"
           (click)="forthCheck()"
@@ -1618,7 +1625,6 @@
         >
           Next Steep
         </button>
-        <button type="button" class="button gray" (click)="submit()">{{ Finish2 }}</button>
       </aw-wizard-step>
 
       <aw-wizard-step stepTitle="'STEEP 6'">
