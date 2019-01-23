@@ -7,7 +7,7 @@ import { CountriesService } from "src/app/services/countries.service";
 import { UsersService } from "src/app/services/users.service";
 import { GloberService } from "src/app/services/glober.service";
 import { CategoryService } from "src/app/services/category.service";
-import { AngularEditorConfig } from '@kolkov/angular-editor';
+import { AngularEditorConfig } from "@kolkov/angular-editor";
 
 @Component({
   selector: "app-edit-profile",
@@ -47,9 +47,9 @@ export class EditProfileComponent implements OnInit {
   editorConfig: AngularEditorConfig = {
     editable: true,
     spellcheck: true,
-    placeholder: 'Enter text here...',
-    translate: 'no',
-    uploadUrl: 'assets/upload', // if needed
+    placeholder: "Enter text here...",
+    translate: "no",
+    uploadUrl: "assets/upload" // if needed
   };
 
   dropdownSettings = {
@@ -231,7 +231,12 @@ export class EditProfileComponent implements OnInit {
         this.workHistory = JSON.parse(res["workHistory"]);
         this.referees = JSON.parse(res["referees"]);
         this.language = JSON.parse(res["languages"]);
-        this.selectedItems = JSON.parse(res["preferedPositions"]);
+        this.selectedItems = JSON.parse(res["preferedPositions"]).map(d => {
+          var i = {
+            name: d
+          };
+          return i;
+        });
 
         this.cRForm.value.preferedPositions = JSON.stringify(
           this.selectedItems
@@ -319,7 +324,17 @@ export class EditProfileComponent implements OnInit {
         res => {
           this.categories = res["rows"];
 
-          console.log(this.categories);
+          let f = this.selectedItems;
+
+          console.log("f", f);
+
+          let selectedItems = f.map(d =>
+            this.categories.filter(i => i.name === d.name)
+          );
+
+          this.selectedItems = [].concat.apply([], selectedItems);
+
+          console.log(this.selectedItems);
 
           this.loading = false;
         },
@@ -329,6 +344,9 @@ export class EditProfileComponent implements OnInit {
         }
       );
   }
+  
+
+
 
   get firstName() {
     return this.cRForm.get("firstName");

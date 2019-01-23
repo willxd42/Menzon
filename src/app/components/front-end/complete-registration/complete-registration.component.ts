@@ -329,23 +329,23 @@ export class CompleteRegistrationComponent implements OnInit {
 
   onItemSelect(item: any) {
     this.selectedItems.push(item);
-    this.cRForm.value.preferedPositions = JSON.stringify(this.selectedItems);
+    this.cRForm.value.preferedPositions = this.selectedItems;
   }
   onSelectAll(items: any[]) {
     this.selectedItems.concat(items);
-    this.cRForm.value.preferedPositions = JSON.stringify(this.selectedItems);
+    this.cRForm.value.preferedPositions = this.selectedItems;
   }
 
   onDeSelect(item: any) {
     this.selectedItems.filter(i => {
       return i.idField != item.idField;
     });
-    this.cRForm.value.preferedPositions = JSON.stringify(this.selectedItems);
+    this.cRForm.value.preferedPositions = this.selectedItems;
   }
 
   onDeSelectAll(items: any[]) {
     this.selectedItems = [];
-    this.cRForm.value.preferedPositions = JSON.stringify(this.selectedItems);
+    this.cRForm.value.preferedPositions = this.selectedItems;
   }
 
   get refereesForms() {
@@ -634,13 +634,13 @@ export class CompleteRegistrationComponent implements OnInit {
     let dateNyscCompleted;
     let dateNyscStarted;
 
-    let categories = JSON.stringify(
-      this.selectedItems.map(data => {
-        return data["name"];
-      })
-    );
+    let category = this.cRForm.value.preferedPositions.map(data => {
+      return data["name"];
+    });
 
-    // this.cRForm.value.preferedPositions = JSON.stringify(this.selectedItems);
+    let categories = JSON.stringify(this.removeDuplicates(category));
+
+    console.log(categories);
 
     if (this.cRForm.value.dateOfBirth) {
       birthday = `${this.cRForm.value.dateOfBirth.year}-${
@@ -769,5 +769,12 @@ export class CompleteRegistrationComponent implements OnInit {
           }
         );
     }
+  }
+
+  private removeDuplicates(arr: any[]) {
+    let unique_array = arr.filter(function(elem, index, self) {
+      return index == self.indexOf(elem);
+    });
+    return unique_array;
   }
 }

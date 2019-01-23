@@ -446,6 +446,7 @@
             !expectedSalary.invalid &&
             !prefaredLocation.invalid
           "
+          class="button gray"
           type="button"
           (click)="submit()"
         >
@@ -840,7 +841,7 @@
           Next Steep
         </button>
 
-        <button type="button" (click)="submit()">{{ Finish2 }}</button>
+        <button type="button" class="button gray" (click)="submit()">{{ Finish2 }}</button>
       </aw-wizard-step>
 
       <aw-wizard-step stepTitle="STEEP 3">
@@ -1073,7 +1074,7 @@
           Next Steep
         </button>
 
-        <button type="button" (click)="submit()">{{ Finish2 }}</button>
+        <button type="button" class="button gray" (click)="submit()">{{ Finish2 }}</button>
       </aw-wizard-step>
 
       <aw-wizard-step stepTitle="STEEP 4">
@@ -1332,7 +1333,7 @@
         <button *ngIf="!workHistoryForms.invalid" type="button" awNextStep>
           Next Steep
         </button>
-        <button type="button" (click)="submit()">{{ Finish2 }}</button>
+        <button type="button" class="button gray" (click)="submit()">{{ Finish2 }}</button>
       </aw-wizard-step>
 
       <aw-wizard-step stepTitle="STEEP 5">
@@ -1617,7 +1618,7 @@
         >
           Next Steep
         </button>
-        <button type="button" (click)="submit()">{{ Finish2 }}</button>
+        <button type="button" class="button gray" (click)="submit()">{{ Finish2 }}</button>
       </aw-wizard-step>
 
       <aw-wizard-step stepTitle="'STEEP 6'">
