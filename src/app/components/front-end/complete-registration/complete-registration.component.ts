@@ -47,6 +47,7 @@ export class CompleteRegistrationComponent implements OnInit {
   fifthCheck$ = false;
   newCheck$ = false;
   loading: boolean;
+  success: boolean
   months = monthOfTheYear;
   skillLevel = skillLevel;
   selectedCvFile: any;
@@ -60,7 +61,7 @@ export class CompleteRegistrationComponent implements OnInit {
   cvFile$: any;
   photoFile$: any;
   Finish = "Finish";
-  Finish2 = "Or Save Current Stage.";
+  Finish2 = "Save Current Stage.";
   space = "";
 
   editorConfig: AngularEditorConfig = {
@@ -667,7 +668,6 @@ export class CompleteRegistrationComponent implements OnInit {
     }
 
     if (!this.cvFile$) {
-      this.Finish = "Loading...";
       this.Finish2 = "Loading...";
       this.error2 = false;
       const upload: FormData = new FormData();
@@ -707,13 +707,16 @@ export class CompleteRegistrationComponent implements OnInit {
         })
         .subscribe(
           res => {
-            console.log(res);
-            this.router.navigate(["/profile"]);
+            this.success = true
+            this.Finish2 = "Save Current Stage.";
+            setTimeout(() => {
+              this.success = false
+            }, 3000);
           },
           err => {
             console.log(err);
             this.Finish = "Finish";
-            this.Finish2 = "Or Save Current Stage.";
+            this.Finish2 = "Save Current Stage.";
             this.error2 = true;
           }
         );
@@ -764,7 +767,7 @@ export class CompleteRegistrationComponent implements OnInit {
           err => {
             console.log(err);
             this.Finish = "Finish";
-            this.Finish2 = "Or Save Current Stage.";
+            this.Finish2 = "Save Current Stage.";
             this.error2 = true;
           }
         );

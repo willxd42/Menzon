@@ -30,6 +30,19 @@
 
 <!-- Container -->
 <div class="container" *ngIf="!loading && !error">
+  <div class="container">
+    <div class="submit-page">
+      <!-- Notice -->
+      <div
+        class="notification notice closeable margin-bottom-40"
+        *ngIf="success"
+      >
+        <p>
+          <span>Current Changes Save! </span> Please continue to the next steep.
+        </p>
+      </div>
+    </div>
+  </div>
   <form [formGroup]="cRForm">
     <aw-wizard>
       <aw-wizard-step stepTitle="STEEP 1">
@@ -1056,6 +1069,9 @@
 
         <br /><br />
         <button type="button" awPreviousStep>PREV</button>
+        <button type="button" class="button gray" (click)="submit()">
+          {{ Finish2 }}
+        </button>
         <button
           *ngIf="!newCheck$ && refereesForms.invalid"
           (click)="secondCheck()"
@@ -1072,10 +1088,6 @@
         </button>
         <button *ngIf="!refereesForms.invalid" type="button" awNextStep>
           Next Steep
-        </button>
-
-        <button type="button" class="button gray" (click)="submit()">
-          {{ Finish2 }}
         </button>
       </aw-wizard-step>
 
@@ -1806,6 +1818,19 @@
       </aw-wizard-step>
     </aw-wizard>
   </form>
+  <div class="container">
+    <div class="submit-page">
+      <!-- Notice -->
+      <div
+        class="notification notice closeable margin-bottom-40"
+        *ngIf="success"
+      >
+        <p>
+          <span>Current Changes Save! </span> Please continue to the next steep.
+        </p>
+      </div>
+    </div>
+  </div>
 </div>
 
 <br /><br /><br />
