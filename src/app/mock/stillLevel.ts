@@ -3,5 +3,5 @@ export const skillLevel = [
     'Armature',
     'Professional',
     'Experienced',
-    'Expart'
+    'Expert'
 ]

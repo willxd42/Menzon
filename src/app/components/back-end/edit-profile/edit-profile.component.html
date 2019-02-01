@@ -231,13 +231,31 @@
             </div>
 
             <div class="form-row form-row-wide four columns">
-              <label>Street Adress: (Optional)</label>
-              <input
-                type="text"
-                class="input-text"
-                [(ngModel)]="user.address1"
-                formControlName="street_address"
-              />
+              <label>Marital Status: <span class="red">*</span></label>
+              <select
+                formControlName="maritalStatus"
+                [(ngModel)]="user.maritalStatus"
+                [ngClass]="{
+                  'input-error':
+                    (maritalStatus.invalid && maritalStatus.touched) ||
+                    (maritalStatus.invalid && check$)
+                }"
+              >
+                <option value="Married">Married</option>
+                <option value="Single">Single</option>
+                <option value="Divorced">Divorced </option>
+                <option value="Widowed">Widowed</option>
+              </select>
+
+              <p
+                class="error2"
+                *ngIf="
+                  (maritalStatus.invalid && maritalStatus.touched) ||
+                  (maritalStatus.invalid && check$)
+                "
+              >
+                Marital Status is required
+              </p>
             </div>
           </div>
 
@@ -335,7 +353,10 @@
 
           <div class="row">
             <div class="form-row form-row-wide four columns">
-              <label>Specialiazation: <span class="red">*</span></label>
+              <label
+                >Specialiazation: ( can only select 3 )
+                <span class="red">*</span></label
+              >
               <ng-multiselect-dropdown
                 [placeholder]="'Select your Specialiazation'"
                 [data]="categories"
@@ -361,31 +382,13 @@
             </div>
 
             <div class="form-row form-row-wide four columns">
-              <label>Marital Status: <span class="red">*</span></label>
-              <select
-                formControlName="maritalStatus"
-                [(ngModel)]="user.maritalStatus"
-                [ngClass]="{
-                  'input-error':
-                    (maritalStatus.invalid && maritalStatus.touched) ||
-                    (maritalStatus.invalid && check$)
-                }"
-              >
-                <option value="Married">Married</option>
-                <option value="Single">Single</option>
-                <option value="Divorced">Divorced </option>
-                <option value="Widowed">Widowed</option>
-              </select>
-
-              <p
-                class="error2"
-                *ngIf="
-                  (maritalStatus.invalid && maritalStatus.touched) ||
-                  (maritalStatus.invalid && check$)
-                "
-              >
-                Marital Status is required
-              </p>
+              <label>Street Adress: (Optional)</label>
+              <input
+                type="text"
+                class="input-text"
+                [(ngModel)]="user.address1"
+                formControlName="street_address"
+              />
             </div>
 
             <div class="form-row form-row-wide four columns">
@@ -795,10 +798,7 @@
 
   <p *ngIf="error2" class="error2">{{ errMessage }}</p>
   <br />
-  <p
-    class="error2"
-    *ngIf="cRForm.invalid && check$"
-  >
+  <p class="error2" *ngIf="cRForm.invalid && check$">
     Form invalid please make sure you fill all fields with *
   </p>
   <button *ngIf="cRForm.invalid" type="button" (click)="check()">

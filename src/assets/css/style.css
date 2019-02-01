@@ -4023,7 +4023,7 @@ screen and (max-height: 300px) {
 .resumes-list .resumes-list-content,
 .job-list .job-list-content,
 .job-list img {
-    padding: 35px 0;
+    padding: 10px 0;
 }
 
 .job-list .job-list-content {

@@ -2,6 +2,7 @@ import { Component, OnInit } from "@angular/core";
 import { FormGroup, FormControl, Validators } from "@angular/forms";
 import { UsersService } from "src/app/services/users.service";
 import { Router } from "@angular/router";
+import { GloberService } from 'src/app/services/glober.service';
 
 @Component({
   selector: "app-register",
@@ -15,7 +16,7 @@ export class RegisterComponent implements OnInit {
   loading: boolean;
   error: boolean;
 
-  constructor(private userService: UsersService, private router: Router) {}
+  constructor(private userService: UsersService, private router: Router, private glo: GloberService) {}
 
   ngOnInit() {
     this.registerForm = new FormGroup({
@@ -76,7 +77,7 @@ export class RegisterComponent implements OnInit {
       .subscribe(
         res => {
           localStorage.setItem("user", JSON.stringify(res));
-          console.log(res);
+          this.glo.change()
           this.strated(res);
         },
         err => {

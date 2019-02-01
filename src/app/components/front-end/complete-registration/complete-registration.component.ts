@@ -47,7 +47,7 @@ export class CompleteRegistrationComponent implements OnInit {
   fifthCheck$ = false;
   newCheck$ = false;
   loading: boolean;
-  success: boolean
+  success: boolean;
   months = monthOfTheYear;
   skillLevel = skillLevel;
   selectedCvFile: any;
@@ -244,11 +244,20 @@ export class CompleteRegistrationComponent implements OnInit {
       language: this.fb.array([], Validators.compose([Validators.required]))
     });
 
+    this.addLanguage();
+    this.addLanguage();
+    this.addLanguage();
+    this.addLanguage();
     this.addEducation();
     this.addReferees();
     this.addWorkHistory();
+    this.addWorkHistory();
     this.addSkill();
-    this.addLanguage();
+
+    this.languageForms.controls[0].get("language").setValue("English");
+    this.languageForms.controls[1].get("language").setValue("Igbo");
+    this.languageForms.controls[2].get("language").setValue("Hausa");
+    this.languageForms.controls[3].get("language").setValue("Yoruba");
   }
 
   ngOnInit() {
@@ -630,7 +639,7 @@ export class CompleteRegistrationComponent implements OnInit {
     return formData;
   }
 
-  submit() {
+  submit(persentage: number) {
     let birthday;
     let dateNyscCompleted;
     let dateNyscStarted;
@@ -686,6 +695,7 @@ export class CompleteRegistrationComponent implements OnInit {
         gender: this.cRForm.value.gender,
         province: this.cRForm.value.state,
         cvTitle: "My Cv",
+        persentage: persentage,
         cvtext: this.cRForm.value.tellUsAboutYourSelf || "",
         address1: this.cRForm.value.street_address || "",
         city: this.cRForm.value.city || "",
@@ -707,10 +717,10 @@ export class CompleteRegistrationComponent implements OnInit {
         })
         .subscribe(
           res => {
-            this.success = true
+            this.success = true;
             this.Finish2 = "Save Current Stage.";
             setTimeout(() => {
-              this.success = false
+              this.success = false;
             }, 3000);
           },
           err => {
@@ -740,6 +750,7 @@ export class CompleteRegistrationComponent implements OnInit {
         gender: this.cRForm.value.gender,
         province: this.cRForm.value.state,
         cvTitle: "My Cv",
+        persentage: persentage,
         cvtext: this.cRForm.value.tellUsAboutYourSelf || "",
         address1: this.cRForm.value.street_address || "",
         city: this.cRForm.value.city || "",

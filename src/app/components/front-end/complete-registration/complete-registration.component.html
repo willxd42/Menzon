@@ -212,12 +212,30 @@
             </div>
 
             <div class="form-row form-row-wide four columns">
-              <label>Street Adress: (Optional)</label>
-              <input
-                type="text"
-                class="input-text"
-                formControlName="street_address"
-              />
+              <label>Marital Status: <span class="red">*</span></label>
+              <select
+                formControlName="maritalStatus"
+                [ngClass]="{
+                  'input-error':
+                    (maritalStatus.invalid && maritalStatus.touched) ||
+                    (maritalStatus.invalid && firstCheck$)
+                }"
+              >
+                <option value="Married">Married</option>
+                <option value="Single">Single</option>
+                <option value="Divorced">Divorced </option>
+                <option value="Widowed">Widowed</option>
+              </select>
+
+              <p
+                class="error2"
+                *ngIf="
+                  (maritalStatus.invalid && maritalStatus.touched) ||
+                  (maritalStatus.invalid && firstCheck$)
+                "
+              >
+                Marital Status is required
+              </p>
             </div>
           </div>
 
@@ -308,7 +326,7 @@
 
           <div class="row">
             <div class="form-row form-row-wide four columns">
-              <label>Specialiazation: <span class="red">*</span></label>
+              <label>Specialiazation: (can only select 3 )<span class="red">*</span></label>
               <ng-multiselect-dropdown
                 [placeholder]="'Select your Specialiazation'"
                 [data]="categories"
@@ -334,30 +352,12 @@
             </div>
 
             <div class="form-row form-row-wide four columns">
-              <label>Marital Status: <span class="red">*</span></label>
-              <select
-                formControlName="maritalStatus"
-                [ngClass]="{
-                  'input-error':
-                    (maritalStatus.invalid && maritalStatus.touched) ||
-                    (maritalStatus.invalid && firstCheck$)
-                }"
-              >
-                <option value="Married">Married</option>
-                <option value="Single">Single</option>
-                <option value="Divorced">Divorced </option>
-                <option value="Widowed">Widowed</option>
-              </select>
-
-              <p
-                class="error2"
-                *ngIf="
-                  (maritalStatus.invalid && maritalStatus.touched) ||
-                  (maritalStatus.invalid && firstCheck$)
-                "
-              >
-                Marital Status is required
-              </p>
+              <label>Street Adress: (Optional)</label>
+              <input
+                type="text"
+                class="input-text"
+                formControlName="street_address"
+              />
             </div>
 
             <div class="form-row form-row-wide four columns">
@@ -401,7 +401,7 @@
           "
           class="button gray"
           type="button"
-          (click)="submit()"
+          (click)="submit(10)"
         >
           {{ Finish2 }}
         </button>
@@ -827,7 +827,7 @@
 
         <br /><br />
         <button type="button" awPreviousStep>PREV</button>
-        <button type="button" class="button gray" (click)="submit()">
+        <button type="button" class="button gray" (click)="submit(20)">
           {{ Finish2 }}
         </button>
         <button
@@ -858,240 +858,6 @@
       </aw-wizard-step>
 
       <aw-wizard-step stepTitle="STEEP 3">
-        <div class="container">
-          <div formGroupName="referees">
-            <h3 class="margin-bottom-10 margin-top-10">Referees</h3>
-
-            <br />
-            <div
-              class="row"
-              *ngFor="let r of refereesForms.controls; let i = index"
-              [formGroupName]="i"
-            >
-              <br /><br />
-              <div class="row">
-                <div class="form-row form-row-wide four columns">
-                  <label>Name: <span class="red">*</span></label>
-                  <input
-                    type="text"
-                    class="input-text"
-                    formControlName="name"
-                    [ngClass]="{
-                      'input-error':
-                        (r.controls.name.invalid && r.controls.name.touched) ||
-                        (r.controls.name.invalid && newCheck$)
-                    }"
-                  />
-                  <p
-                    class="error2"
-                    *ngIf="
-                      (r.controls.name.invalid && r.controls.name.touched) ||
-                      (r.controls.name.invalid && newCheck$)
-                    "
-                  >
-                    Name is required
-                  </p>
-                </div>
-
-                <div class="form-row form-row-wide four columns">
-                  <label>Designation: <span class="red">*</span></label>
-                  <input
-                    type="text"
-                    class="input-text"
-                    formControlName="designation"
-                    [ngClass]="{
-                      'input-error':
-                        (r.controls.designation.invalid &&
-                          r.controls.designation.touched) ||
-                        (r.controls.designation.invalid && newCheck$)
-                    }"
-                  />
-                  <p
-                    class="error2"
-                    *ngIf="
-                      (r.controls.designation.invalid &&
-                        r.controls.designation.touched) ||
-                      (r.controls.designation.invalid && newCheck$)
-                    "
-                  >
-                    Referee Designation is required
-                  </p>
-                </div>
-
-                <div class="form-row form-row-wide four columns">
-                  <label>Company: <span class="red">*</span></label>
-                  <input
-                    type="text"
-                    class="input-text"
-                    formControlName="company"
-                    [ngClass]="{
-                      'input-error':
-                        (r.controls.company.invalid &&
-                          r.controls.company.touched) ||
-                        (r.controls.company.invalid && newCheck$)
-                    }"
-                  />
-                  <p
-                    class="error2"
-                    *ngIf="
-                      (r.controls.company.invalid &&
-                        r.controls.company.touched) ||
-                      (r.controls.company.invalid && newCheck$)
-                    "
-                  >
-                    Referee Company is required
-                  </p>
-                </div>
-
-                <div class="form-row form-row-wide four columns">
-                  <label>Country: <span class="red">*</span></label>
-                  <select
-                    formControlName="country"
-                    [ngClass]="{
-                      'input-error':
-                        (r.controls.country.invalid &&
-                          r.controls.country.touched) ||
-                        (r.controls.country.invalid && newCheck$)
-                    }"
-                  >
-                    <option *ngFor="let c of countries" [value]="c.name">
-                      {{ c.name }}
-                    </option>
-                  </select>
-
-                  <p
-                    class="error2"
-                    *ngIf="
-                      (r.controls.country.invalid &&
-                        r.controls.country.touched) ||
-                      (r.controls.country.invalid && newCheck$)
-                    "
-                  >
-                    Referee Country is required
-                  </p>
-                </div>
-              </div>
-
-              <div class="row">
-                <div class="form-row form-row-wide four columns">
-                  <label>Phone: <span class="red">*</span></label>
-                  <input
-                    type="text"
-                    class="input-text"
-                    formControlName="phone"
-                    [ngClass]="{
-                      'input-error':
-                        (r.controls.phone.invalid &&
-                          r.controls.phone.touched) ||
-                        (r.controls.phone.invalid && newCheck$)
-                    }"
-                  />
-                  <p
-                    class="error2"
-                    *ngIf="
-                      (r.controls.phone.invalid && r.controls.phone.touched) ||
-                      (r.controls.phone.invalid && newCheck$)
-                    "
-                  >
-                    phone is required
-                  </p>
-                </div>
-
-                <div class="form-row form-row-wide four columns">
-                  <label>Email: <span class="red">*</span></label>
-                  <input
-                    type="text"
-                    class="input-text"
-                    formControlName="email"
-                    [ngClass]="{
-                      'input-error':
-                        (r.controls.email.invalid &&
-                          r.controls.email.touched) ||
-                        (r.controls.email.invalid && newCheck$)
-                    }"
-                  />
-                  <p
-                    class="error2"
-                    *ngIf="
-                      (r.controls.email.invalid && r.controls.email.touched) ||
-                      (r.controls.email.invalid && newCheck$)
-                    "
-                  >
-                    Referee Email is required
-                  </p>
-                </div>
-
-                <div
-                  style="display: none"
-                  class="form-row form-row-wide four columns"
-                >
-                  <label>Id: <span class="red">*</span></label>
-                  <input
-                    type="text"
-                    class="input-text"
-                    disabled
-                    [(ngModel)]="'referees_' + i"
-                    formControlName="id"
-                    [ngClass]="{
-                      'input-error':
-                        (r.controls.id.invalid && r.controls.id.touched) ||
-                        (r.controls.id.invalid && newCheck$)
-                    }"
-                  />
-                  <p
-                    class="error2"
-                    *ngIf="
-                      (r.controls.id.invalid && r.controls.id.touched) ||
-                      (r.controls.id.invalid && newCheck$)
-                    "
-                  >
-                    Referee Id is required
-                  </p>
-                </div>
-              </div>
-            </div>
-
-            <br />
-            <button
-              style="color: #fff; background: red"
-              *ngIf="refereesForms.controls?.length > 1"
-              (click)="deleteReferees(i)"
-              class="button gray"
-            >
-              <i class="fa fa-plus-circle"></i>Delete
-            </button>
-          </div>
-        </div>
-
-        <button (click)="addReferees()" class="button gray">
-          <i class="fa fa-plus-circle"></i> Add More Referees
-        </button>
-
-        <br /><br />
-        <button type="button" awPreviousStep>PREV</button>
-        <button type="button" class="button gray" (click)="submit()">
-          {{ Finish2 }}
-        </button>
-        <button
-          *ngIf="!newCheck$ && refereesForms.invalid"
-          (click)="secondCheck()"
-          type="button"
-        >
-          Next Steep
-        </button>
-        <button
-          *ngIf="newCheck$ && refereesForms.invalid"
-          (click)="newCheck()"
-          type="button"
-        >
-          Next Steep
-        </button>
-        <button *ngIf="!refereesForms.invalid" type="button" awNextStep>
-          Next Steep
-        </button>
-      </aw-wizard-step>
-
-      <aw-wizard-step stepTitle="STEEP 4">
         <div class="container">
           <div formGroupName="workHistory">
             <h3 class="margin-bottom-10 margin-top-10">Work History</h3>
@@ -1313,7 +1079,7 @@
 
               <br />
               <button
-                *ngIf="workHistoryForms.controls?.length > 1"
+                *ngIf="workHistoryForms.controls?.length > 2"
                 (click)="deleteWorkHistory(i)"
                 class="button gray"
                 style="color: #fff; background: red"
@@ -1330,7 +1096,7 @@
         </div>
         <br /><br />
         <button type="button" awPreviousStep>PREV</button>
-        <button type="button" class="button gray" (click)="submit()">
+        <button type="button" class="button gray" (click)="submit(40)">
           {{ Finish2 }}
         </button>
         <button
@@ -1348,6 +1114,240 @@
           Next Steep
         </button>
         <button *ngIf="!workHistoryForms.invalid" type="button" awNextStep>
+          Next Steep
+        </button>
+      </aw-wizard-step>
+
+      <aw-wizard-step stepTitle="STEEP 4">
+        <div class="container">
+          <div formGroupName="referees">
+            <h3 class="margin-bottom-10 margin-top-10">Referees</h3>
+
+            <br />
+            <div
+              class="row"
+              *ngFor="let r of refereesForms.controls; let i = index"
+              [formGroupName]="i"
+            >
+              <br /><br />
+              <div class="row">
+                <div class="form-row form-row-wide four columns">
+                  <label>Name: <span class="red">*</span></label>
+                  <input
+                    type="text"
+                    class="input-text"
+                    formControlName="name"
+                    [ngClass]="{
+                      'input-error':
+                        (r.controls.name.invalid && r.controls.name.touched) ||
+                        (r.controls.name.invalid && newCheck$)
+                    }"
+                  />
+                  <p
+                    class="error2"
+                    *ngIf="
+                      (r.controls.name.invalid && r.controls.name.touched) ||
+                      (r.controls.name.invalid && newCheck$)
+                    "
+                  >
+                    Name is required
+                  </p>
+                </div>
+
+                <div class="form-row form-row-wide four columns">
+                  <label>Designation: <span class="red">*</span></label>
+                  <input
+                    type="text"
+                    class="input-text"
+                    formControlName="designation"
+                    [ngClass]="{
+                      'input-error':
+                        (r.controls.designation.invalid &&
+                          r.controls.designation.touched) ||
+                        (r.controls.designation.invalid && newCheck$)
+                    }"
+                  />
+                  <p
+                    class="error2"
+                    *ngIf="
+                      (r.controls.designation.invalid &&
+                        r.controls.designation.touched) ||
+                      (r.controls.designation.invalid && newCheck$)
+                    "
+                  >
+                    Referee Designation is required
+                  </p>
+                </div>
+
+                <div class="form-row form-row-wide four columns">
+                  <label>Company: <span class="red">*</span></label>
+                  <input
+                    type="text"
+                    class="input-text"
+                    formControlName="company"
+                    [ngClass]="{
+                      'input-error':
+                        (r.controls.company.invalid &&
+                          r.controls.company.touched) ||
+                        (r.controls.company.invalid && newCheck$)
+                    }"
+                  />
+                  <p
+                    class="error2"
+                    *ngIf="
+                      (r.controls.company.invalid &&
+                        r.controls.company.touched) ||
+                      (r.controls.company.invalid && newCheck$)
+                    "
+                  >
+                    Referee Company is required
+                  </p>
+                </div>
+
+                <div class="form-row form-row-wide four columns">
+                  <label>Country: <span class="red">*</span></label>
+                  <select
+                    formControlName="country"
+                    [ngClass]="{
+                      'input-error':
+                        (r.controls.country.invalid &&
+                          r.controls.country.touched) ||
+                        (r.controls.country.invalid && newCheck$)
+                    }"
+                  >
+                    <option *ngFor="let c of countries" [value]="c.name">
+                      {{ c.name }}
+                    </option>
+                  </select>
+
+                  <p
+                    class="error2"
+                    *ngIf="
+                      (r.controls.country.invalid &&
+                        r.controls.country.touched) ||
+                      (r.controls.country.invalid && newCheck$)
+                    "
+                  >
+                    Referee Country is required
+                  </p>
+                </div>
+              </div>
+
+              <div class="row">
+                <div class="form-row form-row-wide four columns">
+                  <label>Phone: <span class="red">*</span></label>
+                  <input
+                    type="text"
+                    class="input-text"
+                    formControlName="phone"
+                    [ngClass]="{
+                      'input-error':
+                        (r.controls.phone.invalid &&
+                          r.controls.phone.touched) ||
+                        (r.controls.phone.invalid && newCheck$)
+                    }"
+                  />
+                  <p
+                    class="error2"
+                    *ngIf="
+                      (r.controls.phone.invalid && r.controls.phone.touched) ||
+                      (r.controls.phone.invalid && newCheck$)
+                    "
+                  >
+                    phone is required
+                  </p>
+                </div>
+
+                <div class="form-row form-row-wide four columns">
+                  <label>Email: <span class="red">*</span></label>
+                  <input
+                    type="text"
+                    class="input-text"
+                    formControlName="email"
+                    [ngClass]="{
+                      'input-error':
+                        (r.controls.email.invalid &&
+                          r.controls.email.touched) ||
+                        (r.controls.email.invalid && newCheck$)
+                    }"
+                  />
+                  <p
+                    class="error2"
+                    *ngIf="
+                      (r.controls.email.invalid && r.controls.email.touched) ||
+                      (r.controls.email.invalid && newCheck$)
+                    "
+                  >
+                    Referee Email is required
+                  </p>
+                </div>
+
+                <div
+                  style="display: none"
+                  class="form-row form-row-wide four columns"
+                >
+                  <label>Id: <span class="red">*</span></label>
+                  <input
+                    type="text"
+                    class="input-text"
+                    disabled
+                    [(ngModel)]="'referees_' + i"
+                    formControlName="id"
+                    [ngClass]="{
+                      'input-error':
+                        (r.controls.id.invalid && r.controls.id.touched) ||
+                        (r.controls.id.invalid && newCheck$)
+                    }"
+                  />
+                  <p
+                    class="error2"
+                    *ngIf="
+                      (r.controls.id.invalid && r.controls.id.touched) ||
+                      (r.controls.id.invalid && newCheck$)
+                    "
+                  >
+                    Referee Id is required
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            <br />
+            <button
+              style="color: #fff; background: red"
+              *ngIf="refereesForms.controls?.length > 1"
+              (click)="deleteReferees(i)"
+              class="button gray"
+            >
+              <i class="fa fa-plus-circle"></i>Delete
+            </button>
+          </div>
+        </div>
+
+        <button (click)="addReferees()" class="button gray">
+          <i class="fa fa-plus-circle"></i> Add More Referees
+        </button>
+
+        <br /><br />
+        <button type="button" awPreviousStep>PREV</button>
+        <button type="button" class="button gray" (click)="submit(60)">
+          {{ Finish2 }}
+        </button>
+        <button
+          *ngIf="!newCheck$ && refereesForms.invalid"
+          (click)="secondCheck()"
+          type="button"
+        >
+          Next Steep
+        </button>
+        <button
+          *ngIf="newCheck$ && refereesForms.invalid"
+          (click)="newCheck()"
+          type="button"
+        >
+          Next Steep
+        </button>
+        <button *ngIf="!refereesForms.invalid" type="button" awNextStep>
           Next Steep
         </button>
       </aw-wizard-step>
@@ -1400,9 +1400,10 @@
                         (s.controls.skillLevel.invalid && forthCheck$)
                     }"
                   >
-                    <option *ngFor="let sk of skillLevel" [value]="sk">
-                      {{ sk }}
-                    </option>
+
+                    <option value="Entry Level">Entry Level</option>
+                    <option value="Intermediate">Intermediate</option>
+                    <option value="Advanced">Advanced</option>
                   </select>
 
                   <p
@@ -1573,12 +1574,10 @@
                         (l.controls.proficiencyLevel.invalid && forthCheck$)
                     }"
                   >
+                    <option value="Not Applicable">Not Applicable</option>
                     <option value="Novice">Novice</option>
-                    <option value="Beginner">Beginner</option>
+                    <option value="Intermediate">Intermediate</option>
                     <option value="Advanced">Advanced</option>
-                    <option value="Competent">Competent</option>
-                    <option value="Proficient">Proficient</option>
-                    <option value="Expert">Expert</option>
                   </select>
 
                   <p
@@ -1597,7 +1596,7 @@
               <br />
               <button
                 style="color: #fff; background: red"
-                *ngIf="languageForms.controls?.length > 1"
+                *ngIf="languageForms.controls?.length > 4"
                 (click)="deleteLanguage(i)"
                 class="button gray"
               >
@@ -1613,7 +1612,7 @@
         </div>
         <br /><br />
         <button type="button" awPreviousStep>PREV</button>
-        <button type="button" class="button gray" (click)="submit()">
+        <button type="button" class="button gray" (click)="submit(80)">
           {{ Finish2 }}
         </button>
         <button
@@ -1811,7 +1810,7 @@
           "
           type="fifthCheck"
           type="button"
-          (click)="submit()"
+          (click)="submit(100)"
         >
           {{ Finish }}
         </button>
