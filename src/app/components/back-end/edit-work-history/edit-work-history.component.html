@@ -110,6 +110,17 @@
           >
             From Year is required
           </p>
+
+          <p
+            class="error2"
+            *ngIf="
+              (wH.controls.fromYear.errors.minlength ||
+                wH.controls.fromYear.errors.maxlength) &&
+              wH.controls.fromYear.touched
+            "
+          >
+            Invalid Year
+          </p>
         </div>
         <div class="form-row form-row-wide four columns">
           <label>From Month: <span class="red">*</span></label>
@@ -160,6 +171,17 @@
           >
             To Year is required
           </p>
+
+          <p
+            class="error2"
+            *ngIf="
+              (wH.controls.toYear.errors.minlength ||
+                wH.controls.toYear.errors.maxlength) &&
+              wH.controls.toYear.touched
+            "
+          >
+            Invalid Year
+          </p>
         </div>
 
         <div class="form-row form-row-wide four columns">
@@ -179,11 +201,11 @@
           <p
             class="error2"
             *ngIf="
-              (wH.controls.toYear.invalid && wH.controls.toYear.touched) ||
-              (wH.controls.toYear.invalid && check$)
+              (wH.controls.toMonth.invalid && wH.controls.toMonth.touched) ||
+              (wH.controls.toMonth.invalid && check$)
             "
           >
-            To Year is required
+            To Month is required
           </p>
         </div>
       </div>

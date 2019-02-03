@@ -83,20 +83,20 @@ export class AddEducationComponent implements OnInit {
       country: ["", Validators.required],
       fromYear: [
         "",
-        Validators.compose([
+        [
           Validators.required,
           Validators.minLength(4),
           Validators.maxLength(4)
-        ])
+        ]
       ],
       fromMonth: ["", Validators.required],
       toYear: [
         "",
-        Validators.compose([
+       [
           Validators.required,
           Validators.minLength(4),
           Validators.maxLength(4)
-        ])
+       ]
       ],
       toMonth: ["", Validators.required],
       course: ["", Validators.required]

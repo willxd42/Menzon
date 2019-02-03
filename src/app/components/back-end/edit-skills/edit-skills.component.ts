@@ -4,7 +4,7 @@ import { Router, ActivatedRoute } from "@angular/router";
 import { UsersService } from "src/app/services/users.service";
 import { monthOfTheYear } from "src/app/mock/months";
 import { skillLevel } from "src/app/mock/stillLevel";
-import { GloberService } from 'src/app/services/glober.service';
+import { GloberService } from "src/app/services/glober.service";
 
 @Component({
   selector: "app-edit-skills",
@@ -28,11 +28,11 @@ export class EditSkillsComponent implements OnInit {
     private fb: FormBuilder,
     private router: Router,
     private userService: UsersService,
-    private route: ActivatedRoute,    
-    public globalService: GloberService 
-    ) {
-      this.globalService.change$.subscribe(res => this.ngOnInit());
-    }
+    private route: ActivatedRoute,
+    public globalService: GloberService
+  ) {
+    this.globalService.change$.subscribe(res => this.ngOnInit());
+  }
   ngOnInit() {
     this.loading = true;
     this.error = false;
@@ -76,7 +76,10 @@ export class EditSkillsComponent implements OnInit {
     const skill = this.fb.group({
       skill: ["", Validators.required],
       skillLevel: ["", Validators.required],
-      lastYearUsed: ["", Validators.required],
+      lastYearUsed: [
+        "",
+        [Validators.required, Validators.minLength(4), Validators.maxLength(4)]
+      ],
       lastMonthUsed: ["", Validators.required],
       yearsOfExperience: ["", Validators.required]
     });

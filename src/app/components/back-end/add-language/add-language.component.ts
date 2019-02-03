@@ -82,6 +82,21 @@ export class AddLanguageComponent implements OnInit {
     if (this.languageForms.invalid) {
       this.check$ = true;
     } else {
+      this.cRForm.value.language.map(language => {
+        if (language.proficiencyLevel !== "Not Applicable") {
+          let d: any = {};
+          d.language = language.language;
+          d.proficiencyLevel = language.proficiencyLevel;
+          d.dommy = `${language.language}-spoken`;
+          return d;
+        } else {
+          let d: any = {};
+          d.language = language.language;
+          d.proficiencyLevel = language.proficiencyLevel;
+          return d;
+        }
+      });
+
       this.Submit = "Loading...";
       this.error2 = false;
       const upload: FormData = new FormData();

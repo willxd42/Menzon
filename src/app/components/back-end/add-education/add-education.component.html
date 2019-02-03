@@ -114,8 +114,8 @@
             <p
               class="error2"
               *ngIf="
-                (e.controls.fromYear.errors?.minLength ||
-                  e.controls.fromYear.errors?.maxLength) &&
+                (e.controls.fromYear.errors.minLength ||
+                  e.controls.fromYear.errors.maxLength) &&
                 e.controls.fromYear.touched
               "
             >
@@ -175,8 +175,8 @@
             <p
               class="error2"
               *ngIf="
-                (e.controls.toYear.errors?.minLength ||
-                  e.controls.toYear.errors?.maxLength) &&
+                (e.controls.toYear.errors.minLength ||
+                  e.controls.toYear.errors.maxLength) &&
                 e.controls.toYear.touched
               "
             >

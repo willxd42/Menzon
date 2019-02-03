@@ -71,7 +71,11 @@ export class AddSkillComponent implements OnInit {
     const skill = this.fb.group({
       skill: ["", Validators.required],
       skillLevel: ["", Validators.required],
-      lastYearUsed: ["", Validators.required],
+      lastYearUsed: ["", [
+        Validators.required,
+        Validators.minLength(4),
+        Validators.maxLength(4)
+      ]],
       lastMonthUsed: ["", Validators.required],
       yearsOfExperience: ["", Validators.required]
     });

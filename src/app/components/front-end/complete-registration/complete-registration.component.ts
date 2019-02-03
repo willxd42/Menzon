@@ -1,11 +1,5 @@
 import { Component, OnInit } from "@angular/core";
-import {
-  FormGroup,
-  FormBuilder,
-  FormArray,
-  FormControl,
-  Validators
-} from "@angular/forms";
+import { FormGroup, FormBuilder, FormArray, Validators } from "@angular/forms";
 import {
   NgbDatepickerConfig,
   NgbCalendar,
@@ -172,76 +166,55 @@ export class CompleteRegistrationComponent implements OnInit {
     private countryService: CountriesService,
     private userService: UsersService,
     public globalService: GloberService,
-    config: NgbDatepickerConfig,
-    calendar: NgbCalendar,
+    public config: NgbDatepickerConfig,
+    public calendar: NgbCalendar,
     private categoryService: CategoryService
-  ) {
+  ) {}
+
+  ngOnInit() {
+    this.loading = true;
+    this.error = false;
+
     // customize default values of datepickers used by this component tree
-    config.minDate = { year: 1900, month: 1, day: 1 };
+    this.config.minDate = { year: 1900, month: 1, day: 1 };
 
     // days that don't belong to current month are not visible
-    config.outsideDays = "hidden";
+    this.config.outsideDays = "hidden";
 
     // weekends are disabled
-    config.markDisabled = (date: NgbDate) => calendar.getWeekday(date) >= 6;
+    this.config.markDisabled = (date: NgbDate) =>
+      this.calendar.getWeekday(date) >= 6;
     this.globalService.change$.subscribe(res => this.ngOnInit());
 
-    this.cRForm = new FormGroup({
-      firstName: new FormControl("", Validators.compose([Validators.required])),
-      lastName: new FormControl("", Validators.compose([Validators.required])),
-      middleName: new FormControl(""),
-      gender: new FormControl("", Validators.compose([Validators.required])),
-      dateOfBirth: new FormControl(
-        "",
-        Validators.compose([Validators.required])
-      ),
-      email: new FormControl(
-        "",
-        Validators.compose([Validators.required, Validators.email])
-      ),
-      mobileNumber: new FormControl(""),
-      street_address: new FormControl(""),
-      city: new FormControl(""),
-      state: new FormControl("", Validators.compose([Validators.required])),
-      country: new FormControl("", Validators.compose([Validators.required])),
-      prefaredLocation: new FormControl(
-        "",
-        Validators.compose([Validators.required])
-      ),
-      maritalStatus: new FormControl(
-        "",
-        Validators.compose([Validators.required])
-      ),
-      preferedPositions: new FormControl(
-        "",
-        Validators.compose([Validators.required])
-      ),
-      expectedSalary: new FormControl(
-        "",
-        Validators.compose([Validators.required])
-      ),
-      NTSCcompleted: new FormControl(
-        "",
-        Validators.compose([Validators.required])
-      ),
-      NYSCDate: new FormControl(""),
-      NTSCcompletedDate: new FormControl(""),
-      howDidYouHereAboutUs: new FormControl(
-        "",
-        Validators.compose([Validators.required])
-      ),
-      tellUsAboutYourSelf: new FormControl(
-        "",
-        Validators.compose([Validators.required])
-      ),
-      // cvTitle: new FormControl("", Validators.compose([Validators.required])),
-      cvFile: new FormControl("", Validators.compose([Validators.required])),
-      photoFile: new FormControl(""),
-      education: this.fb.array([], Validators.compose([Validators.required])),
-      referees: this.fb.array([], Validators.compose([Validators.required])),
-      workHistory: this.fb.array([], Validators.compose([Validators.required])),
-      skills: this.fb.array([], Validators.compose([Validators.required])),
-      language: this.fb.array([], Validators.compose([Validators.required]))
+    this.cRForm = this.fb.group({
+      firstName: ["", [Validators.required]],
+      lastName: ["", [Validators.required]],
+      middleName: [""],
+      gender: ["", [Validators.required]],
+      dateOfBirth: ["", [Validators.required]],
+      email: ["", [Validators.required, Validators.email]],
+      mobileNumber: [""],
+      street_address: [""],
+      city: [""],
+      state: ["", [Validators.required]],
+      country: ["", [Validators.required]],
+      prefaredLocation: ["", [Validators.required]],
+      maritalStatus: ["", [Validators.required]],
+      preferedPositions: ["", [Validators.required]],
+      expectedSalary: ["", [Validators.required]],
+      NTSCcompleted: ["", [Validators.required]],
+      NYSCDate: [""],
+      NTSCcompletedDate: [""],
+      howDidYouHereAboutUs: ["", [Validators.required]],
+      tellUsAboutYourSelf: ["", [Validators.required]],
+      // cvTitle: ["", [Validators.required]],
+      cvFile: ["", [Validators.required]],
+      photoFile: [""],
+      education: this.fb.array([], [Validators.required]),
+      referees: this.fb.array([], [Validators.required]),
+      workHistory: this.fb.array([], [Validators.required]),
+      skills: this.fb.array([], [Validators.required]),
+      language: this.fb.array([], [Validators.required])
     });
 
     this.addLanguage();
@@ -258,11 +231,7 @@ export class CompleteRegistrationComponent implements OnInit {
     this.languageForms.controls[1].get("language").setValue("Igbo");
     this.languageForms.controls[2].get("language").setValue("Hausa");
     this.languageForms.controls[3].get("language").setValue("Yoruba");
-  }
 
-  ngOnInit() {
-    this.loading = true;
-    this.error = false;
     this.user = JSON.parse(localStorage.getItem("appUser"));
     if (this.user) {
       this.firstName$ = this.user.firstName;
@@ -272,6 +241,8 @@ export class CompleteRegistrationComponent implements OnInit {
     }
 
     this.getAll();
+
+    console.log("kkk", this.educationForms.errors);
   }
 
   getAll() {
@@ -389,10 +360,16 @@ export class CompleteRegistrationComponent implements OnInit {
       institution: ["", Validators.required],
       degree: ["", Validators.required],
       country: ["", Validators.required],
-      fromYear: ["", Validators.required],
+      fromYear: [
+        "",
+        [Validators.required, Validators.minLength(4), Validators.maxLength(4)]
+      ],
       fromMonth: ["", Validators.required],
       toYear: ["", Validators.required],
-      toMonth: ["", Validators.required],
+      toMonth: [
+        "",
+        [Validators.required, Validators.minLength(4), Validators.maxLength(4)]
+      ],
       course: ["", Validators.required]
     });
 
@@ -412,9 +389,15 @@ export class CompleteRegistrationComponent implements OnInit {
       company: ["", Validators.required],
       jobTitle: ["", Validators.required],
       country: ["", Validators.required],
-      fromYear: ["", Validators.required],
+      fromYear: [
+        "",
+        [Validators.required, Validators.minLength(4), Validators.maxLength(4)]
+      ],
       fromMonth: ["", Validators.required],
-      toYear: ["", Validators.required],
+      toYear: [
+        "",
+        [Validators.required, Validators.minLength(4), Validators.maxLength(4)]
+      ],
       toMonth: ["", Validators.required]
     });
 
@@ -433,7 +416,10 @@ export class CompleteRegistrationComponent implements OnInit {
     const skill = this.fb.group({
       skill: ["", Validators.required],
       skillLevel: ["", Validators.required],
-      lastYearUsed: ["", Validators.required],
+      lastYearUsed: [
+        "",
+        [Validators.required, Validators.minLength(4), Validators.maxLength(4)]
+      ],
       lastMonthUsed: ["", Validators.required],
       yearsOfExperience: ["", Validators.required]
     });
@@ -639,7 +625,7 @@ export class CompleteRegistrationComponent implements OnInit {
     return formData;
   }
 
-  submit(persentage: number) {
+  submit(percentage: number) {
     let birthday;
     let dateNyscCompleted;
     let dateNyscStarted;
@@ -676,6 +662,21 @@ export class CompleteRegistrationComponent implements OnInit {
       dateNyscStarted = "";
     }
 
+    this.cRForm.value.language.map(language => {
+      if (language.proficiencyLevel !== "Not Applicable") {
+        let d: any = {};
+        d.language = language.language;
+        d.proficiencyLevel = language.proficiencyLevel;
+        d.dommy = `${language.language}-spoken`;
+        return d;
+      } else {
+        let d: any = {};
+        d.language = language.language;
+        d.proficiencyLevel = language.proficiencyLevel;
+        return d;
+      }
+    });
+
     if (!this.cvFile$) {
       this.Finish2 = "Loading...";
       this.error2 = false;
@@ -695,7 +696,7 @@ export class CompleteRegistrationComponent implements OnInit {
         gender: this.cRForm.value.gender,
         province: this.cRForm.value.state,
         cvTitle: "My Cv",
-        persentage: persentage,
+        percentage: percentage,
         cvtext: this.cRForm.value.tellUsAboutYourSelf || "",
         address1: this.cRForm.value.street_address || "",
         city: this.cRForm.value.city || "",
@@ -750,7 +751,7 @@ export class CompleteRegistrationComponent implements OnInit {
         gender: this.cRForm.value.gender,
         province: this.cRForm.value.state,
         cvTitle: "My Cv",
-        persentage: persentage,
+        percentage: percentage,
         cvtext: this.cRForm.value.tellUsAboutYourSelf || "",
         address1: this.cRForm.value.street_address || "",
         city: this.cRForm.value.city || "",

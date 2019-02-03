@@ -1,6 +1,6 @@
 import { Component, OnInit } from "@angular/core";
 import { Router } from "@angular/router";
-import { FormGroup, FormControl, Validators } from "@angular/forms";
+import { FormGroup, FormBuilder, Validators } from "@angular/forms";
 import { NgbCalendar } from "@ng-bootstrap/ng-bootstrap";
 import { StateService } from "src/app/services/state.service";
 import { CountriesService } from "src/app/services/countries.service";
@@ -156,65 +156,45 @@ export class EditProfileComponent implements OnInit {
     private countryService: CountriesService,
     private userService: UsersService,
     public globalService: GloberService,
-    private categoryService: CategoryService
+    private categoryService: CategoryService,
+    private fb: FormBuilder
   ) {
     this.globalService.change$.subscribe(res => this.ngOnInit());
 
-    this.cRForm = new FormGroup({
-      firstName: new FormControl("", Validators.compose([Validators.required])),
-      lastName: new FormControl("", Validators.compose([Validators.required])),
-      middleName: new FormControl(""),
-      gender: new FormControl("", Validators.compose([Validators.required])),
-      dateOfBirth: new FormControl(
-        "",
-        Validators.compose([Validators.required])
-      ),
-      email: new FormControl(
-        "",
-        Validators.compose([Validators.required, Validators.email])
-      ),
-      mobileNumber: new FormControl(""),
-      street_address: new FormControl(""),
-      city: new FormControl(""),
-      state: new FormControl("", Validators.compose([Validators.required])),
-      country: new FormControl("", Validators.compose([Validators.required])),
-      prefaredLocation: new FormControl(
-        "",
-        Validators.compose([Validators.required])
-      ),
-      expectedSalary: new FormControl(
-        "",
-        Validators.compose([Validators.required])
-      ),
-      tellUsAboutYourSelf: new FormControl(
-        "",
-        Validators.compose([Validators.required])
-      ),
-      cvFile: new FormControl(""),
-      // cvTitle: new FormControl("", Validators.compose([Validators.required])),
-      photoFile: new FormControl(""),
-      maritalStatus: new FormControl(
-        "",
-        Validators.compose([Validators.required])
-      ),
-      preferedPositions: new FormControl(
-        "",
-        Validators.compose([Validators.required])
-      ),
-      NTSCcompleted: new FormControl(
-        "",
-        Validators.compose([Validators.required])
-      ),
-      NYSCDate: new FormControl(""),
-      NTSCcompletedDate: new FormControl("")
-      // howDidYouHereAboutUs: new FormControl(
-      //   "",
-      //   Validators.compose([Validators.required])
-      // )
-    });
+    
   }
 
   ngOnInit() {
+
+    this.cRForm = this.fb.group({
+      firstName: ["", [Validators.required]],
+      lastName: ["", [Validators.required]],
+      middleName: [""],
+      gender: ["", [Validators.required]],
+      dateOfBirth: ["", [Validators.required]],
+      email: ["", [Validators.required, Validators.email]],
+      mobileNumber: [""],
+      street_address: [""],
+      city: [""],
+      state: ["", [Validators.required]],
+      country: ["", [Validators.required]],
+      prefaredLocation: ["", [Validators.required]],
+      expectedSalary: ["", [Validators.required]],
+      tellUsAboutYourSelf: ["", [Validators.required]],
+      cvFile: [""],
+      // cvTitle: ["", [Validators.required]],
+      photoFile: [""],
+      maritalStatus: ["", [Validators.required]],
+      preferedPositions: ["", [Validators.required]],
+      NTSCcompleted: ["", [Validators.required]],
+      NYSCDate: [""],
+      NTSCcompletedDate: [""]
+      // howDidYouHereAboutUs: [
+      //   "",
+      //   [Validators.required])
+      // )
+    });
+
     this.loading = true;
     this.error = false;
     this.u = JSON.parse(localStorage.getItem("appUser"));
@@ -344,9 +324,6 @@ export class EditProfileComponent implements OnInit {
         }
       );
   }
-  
-
-
 
   get firstName() {
     return this.cRForm.get("firstName");
@@ -568,7 +545,7 @@ export class EditProfileComponent implements OnInit {
         city: this.cRForm.value.city,
         country: this.cRForm.value.country,
         email: this.cRForm.value.email,
-        persentage: this.user.persentage,
+        percentage: this.user.percentage,
         mobilePhone: this.cRForm.value.mobileNumber,
         workHistory: JSON.stringify(this.workHistory),
         education: JSON.stringify(this.education),
@@ -618,7 +595,7 @@ export class EditProfileComponent implements OnInit {
         city: this.cRForm.value.city,
         country: this.cRForm.value.country,
         email: this.cRForm.value.email,
-        persentage: this.user.persentage,
+        percentage: this.user.percentage,
         mobilePhone: this.cRForm.value.mobileNumber,
         workHistory: JSON.stringify(this.workHistory),
         education: JSON.stringify(this.education),
@@ -669,7 +646,7 @@ export class EditProfileComponent implements OnInit {
         city: this.cRForm.value.city,
         country: this.cRForm.value.country,
         email: this.cRForm.value.email,
-        persentage: this.user.persentage,
+        percentage: this.user.percentage,
         mobilePhone: this.cRForm.value.mobileNumber,
         workHistory: JSON.stringify(this.workHistory),
         education: JSON.stringify(this.education),
@@ -720,7 +697,7 @@ export class EditProfileComponent implements OnInit {
         city: this.cRForm.value.city || "",
         country: this.cRForm.value.country,
         email: this.cRForm.value.email,
-        persentage: this.user.persentage,
+        percentage: this.user.percentage,
         mobilePhone: this.cRForm.value.mobileNumber,
         workHistory: JSON.stringify(this.workHistory),
         education: JSON.stringify(this.education),

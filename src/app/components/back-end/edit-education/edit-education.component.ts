@@ -4,7 +4,7 @@ import { Router, ActivatedRoute } from "@angular/router";
 import { UsersService } from "src/app/services/users.service";
 import { monthOfTheYear } from "src/app/mock/months";
 import { CountriesService } from "src/app/services/countries.service";
-import { GloberService } from 'src/app/services/glober.service';
+import { GloberService } from "src/app/services/glober.service";
 
 @Component({
   selector: "app-edit-education",
@@ -29,10 +29,11 @@ export class EditEducationComponent implements OnInit {
     private router: Router,
     private route: ActivatedRoute,
     private countryService: CountriesService,
-    private userService: UsersService,    
-    public globalService: GloberService ) {
-      this.globalService.change$.subscribe(res => this.ngOnInit());
-    }
+    private userService: UsersService,
+    public globalService: GloberService
+  ) {
+    this.globalService.change$.subscribe(res => this.ngOnInit());
+  }
 
   ngOnInit() {
     this.getCountries();
@@ -63,7 +64,7 @@ export class EditEducationComponent implements OnInit {
     );
   }
 
-  getCountries() { 
+  getCountries() {
     this.loading = true;
     return this.countryService.getCountries({ rows: 1000 }).subscribe(
       res => {
@@ -87,20 +88,12 @@ export class EditEducationComponent implements OnInit {
       country: ["", Validators.required],
       fromYear: [
         "",
-        Validators.compose([
-          Validators.required,
-          Validators.minLength(4),
-          Validators.maxLength(4)
-        ])
+        [Validators.required, Validators.minLength(4), Validators.maxLength(4)]
       ],
       fromMonth: ["", Validators.required],
       toYear: [
         "",
-        Validators.compose([
-          Validators.required,
-          Validators.minLength(4),
-          Validators.maxLength(4)
-        ])
+        [Validators.required, Validators.minLength(4), Validators.maxLength(4)]
       ],
       toMonth: ["", Validators.required],
       course: ["", Validators.required]
@@ -121,6 +114,21 @@ export class EditEducationComponent implements OnInit {
     if (this.educationForms.invalid) {
       this.check$ = true;
     } else {
+      this.cRForm.value.language.map(language => {
+        if (language.proficiencyLevel !== "Not Applicable") {
+          let d: any = {};
+          d.language = language.language;
+          d.proficiencyLevel = language.proficiencyLevel;
+          d.dommy = `${language.language}-spoken`;
+          return d;
+        } else {
+          let d: any = {};
+          d.language = language.language;
+          d.proficiencyLevel = language.proficiencyLevel;
+          return d;
+        }
+      });
+
       this.Submit = "Loading...";
       this.error2 = false;
       const upload: FormData = new FormData();

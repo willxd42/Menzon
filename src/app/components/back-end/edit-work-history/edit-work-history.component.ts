@@ -85,9 +85,17 @@ export class EditWorkHistoryComponent implements OnInit {
       company: ["", Validators.required],
       jobTitle: ["", Validators.required],
       country: ["", Validators.required],
-      fromYear: ["", Validators.required],
+      fromYear: ["", [
+        Validators.required,
+        Validators.minLength(4),
+        Validators.maxLength(4)
+      ]],
       fromMonth: ["", Validators.required],
-      toYear: ["", Validators.required],
+      toYear: ["", [
+        Validators.required,
+        Validators.minLength(4),
+        Validators.maxLength(4)
+      ]],
       toMonth: ["", Validators.required]
     });
 

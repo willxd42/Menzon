@@ -145,6 +145,17 @@
             >
               Years Of Experience is required
             </p>
+
+            <p
+            class="error2"
+            *ngIf="
+              (s.controls.lastYearUsed.errors.minlength ||
+              s.controls.lastYearUsed.errors.maxlength) &&
+              s.controls.lastYearUsed.touched
+            "
+          >
+            Invalid Year
+          </p>
           </div>
         </div>
 
