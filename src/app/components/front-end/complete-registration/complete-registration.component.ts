@@ -57,7 +57,8 @@ export class CompleteRegistrationComponent implements OnInit {
   Finish = "Finish";
   Finish2 = "Save Current Stage.";
   space = "";
-
+  years = [];
+  year = new Date().getFullYear();
   editorConfig: AngularEditorConfig = {
     editable: true,
     spellcheck: true,
@@ -241,8 +242,6 @@ export class CompleteRegistrationComponent implements OnInit {
     }
 
     this.getAll();
-
-    console.log("kkk", this.educationForms.errors);
   }
 
   getAll() {
@@ -297,15 +296,24 @@ export class CompleteRegistrationComponent implements OnInit {
         res => {
           this.categories = res["rows"];
 
-          console.log(this.categories);
-
-          this.loading = false;
+          this.allYear();
         },
         err => {
           this.error = true;
           this.loading = false;
         }
       );
+  }
+
+  allYear() {
+    var max = new Date().getFullYear();
+    var min = max - 79;
+    for (var i = min; i <= max; i++) {
+      this.years.push(i);
+      this.loading = false;
+    }
+
+    this.years.sort();
   }
 
   onItemSelect(item: any) {
@@ -360,16 +368,10 @@ export class CompleteRegistrationComponent implements OnInit {
       institution: ["", Validators.required],
       degree: ["", Validators.required],
       country: ["", Validators.required],
-      fromYear: [
-        "",
-        [Validators.required, Validators.minLength(4), Validators.maxLength(4)]
-      ],
+      fromYear: ["", [Validators.required]],
       fromMonth: ["", Validators.required],
       toYear: ["", Validators.required],
-      toMonth: [
-        "",
-        [Validators.required, Validators.minLength(4), Validators.maxLength(4)]
-      ],
+      toMonth: ["", [Validators.required]],
       course: ["", Validators.required]
     });
 
@@ -389,15 +391,9 @@ export class CompleteRegistrationComponent implements OnInit {
       company: ["", Validators.required],
       jobTitle: ["", Validators.required],
       country: ["", Validators.required],
-      fromYear: [
-        "",
-        [Validators.required, Validators.minLength(4), Validators.maxLength(4)]
-      ],
+      fromYear: ["", [Validators.required]],
       fromMonth: ["", Validators.required],
-      toYear: [
-        "",
-        [Validators.required, Validators.minLength(4), Validators.maxLength(4)]
-      ],
+      toYear: ["", [Validators.required]],
       toMonth: ["", Validators.required]
     });
 
@@ -416,10 +412,7 @@ export class CompleteRegistrationComponent implements OnInit {
     const skill = this.fb.group({
       skill: ["", Validators.required],
       skillLevel: ["", Validators.required],
-      lastYearUsed: [
-        "",
-        [Validators.required, Validators.minLength(4), Validators.maxLength(4)]
-      ],
+      lastYearUsed: ["", [Validators.required]],
       lastMonthUsed: ["", Validators.required],
       yearsOfExperience: ["", Validators.required]
     });

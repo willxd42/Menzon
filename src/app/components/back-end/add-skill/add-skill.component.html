@@ -68,7 +68,7 @@
 
           <div class="form-row form-row-wide three columns">
             <label>Last Year Used: <span class="red">*</span></label>
-            <input
+            <!-- <input
               type="number"
               class="input-text"
               formControlName="lastYearUsed"
@@ -78,7 +78,20 @@
                     s.controls.lastYearUsed.touched) ||
                   (s.controls.lastYearUsed.invalid && check$)
               }"
-            />
+            /> -->
+            <select
+              formControlName="lastYearUsed"
+              [ngModel]="year"
+              [ngClass]="{
+                'input-error':
+                  (s.controls.lastYearUsed.invalid &&
+                    s.controls.lastYearUsed.touched) ||
+                  (s.controls.lastYearUsed.invalid && check$)
+              }"
+            >
+              <option *ngFor="let y of years" [value]="y">{{ y }}</option>
+              <option value="till date">Till Date</option>
+            </select>
             <p
               class="error2"
               *ngIf="
@@ -89,7 +102,7 @@
             >
               Last Year Used is required
             </p>
-            <p
+            <!-- <p
               class="error2"
               *ngIf="
                 (s.controls.lastYearUsed.errors.minlength ||
@@ -98,7 +111,7 @@
               "
             >
               Invalid Year
-            </p>
+            </p> -->
           </div>
 
           <div class="form-row form-row-wide three columns">
@@ -140,6 +153,19 @@
                   (s.controls.yearsOfExperience.invalid && check$)
               }"
             />
+            <!-- <select
+              formControlName="yearsOfExperience"
+              [ngModel]="year"
+              [ngClass]="{
+                'input-error':
+                  (s.controls.yearsOfExperience.invalid &&
+                    s.controls.yearsOfExperience.touched) ||
+                  (s.controls.yearsOfExperience.invalid && check$)
+              }"
+            >
+              <option *ngFor="let y of years" [value]="y">{{ y }}</option>
+              <option value="till date">Till Date</option>
+            </select> -->
             <p
               class="error2"
               *ngIf="

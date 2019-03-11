@@ -326,7 +326,11 @@
 
           <div class="row">
             <div class="form-row form-row-wide four columns">
-              <label>Specialiazation: (can only select 3 )<span class="red">*</span></label>
+              <label
+                >Specialiazation: (can only select 3 )<span class="red"
+                  >*</span
+                ></label
+              >
               <ng-multiselect-dropdown
                 [placeholder]="'Select your Specialiazation'"
                 [data]="categories"
@@ -460,6 +464,7 @@
             !prefaredLocation.invalid
           "
           type="button"
+          (click)="submit(10)"
           awNextStep
         >
           Next Steep
@@ -515,11 +520,11 @@
                         (e.controls.degree.invalid && secondCheck$)
                     }"
                   >
-                    <!-- <option *ngFor="let d of degree" [value]="d.name">{{
+                    <option *ngFor="let d of degree" [value]="d.name">{{
                       d.name
-                    }}</option> -->
+                    }}</option>
 
-                    <option value="PhD">PhD</option>
+                    <!-- <option value="PhD">PhD</option>
                     <option value="PGD">PGD</option>
                     <option value="MSC">MSC</option>
                     <option value="B.Sc">B.Sc</option>
@@ -527,7 +532,7 @@
                     <option value="ND">ND</option>
                     <option value="OND">OND</option>
                     <option value="NCE">NCE</option>
-                    <option value="SSCE">SSCE</option>
+                    <option value="SSCE">SSCE</option> -->
                   </select>
                   <p
                     class="error2"
@@ -571,7 +576,7 @@
 
                 <div class="form-row form-row-wide four columns">
                   <label>From Year: <span class="red">*</span></label>
-                  <input
+                  <!-- <input
                     type="number"
                     class="input-text"
                     formControlName="fromYear"
@@ -581,7 +586,20 @@
                           e.controls.fromYear.touched) ||
                         (e.controls.fromYear.invalid && secondCheck$)
                     }"
-                  />
+                  /> -->
+                  <select
+                    formControlName="fromYear"
+                    [ngModel]="year"
+                    [ngClass]="{
+                      'input-error':
+                        (e.controls.fromYear.invalid &&
+                          e.controls.fromYear.touched) ||
+                        (e.controls.fromYear.invalid && secondCheck$)
+                    }"
+                  >
+                    <option *ngFor="let y of years" [value]="y">{{ y }}</option>
+                    <option value="till date">Till Date</option>
+                  </select>
                   <p
                     class="error2"
                     *ngIf="
@@ -592,7 +610,7 @@
                   >
                     From Year is required
                   </p>
-                  <p
+                  <!-- <p
                     class="error2"
                     *ngIf="
                       (e.controls.fromYear.errors.minlength ||
@@ -601,7 +619,7 @@
                     "
                   >
                     Invalid Year
-                  </p>
+                  </p> -->
                 </div>
               </div>
 
@@ -635,7 +653,7 @@
 
                 <div class="form-row form-row-wide four columns">
                   <label>To Year: <span class="red">*</span></label>
-                  <input
+                  <!-- <input
                     type="number"
                     class="input-text"
                     formControlName="toYear"
@@ -645,7 +663,20 @@
                           e.controls.toYear.touched) ||
                         (e.controls.toYear.invalid && secondCheck$)
                     }"
-                  />
+                  /> -->
+                  <select
+                    formControlName="toYear"
+                    [ngModel]="year"
+                    [ngClass]="{
+                      'input-error':
+                        (e.controls.toYear.invalid &&
+                          e.controls.toYear.touched) ||
+                        (e.controls.toYear.invalid && secondCheck$)
+                    }"
+                  >
+                    <option *ngFor="let y of years" [value]="y">{{ y }}</option>
+                    <option value="till date">Till Date</option>
+                  </select>
                   <p
                     class="error2"
                     *ngIf="
@@ -657,7 +688,7 @@
                     To Year is required
                   </p>
 
-                  <p
+                  <!-- <p
                     class="error2"
                     *ngIf="
                       (e.controls.toYear.errors.minlength ||
@@ -666,7 +697,7 @@
                     "
                   >
                     Invalid Year
-                  </p>
+                  </p> -->
                 </div>
 
                 <div class="form-row form-row-wide four columns">
@@ -951,7 +982,7 @@
               <div class="row">
                 <div class="form-row form-row-wide four columns">
                   <label>From Year: <span class="red">*</span></label>
-                  <input
+                  <!-- <input
                     type="number"
                     class="input-text"
                     formControlName="fromYear"
@@ -961,7 +992,20 @@
                           wH.controls.fromYear.touched) ||
                         (wH.controls.fromYear.invalid && thirdCheck$)
                     }"
-                  />
+                  /> -->
+                  <select
+                    formControlName="fromYear"
+                    [ngModel]="year"
+                    [ngClass]="{
+                      'input-error':
+                        (wH.controls.fromYear.invalid &&
+                          wH.controls.fromYear.touched) ||
+                        (wH.controls.fromYear.invalid && thirdCheck$)
+                    }"
+                  >
+                    <option *ngFor="let y of years" [value]="y">{{ y }}</option>
+                    <option value="till date">Till Date</option>
+                  </select>
                   <p
                     class="error2"
                     *ngIf="
@@ -972,7 +1016,7 @@
                   >
                     From Year is required
                   </p>
-
+                  <!-- 
                   <p
                     class="error2"
                     *ngIf="
@@ -982,7 +1026,7 @@
                     "
                   >
                     Invalid Year
-                  </p>
+                  </p> -->
                 </div>
                 <div class="form-row form-row-wide four columns">
                   <label>From Month: <span class="red">*</span></label>
@@ -1013,7 +1057,7 @@
 
                 <div class="form-row form-row-wide four columns">
                   <label>To Year: <span class="red">*</span></label>
-                  <input
+                  <!-- <input
                     type="number"
                     class="input-text"
                     formControlName="toYear"
@@ -1023,7 +1067,21 @@
                           wH.controls.toYear.touched) ||
                         (wH.controls.toYear.invalid && thirdCheck$)
                     }"
-                  />
+                  /> -->
+
+                  <select
+                    formControlName="toYear"
+                    [ngModel]="year"
+                    [ngClass]="{
+                      'input-error':
+                        (wH.controls.toYear.invalid &&
+                          wH.controls.toYear.touched) ||
+                        (wH.controls.toYear.invalid && thirdCheck$)
+                    }"
+                  >
+                    <option *ngFor="let y of years" [value]="y">{{ y }}</option>
+                    <option value="till date">Till Date</option>
+                  </select>
 
                   <p
                     class="error2"
@@ -1036,7 +1094,7 @@
                     To Year is required
                   </p>
 
-                  <p
+                  <!-- <p
                     class="error2"
                     *ngIf="
                       (wH.controls.toYear.errors.minlength ||
@@ -1045,7 +1103,7 @@
                     "
                   >
                     Invalid Year
-                  </p>
+                  </p> -->
                 </div>
 
                 <div class="form-row form-row-wide four columns">
@@ -1400,7 +1458,6 @@
                         (s.controls.skillLevel.invalid && forthCheck$)
                     }"
                   >
-
                     <option value="Entry Level">Entry Level</option>
                     <option value="Intermediate">Intermediate</option>
                     <option value="Advanced">Advanced</option>
@@ -1420,7 +1477,7 @@
 
                 <div class="form-row form-row-wide three columns">
                   <label>Last Year Used: <span class="red">*</span></label>
-                  <input
+                  <!-- <input
                     type="number"
                     class="input-text"
                     formControlName="lastYearUsed"
@@ -1430,7 +1487,20 @@
                           s.controls.lastYearUsed.touched) ||
                         (s.controls.lastYearUsed.invalid && forthCheck$)
                     }"
-                  />
+                  /> -->
+                  <select
+                    formControlName="lastYearUsed"
+                    [ngModel]="year"
+                    [ngClass]="{
+                      'input-error':
+                        (s.controls.lastYearUsed.invalid &&
+                          s.controls.lastYearUsed.touched) ||
+                        (s.controls.lastYearUsed.invalid && forthCheck$)
+                    }"
+                  >
+                    <option *ngFor="let y of years" [value]="y">{{ y }}</option>
+                    <option value="till date">Till Date</option>
+                  </select>
                   <p
                     class="error2"
                     *ngIf="
@@ -1441,8 +1511,8 @@
                   >
                     Last Year Used is required
                   </p>
-                  
-                  <p
+
+                  <!-- <p
                   class="error2"
                   *ngIf="
                     (s.controls.lastYearUsed.errors.minlength ||
@@ -1451,7 +1521,7 @@
                   "
                 >
                   Invalid Year
-                </p>
+                </p> -->
                 </div>
 
                 <div class="form-row form-row-wide three columns">

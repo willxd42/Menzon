@@ -23,6 +23,7 @@ export class EditSkillsComponent implements OnInit {
   Submit = "Submit";
   check$: boolean;
   skillLevel = skillLevel;
+  years = []
 
   constructor(
     private fb: FormBuilder,
@@ -46,6 +47,17 @@ export class EditSkillsComponent implements OnInit {
     this.addSkill();
   }
 
+  allYear() {
+    var max = new Date().getFullYear();
+    var min = max - 79;
+    for (var i = min; i <= max; i++) {
+      this.years.push(i);
+      this.loading = false;
+    }
+
+    this.years.sort();
+  }
+
   getUser() {
     const user = JSON.parse(localStorage.getItem("appUser"));
     this.userService.getSingleUserDetails(user.appUserId).subscribe(
@@ -56,9 +68,7 @@ export class EditSkillsComponent implements OnInit {
           this.route.snapshot.paramMap.get("id")
         ];
 
-        console.log(this.skills);
-
-        this.loading = false;
+        this.allYear()
       },
       err => {
         console.log(err);
@@ -78,7 +88,7 @@ export class EditSkillsComponent implements OnInit {
       skillLevel: ["", Validators.required],
       lastYearUsed: [
         "",
-        [Validators.required, Validators.minLength(4), Validators.maxLength(4)]
+        [Validators.required]
       ],
       lastMonthUsed: ["", Validators.required],
       yearsOfExperience: ["", Validators.required]

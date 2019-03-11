@@ -23,6 +23,7 @@ export class EditWorkHistoryComponent implements OnInit {
   countries: any[];
   Submit = "Submit";
   check$: boolean;
+  years = []
 
   constructor(
     private fb: FormBuilder,
@@ -67,13 +68,23 @@ export class EditWorkHistoryComponent implements OnInit {
     return this.countryService.getCountries({ rows: 1000 }).subscribe(
       res => {
         this.countries = res["rows"];
-        this.getUser();
+        this.allYear();
       },
       err => {
         this.error = true;
         this.loading = false;
       }
     );
+  }
+
+  allYear() {
+    var max = new Date().getFullYear();
+    var min = max - 79;
+    for (var i = min; i <= max; i++) {
+      this.years.push(i);
+    }
+
+    this.getUser();
   }
 
   get workHistoryForms() {
@@ -92,9 +103,7 @@ export class EditWorkHistoryComponent implements OnInit {
       ]],
       fromMonth: ["", Validators.required],
       toYear: ["", [
-        Validators.required,
-        Validators.minLength(4),
-        Validators.maxLength(4)
+        Validators.required
       ]],
       toMonth: ["", Validators.required]
     });

@@ -24,7 +24,7 @@ export class LoginComponent implements OnInit {
     private route: ActivatedRoute,
     public globalService: GloberService
   ) {
-    this.globalService.change$.subscribe(res => this.ngOnInit());
+    this.globalService.change$.subscribe(() => this.ngOnInit());
   }
 
   ngOnInit() {
@@ -68,16 +68,8 @@ export class LoginComponent implements OnInit {
           this.strated(res);
         },
         err => {
-          console.log(err);
-          if (
-            err.error.developerMessage ===
-            { password: ["size must be between 5 and 2147483647"] }
-          ) {
-            this.message = "Password Too short must be at least 5 charaters ";
-          } else if (err.error.developerMessage === "Login Failed") {
-            this.message = "Please Check Your Email long";
-          }
-          this.error = true;
+          this.message = "Login Failed!";
+          // this.error = true;
           this.loading = false;
         }
       );

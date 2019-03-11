@@ -160,12 +160,9 @@ export class EditProfileComponent implements OnInit {
     private fb: FormBuilder
   ) {
     this.globalService.change$.subscribe(res => this.ngOnInit());
-
-    
   }
 
   ngOnInit() {
-
     this.cRForm = this.fb.group({
       firstName: ["", [Validators.required]],
       lastName: ["", [Validators.required]],
@@ -521,6 +518,15 @@ export class EditProfileComponent implements OnInit {
   submit() {
     this.Finish = "Loading...";
     this.error2 = false;
+    this.cRForm.value.preferedPositions.map(data => {
+      return data["name"];
+    });
+
+    let category = this.cRForm.value.preferedPositions.map(data => {
+      return data["name"];
+    });
+
+    let categories = this.removeDuplicates(category);
 
     if (!this.cvFile$ && !this.photoFile$) {
       const upload: FormData = new FormData();
@@ -534,7 +540,7 @@ export class EditProfileComponent implements OnInit {
         firstName: this.cRForm.value.firstName,
         lastName: this.cRForm.value.lastName,
         birthday: this.cRForm.value.dateOfBirth,
-        preferedPositions: JSON.stringify(this.cRForm.value.preferedPositions),
+        preferedPositions: JSON.stringify(categories),
         maritalStatus: this.cRForm.value.maritalStatus,
         preferedCountries: this.cRForm.value.prefaredLocation,
         expectedSalary: this.cRForm.value.expectedSalary,
@@ -584,7 +590,7 @@ export class EditProfileComponent implements OnInit {
         firstName: this.cRForm.value.firstName,
         lastName: this.cRForm.value.lastName,
         birthday: this.cRForm.value.dateOfBirth,
-        preferedPositions: JSON.stringify(this.cRForm.value.preferedPositions),
+        preferedPositions: JSON.stringify(categories),
         maritalStatus: this.cRForm.value.maritalStatus,
         preferedCountries: this.cRForm.value.prefaredLocation,
         expectedSalary: this.cRForm.value.expectedSalary,
@@ -635,7 +641,7 @@ export class EditProfileComponent implements OnInit {
         firstName: this.cRForm.value.firstName,
         lastName: this.cRForm.value.lastName,
         birthday: this.cRForm.value.dateOfBirth,
-        preferedPositions: JSON.stringify(this.cRForm.value.preferedPositions),
+        preferedPositions: JSON.stringify(categories),
         maritalStatus: this.cRForm.value.maritalStatus,
         preferedCountries: this.cRForm.value.prefaredLocation,
         expectedSalary: this.cRForm.value.expectedSalary,
@@ -685,7 +691,7 @@ export class EditProfileComponent implements OnInit {
         firstName: this.cRForm.value.firstName,
         lastName: this.cRForm.value.lastName,
         birthday: this.cRForm.value.dateOfBirth,
-        preferedPositions: JSON.stringify(this.cRForm.value.preferedPositions),
+        preferedPositions: JSON.stringify(categories),
         maritalStatus: this.cRForm.value.maritalStatus,
         preferedCountries: this.cRForm.value.prefaredLocation,
         expectedSalary: this.cRForm.value.expectedSalary,
@@ -768,5 +774,12 @@ export class EditProfileComponent implements OnInit {
         this.loading = false;
       }
     );
+  }
+
+  private removeDuplicates(arr: any[]) {
+    let unique_array = arr.filter(function(elem, index, self) {
+      return index == self.indexOf(elem);
+    });
+    return unique_array;
   }
 }

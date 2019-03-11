@@ -89,7 +89,7 @@
       <div class="row">
         <div class="form-row form-row-wide four columns">
           <label>From Year: <span class="red">*</span></label>
-          <input
+          <!-- <input
             type="number"
             class="input-text"
             [(ngModel)]="workHistory.fromYear"
@@ -100,7 +100,20 @@
                   wH.controls.fromYear.touched) ||
                 (wH.controls.fromYear.invalid && check$)
             }"
-          />
+          /> -->
+          <select
+            [(ngModel)]="workHistory.fromYear"
+            formControlName="fromYear"
+            [ngClass]="{
+              'input-error':
+                (wH.controls.fromYear.invalid &&
+                  wH.controls.fromYear.touched) ||
+                (wH.controls.fromYear.invalid && check$)
+            }"
+          >
+            <option *ngFor="let y of years" [value]="y">{{ y }}</option>
+            <option value="till date">Till Date</option>
+          </select>
           <p
             class="error2"
             *ngIf="
@@ -111,7 +124,7 @@
             From Year is required
           </p>
 
-          <p
+          <!-- <p
             class="error2"
             *ngIf="
               (wH.controls.fromYear.errors.minlength ||
@@ -120,7 +133,7 @@
             "
           >
             Invalid Year
-          </p>
+          </p> -->
         </div>
         <div class="form-row form-row-wide four columns">
           <label>From Month: <span class="red">*</span></label>
@@ -150,7 +163,7 @@
 
         <div class="form-row form-row-wide four columns">
           <label>To Year: <span class="red">*</span></label>
-          <input
+          <!-- <input
             type="number"
             class="input-text"
             [(ngModel)]="workHistory.toYear"
@@ -160,7 +173,19 @@
                 (wH.controls.toYear.invalid && wH.controls.toYear.touched) ||
                 (wH.controls.toYear.invalid && check$)
             }"
-          />
+          /> -->
+          <select
+            [(ngModel)]="workHistory.toYear"
+            formControlName="toYear"
+            [ngClass]="{
+              'input-error':
+                (wH.controls.toYear.invalid && wH.controls.toYear.touched) ||
+                (wH.controls.toYear.invalid && check$)
+            }"
+          >
+            <option *ngFor="let y of years" [value]="y">{{ y }}</option>
+            <option value="till date">Till Date</option>
+          </select>
 
           <p
             class="error2"
@@ -172,7 +197,7 @@
             To Year is required
           </p>
 
-          <p
+          <!-- <p
             class="error2"
             *ngIf="
               (wH.controls.toYear.errors.minlength ||
@@ -181,7 +206,7 @@
             "
           >
             Invalid Year
-          </p>
+          </p> -->
         </div>
 
         <div class="form-row form-row-wide four columns">

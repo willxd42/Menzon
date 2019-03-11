@@ -22,6 +22,8 @@ export class AddWorkHistoryComponent implements OnInit {
   countries: any[];
   Submit = "Submit";
   check$: boolean;
+  years = [];
+  year = new Date().getFullYear();
 
   constructor(
     private fb: FormBuilder,
@@ -43,12 +45,24 @@ export class AddWorkHistoryComponent implements OnInit {
     this.addWorkHistory();
   }
 
+  allYear() {
+    var max = new Date().getFullYear();
+    var min = max - 79;
+    for (var i = min; i <= max; i++) {
+      this.years.push(i);
+      this.loading = false;
+    }
+
+    this.years.sort();
+  }
+
   getUser() {
     const user = JSON.parse(localStorage.getItem("appUser"));
     this.userService.getSingleUserDetails(user.appUserId).subscribe(
       res => {
         this.user = res;
         this.allWorkHistory = JSON.parse(res["workHistory"]);
+        this.allYear();
       },
       err => {
         console.log(err);
@@ -81,17 +95,9 @@ export class AddWorkHistoryComponent implements OnInit {
       company: ["", Validators.required],
       jobTitle: ["", Validators.required],
       country: ["", Validators.required],
-      fromYear: ["", [
-        Validators.required,
-        Validators.minLength(4),
-        Validators.maxLength(4)
-      ]],
+      fromYear: ["", [Validators.required]],
       fromMonth: ["", Validators.required],
-      toYear: ["", [
-        Validators.required,
-        Validators.minLength(4),
-        Validators.maxLength(4)
-      ]],
+      toYear: ["", [Validators.required]],
       toMonth: ["", Validators.required]
     });
 

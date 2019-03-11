@@ -22,6 +22,8 @@ export class AddSkillComponent implements OnInit {
   Submit = "Submit";
   check$: boolean;
   skillLevel = skillLevel;
+  years = [];
+  year = new Date().getFullYear();
 
   constructor(
     private fb: FormBuilder,
@@ -46,6 +48,17 @@ export class AddSkillComponent implements OnInit {
     this.addSkill();
   }
 
+  allYear() {
+    var max = new Date().getFullYear();
+    var min = max - 79;
+    for (var i = min; i <= max; i++) {
+      this.years.push(i);
+      this.loading = false;
+    }
+
+    this.years.sort();
+  }
+
   getUser() {
     const user = JSON.parse(localStorage.getItem("appUser"));
     this.userService.getSingleUserDetails(user.appUserId).subscribe(
@@ -53,7 +66,7 @@ export class AddSkillComponent implements OnInit {
         this.user = res;
         this.allSkills = JSON.parse(res["skills"]);
 
-        this.loading = false;
+        this.allYear();
       },
       err => {
         console.log(err);
@@ -71,11 +84,7 @@ export class AddSkillComponent implements OnInit {
     const skill = this.fb.group({
       skill: ["", Validators.required],
       skillLevel: ["", Validators.required],
-      lastYearUsed: ["", [
-        Validators.required,
-        Validators.minLength(4),
-        Validators.maxLength(4)
-      ]],
+      lastYearUsed: ["", [Validators.required]],
       lastMonthUsed: ["", Validators.required],
       yearsOfExperience: ["", Validators.required]
     });

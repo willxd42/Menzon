@@ -22,6 +22,9 @@ export class AddEducationComponent implements OnInit {
   countries: any[];
   Submit = "Submit";
   check$: boolean;
+  degree: any[];
+  years = [];
+  year = new Date().getFullYear();
 
   constructor(
     private fb: FormBuilder,
@@ -43,13 +46,24 @@ export class AddEducationComponent implements OnInit {
     this.addEducation();
   }
 
+  allYear() {
+    var max = new Date().getFullYear();
+    var min = max - 79;
+    for (var i = min; i <= max; i++) {
+      this.years.push(i);
+      this.loading = false;
+    }
+
+    this.years.sort();
+  }
+
   getUser() {
     const user = JSON.parse(localStorage.getItem("appUser"));
     this.userService.getSingleUserDetails(user.appUserId).subscribe(
       res => {
         this.user = res;
         this.allEducation = JSON.parse(res["education"]);
-        this.loading = false;
+        this.allYear();
       },
       err => {
         console.log(err);
@@ -64,6 +78,19 @@ export class AddEducationComponent implements OnInit {
     return this.countryService.getCountries({ rows: 1000 }).subscribe(
       res => {
         this.countries = res["rows"];
+        this.getDegree();
+      },
+      err => {
+        this.error = true;
+        this.loading = false;
+      }
+    );
+  }
+
+  getDegree() {
+    return this.countryService.getDegree({ rows: 1000 }).subscribe(
+      res => {
+        this.degree = res["rows"];
         this.getUser();
       },
       err => {
@@ -81,22 +108,11 @@ export class AddEducationComponent implements OnInit {
       institution: ["", Validators.required],
       degree: ["", Validators.required],
       country: ["", Validators.required],
-      fromYear: [
-        "",
-        [
-          Validators.required,
-          Validators.minLength(4),
-          Validators.maxLength(4)
-        ]
-      ],
+      fromYear: ["", [Validators.required]],
       fromMonth: ["", Validators.required],
       toYear: [
         "",
-       [
-          Validators.required,
-          Validators.minLength(4),
-          Validators.maxLength(4)
-       ]
+        [Validators.required, Validators.minLength(4), Validators.maxLength(4)]
       ],
       toMonth: ["", Validators.required],
       course: ["", Validators.required]
