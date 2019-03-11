@@ -206,7 +206,7 @@ export class CompleteRegistrationComponent implements OnInit {
       NTSCcompleted: ["", [Validators.required]],
       NYSCDate: [""],
       NTSCcompletedDate: [""],
-      howDidYouHereAboutUs: ["", [Validators.required]],
+      // howDidYouHereAboutUs: ["", [Validators.required]],
       tellUsAboutYourSelf: ["", [Validators.required]],
       // cvTitle: ["", [Validators.required]],
       cvFile: ["", [Validators.required]],
@@ -513,9 +513,9 @@ export class CompleteRegistrationComponent implements OnInit {
     return this.cRForm.get("NTSCcompletedDate");
   }
 
-  get howDidYouHereAboutUs() {
-    return this.cRForm.get("howDidYouHereAboutUs");
-  }
+  // get howDidYouHereAboutUs() {
+  //   return this.cRForm.get("howDidYouHereAboutUs");
+  // }
 
   get tellUsAboutYourSelf() {
     return this.cRForm.get("tellUsAboutYourSelf");

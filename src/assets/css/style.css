@@ -618,8 +618,8 @@ ul li ul a.sf-with-ul:after {
 ---------------------------------------------------------------------- */
 
 #banner {
-    max-height: 600px;
-    width: 100%;
+    /* max-height: 600px; */
+    width: 110%;
     display: inline-block;
     position: relative;
     background-repeat: no-repeat;
@@ -661,7 +661,7 @@ select {
     font-size: 18px;
     float: left;
     box-sizing: border-box;
-    padding: 19px 20px;
+    padding: 14px 20px;
     border: none;
     margin-right: 2%;
     width: 44.5%;

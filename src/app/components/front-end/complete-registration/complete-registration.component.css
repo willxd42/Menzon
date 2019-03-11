@@ -10,10 +10,10 @@ button {
   margin: 10px !important;
 }
 
-input,
+/* input,
 select {
   height: 61px !important;
-}
+} */
 
 div a {
   display: none !important;

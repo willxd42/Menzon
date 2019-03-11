@@ -31,7 +31,7 @@
 }
 
 .row {
-    margin-bottom: 20px;
+    margin-bottom: 40px;
 }
 
 /* Nested Column Classes */
@@ -414,7 +414,7 @@ body.boxed {
 .clearfix:after,
 .row:before,
 .row:after {
-    content: '\0020';
+    content: "\0020";
     display: block;
     overflow: hidden;
     visibility: hidden;
