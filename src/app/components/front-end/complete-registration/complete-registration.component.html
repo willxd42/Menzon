@@ -890,6 +890,7 @@
         </button>
         <button
           *ngIf="!educationForms.invalid && !NTSCcompleted.invalid"
+          (click)="submit(20)"
           type="button"
           awNextStep
         >
@@ -1180,7 +1181,7 @@
         >
           Next Steep
         </button>
-        <button *ngIf="!workHistoryForms.invalid" type="button" awNextStep>
+        <button *ngIf="!workHistoryForms.invalid" type="button" (click)="submit(40)" awNextStep>
           Next Steep
         </button>
       </aw-wizard-step>
@@ -1414,7 +1415,7 @@
         >
           Next Steep
         </button>
-        <button *ngIf="!refereesForms.invalid" type="button" awNextStep>
+        <button *ngIf="!refereesForms.invalid" type="button" (click)="submit(60)" awNextStep>
           Next Steep
         </button>
       </aw-wizard-step>
@@ -1711,6 +1712,7 @@
         <button
           *ngIf="!skillsForms.invalid && !languageForms.invalid"
           type="button"
+          (click)="submit(80)"
           awNextStep
         >
           Next Steep
