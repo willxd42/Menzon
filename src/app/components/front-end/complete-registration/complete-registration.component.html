@@ -1146,6 +1146,7 @@
 
               <br />
               <button
+                *ngIf="workHistoryForms.controls?.length > 1"
                 (click)="deleteWorkHistory(i)"
                 class="button gray"
                 style="color: #fff; background: red"
