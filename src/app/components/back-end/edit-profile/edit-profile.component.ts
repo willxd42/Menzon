@@ -522,6 +522,30 @@ export class EditProfileComponent implements OnInit {
       return data["name"];
     });
 
+    let birthday;
+    let dateNyscCompleted;
+    let dateNyscStarted;
+
+    if (this.cRForm.value.dateOfBirth && this.cRForm.value.dateOfBirth.year
+      && this.cRForm.value.dateOfBirth.month && this.cRForm.value.dateOfBirth.day ) {
+      birthday = `${this.cRForm.value.dateOfBirth.year}-${this.cRForm.value.dateOfBirth.month}-${this.cRForm.value.dateOfBirth.day}`;
+    } else {
+      birthday = null;
+    }
+
+    if (this.cRForm.value.NYSCDate && this.cRForm.value.NYSCDate.year
+      && this.cRForm.value.NYSCDate.month && this.cRForm.value.NYSCDate.day) {
+      dateNyscCompleted = `${this.cRForm.value.NYSCDate.year}-${this.cRForm.value.NYSCDate.month}-${this.cRForm.value.NYSCDate.day}`;
+    } else {
+      dateNyscCompleted = null;
+    }
+
+    if (this.cRForm.value.NTSCcompletedDate && this.cRForm.value.NTSCcompletedDate.year
+      && this.cRForm.value.NTSCcompletedDate.month &&    this.cRForm.value.NTSCcompletedDate.day) {
+      dateNyscStarted = `${this.cRForm.value.NTSCcompletedDate.year}-${this.cRForm.value.NTSCcompletedDate.month}-${this.cRForm.value.NTSCcompletedDate.day}`;
+    } else {
+      dateNyscStarted = null;
+    }
     let category = this.cRForm.value.preferedPositions.map(data => {
       return data["name"];
     });
@@ -535,11 +559,11 @@ export class EditProfileComponent implements OnInit {
         cvTitle: this.user.cvTitle,
         profileImage: this.user.profileImage,
         nyscCompleted: this.cRForm.value.NTSCcompleted,
-        dateNyscCompleted: this.cRForm.value.NYSCDate || "",
-        dateNyscStarted: this.cRForm.value.NTSCcompletedDate || "",
+        dateNyscCompleted: dateNyscCompleted ,
+        dateNyscStarted: dateNyscStarted ,
         firstName: this.cRForm.value.firstName,
         lastName: this.cRForm.value.lastName,
-        birthday: this.cRForm.value.dateOfBirth,
+        birthday: birthday ,
         preferedPositions: JSON.stringify(categories),
         maritalStatus: this.cRForm.value.maritalStatus,
         preferedCountries: this.cRForm.value.prefaredLocation,
@@ -585,11 +609,11 @@ export class EditProfileComponent implements OnInit {
       const jsonse = JSON.stringify({
         cvTitle: this.user.cvTitle,
         nyscCompleted: this.cRForm.value.NTSCcompleted,
-        dateNyscCompleted: this.cRForm.value.NYSCDate || "",
-        dateNyscStarted: this.cRForm.value.NTSCcompletedDate || "",
+        dateNyscCompleted: dateNyscCompleted ,
+        dateNyscStarted: dateNyscStarted ,
         firstName: this.cRForm.value.firstName,
         lastName: this.cRForm.value.lastName,
-        birthday: this.cRForm.value.dateOfBirth,
+        birthday: birthday,
         preferedPositions: JSON.stringify(categories),
         maritalStatus: this.cRForm.value.maritalStatus,
         preferedCountries: this.cRForm.value.prefaredLocation,

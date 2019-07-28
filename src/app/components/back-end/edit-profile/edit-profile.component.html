@@ -225,6 +225,7 @@
               <label>Phone Number: (Optional)</label>
               <input
                 type="text"
+                maxlength="15"
                 class="input-text"
                 [(ngModel)]="user.mobilePhone"
                 formControlName="mobileNumber"
@@ -386,6 +387,7 @@
               <label>Street Adress: (Optional)</label>
               <input
                 type="text"
+                maxlength="100"
                 class="input-text"
                 [(ngModel)]="user.address1"
                 formControlName="street_address"

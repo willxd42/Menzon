@@ -629,30 +629,26 @@ export class CompleteRegistrationComponent implements OnInit {
 
     let categories = JSON.stringify(this.removeDuplicates(category));
 
-    console.log(categories);
 
-    if (this.cRForm.value.dateOfBirth) {
-      birthday = `${this.cRForm.value.dateOfBirth.year}-${
-        this.cRForm.value.dateOfBirth.month
-      }-${this.cRForm.value.dateOfBirth.day}`;
+    if (this.cRForm.value.dateOfBirth && this.cRForm.value.dateOfBirth.year
+      && this.cRForm.value.dateOfBirth.month && this.cRForm.value.dateOfBirth.day ) {
+      birthday = `${this.cRForm.value.dateOfBirth.year}-${this.cRForm.value.dateOfBirth.month}-${this.cRForm.value.dateOfBirth.day}`;
     } else {
-      birthday = "";
+      birthday = null;
     }
 
-    if (this.cRForm.value.NYSCDate) {
-      dateNyscCompleted = `${this.cRForm.value.NYSCDate.year}-${
-        this.cRForm.value.NYSCDate.month
-      }-${this.cRForm.value.NYSCDate.day}`;
+    if (this.cRForm.value.NYSCDate && this.cRForm.value.NYSCDate.year
+      && this.cRForm.value.NYSCDate.month && this.cRForm.value.NYSCDate.day) {
+      dateNyscCompleted = `${this.cRForm.value.NYSCDate.year}-${this.cRForm.value.NYSCDate.month}-${this.cRForm.value.NYSCDate.day}`;
     } else {
-      birthday = "";
+      dateNyscCompleted = null;
     }
 
-    if (this.cRForm.value.NTSCcompletedDate) {
-      dateNyscStarted = `${this.cRForm.value.NTSCcompletedDate.year}-${
-        this.cRForm.value.NTSCcompletedDate.month
-      }-${this.cRForm.value.NTSCcompletedDate.day}`;
+    if (this.cRForm.value.NTSCcompletedDate && this.cRForm.value.NTSCcompletedDate.year
+      && this.cRForm.value.NTSCcompletedDate.month &&    this.cRForm.value.NTSCcompletedDate.day) {
+      dateNyscStarted = `${this.cRForm.value.NTSCcompletedDate.year}-${this.cRForm.value.NTSCcompletedDate.month}-${this.cRForm.value.NTSCcompletedDate.day}`;
     } else {
-      dateNyscStarted = "";
+      dateNyscStarted = null;
     }
 
     this.cRForm.value.language.map(language => {
@@ -675,9 +671,9 @@ export class CompleteRegistrationComponent implements OnInit {
       this.error2 = false;
       const upload: FormData = new FormData();
       const jsonse = JSON.stringify({
-        nyscCompleted: this.cRForm.value.NTSCcompleted || "",
-        dateNyscCompleted: dateNyscCompleted || "",
-        dateNyscStarted: dateNyscStarted || "",
+        nyscCompleted: this.cRForm.value.NTSCcompleted || null,
+        dateNyscCompleted: dateNyscCompleted ,
+        dateNyscStarted: dateNyscStarted ,
         firstName: this.cRForm.value.firstName,
         lastName: this.cRForm.value.lastName,
         middleName: this.cRForm.value.middleName,
@@ -730,9 +726,9 @@ export class CompleteRegistrationComponent implements OnInit {
       this.error2 = false;
       const upload = this.fileUpload();
       const jsonse = JSON.stringify({
-        nyscCompleted: this.cRForm.value.NTSCcompleted || "",
-        dateNyscCompleted: dateNyscCompleted || "",
-        dateNyscStarted: dateNyscStarted || "",
+        nyscCompleted: this.cRForm.value.NTSCcompleted || null,
+        dateNyscCompleted: dateNyscCompleted ,
+        dateNyscStarted: dateNyscStarted ,
         firstName: this.cRForm.value.firstName,
         lastName: this.cRForm.value.lastName,
         middleName: this.cRForm.value.middleName,
